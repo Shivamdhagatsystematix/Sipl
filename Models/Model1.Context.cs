@@ -13,10 +13,10 @@ namespace Sipl.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SiplDatabaseEntities10 : DbContext
+    public partial class SiplDatabaseEntities19 : DbContext
     {
-        public SiplDatabaseEntities10()
-            : base("name=SiplDatabaseEntities10")
+        public SiplDatabaseEntities19()
+            : base("name=SiplDatabaseEntities19")
         {
         }
     

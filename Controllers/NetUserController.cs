@@ -13,7 +13,7 @@ namespace Sipl.Controllers
 {
     public class NetUserController : Controller
     {
-        private SiplDatabaseEntities10 db = new SiplDatabaseEntities10();
+        private SiplDatabaseEntities19 db = new SiplDatabaseEntities19();
 
         // GET: NetUser
         public async Task<ActionResult> Index()
@@ -47,7 +47,7 @@ namespace Sipl.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "UserId,FirstName,LastName,Gender,Email,Password,ConfirmPassword,AddressId,D_O_B_,IsActive,DateCreated,DateModified")] NetUser netUser)
+        public async Task<ActionResult> Create([Bind(Include = "UserId,FirstName,LastName,Role,Gender,Email,Password,ConfirmPassword,DOB,IsActive,DateCreated,DateModified")] NetUser netUser)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Sipl.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "UserId,FirstName,LastName,Gender,Email,Password,ConfirmPassword,AddressId,D_O_B_,IsActive,DateCreated,DateModified")] NetUser netUser)
+        public async Task<ActionResult> Edit([Bind(Include = "UserId,FirstName,LastName,Role,Gender,Email,Password,ConfirmPassword,DOB,IsActive,DateCreated,DateModified")] NetUser netUser)
         {
             if (ModelState.IsValid)
             {

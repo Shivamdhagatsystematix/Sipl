@@ -26,12 +26,12 @@ namespace Sipl.Models
         public byte UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public bool Gender { get; set; }
+        public string Role { get; set; }
+        public string Gender { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        public string AddressId { get; set; }
-        public System.DateTime D_O_B_ { get; set; }
+        public System.DateTime DOB { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateModified { get; set; }

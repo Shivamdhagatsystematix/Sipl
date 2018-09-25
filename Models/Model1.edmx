@@ -65,15 +65,15 @@
           <Property Name="UserId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Gender" Type="bit" Nullable="false" />
+          <Property Name="Role" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ConfirmPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="AddressId" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="D.O.B." Type="date" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="DateModified" Type="date" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="states">
           <Key>
@@ -458,15 +458,15 @@
           <Property Name="UserId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Gender" Type="Boolean" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ConfirmPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AddressId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="D_O_B_" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__UserId__6B24EA82" FromRole="NetUsers" ToRole="Address" />
           <NavigationProperty Name="TeacherInSubjects" Relationship="Self.FK__TeacherIn__UserI__76969D2E" FromRole="NetUsers" ToRole="TeacherInSubject" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__UserId__398D8EEE" FromRole="NetUsers" ToRole="UserRole" />
@@ -716,7 +716,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SiplDatabaseEntities10" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SiplDatabaseEntities19" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="countries" EntityType="Self.country" />
@@ -795,7 +795,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SiplDatabaseModelStoreContainer" CdmEntityContainer="SiplDatabaseEntities10">
+        <EntityContainerMapping StorageEntityContainer="SiplDatabaseModelStoreContainer" CdmEntityContainer="SiplDatabaseEntities19">
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="SiplDatabaseModel.Address">
               <MappingFragment StoreEntitySet="Address">
@@ -860,12 +860,12 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="ConfirmPassword" ColumnName="ConfirmPassword" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="D_O_B_" ColumnName="D.O.B." />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />

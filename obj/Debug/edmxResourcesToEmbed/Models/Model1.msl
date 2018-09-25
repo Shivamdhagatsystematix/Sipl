@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="SiplDatabaseModelStoreContainer" CdmEntityContainer="SiplDatabaseEntities10">
+  <EntityContainerMapping StorageEntityContainer="SiplDatabaseModelStoreContainer" CdmEntityContainer="SiplDatabaseEntities19">
     <EntitySetMapping Name="Addresses">
       <EntityTypeMapping TypeName="SiplDatabaseModel.Address">
         <MappingFragment StoreEntitySet="Address">
@@ -65,12 +65,12 @@
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="ConfirmPassword" ColumnName="ConfirmPassword" />
-          <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-          <ScalarProperty Name="D_O_B_" ColumnName="D.O.B." />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="DateModified" ColumnName="DateModified" />

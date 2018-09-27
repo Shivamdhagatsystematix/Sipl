@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SiplDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CurrentAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PermanantAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="Byte" Nullable="false" />
+    <Property Name="countryID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="stateID" Type="Int32" Nullable="false" />
+    <Property Name="cityID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Address__cityID__6EC0713C" FromRole="Address" ToRole="Cities" />
+    <NavigationProperty Name="country" Relationship="Self.FK__Address__country__6CD828CA" FromRole="Address" ToRole="countries" />
+    <NavigationProperty Name="state" Relationship="Self.FK__Address__stateID__6DCC4D03" FromRole="Address" ToRole="states" />
+    <NavigationProperty Name="NetUser" Relationship="Self.FK__Address__UserId__6B24EA82" FromRole="Address" ToRole="NetUsers" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="cityID" />
+    </Key>
+    <Property Name="cityID" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="stateID" Type="Int32" Nullable="false" />
+    <Property Name="countryID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Latitude" Type="Double" Nullable="false" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__cityID__6EC0713C" FromRole="Cities" ToRole="Address" />
+    <NavigationProperty Name="country" Relationship="Self.FK__Cities__countryI__59C55456" FromRole="Cities" ToRole="countries" />
+    <NavigationProperty Name="state" Relationship="Self.FK__Cities__stateID__5AB9788F" FromRole="Cities" ToRole="states" />
+  </EntityType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="countryID" />
+    </Key>
+    <Property Name="countryID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="countryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="localName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="webCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="region" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="continent" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="latitude" Type="Double" Nullable="false" />
+    <Property Name="longitude" Type="Double" Nullable="false" />
+    <Property Name="surfaceArea" Type="Double" Nullable="false" />
+    <Property Name="population" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__country__6CD828CA" FromRole="countries" ToRole="Address" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK__Cities__countryI__59C55456" FromRole="countries" ToRole="Cities" />
+    <NavigationProperty Name="states" Relationship="Self.FK__states__countryI__58D1301D" FromRole="countries" ToRole="states" />
+  </EntityType>
+  <EntityType Name="Cours">
+    <Key>
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SubjectId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK__Courses__Subject__4D94879B" FromRole="Courses" ToRole="Subjects" />
+    <NavigationProperty Name="SubjectInCourses" Relationship="Self.FK__SubjectIn__Cours__6EF57B66" FromRole="Courses" ToRole="SubjectInCourse" />
+  </EntityType>
+  <EntityType Name="NetRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_NetRoles" FromRole="NetRoles" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="NetUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ConfirmPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__UserId__6B24EA82" FromRole="NetUsers" ToRole="Address" />
+    <NavigationProperty Name="TeacherInSubjects" Relationship="Self.FK__TeacherIn__UserI__76969D2E" FromRole="NetUsers" ToRole="TeacherInSubject" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK__UserRole__UserId__398D8EEE" FromRole="NetUsers" ToRole="UserRole" />
+    <NavigationProperty Name="UserRoles1" Relationship="Self.FK_UserRole_NetUsers" FromRole="NetUsers" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="state">
+    <Key>
+      <PropertyRef Name="stateID" />
+    </Key>
+    <Property Name="stateID" Type="Int32" Nullable="false" />
+    <Property Name="stateName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="countryID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="latitude" Type="Double" Nullable="false" />
+    <Property Name="longitude" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__stateID__6DCC4D03" FromRole="states" ToRole="Address" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK__Cities__stateID__5AB9788F" FromRole="states" ToRole="Cities" />
+    <NavigationProperty Name="country" Relationship="Self.FK__states__countryI__58D1301D" FromRole="states" ToRole="countries" />
+  </EntityType>
+  <EntityType Name="SubjectInCourse">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubjectId" Type="Int32" Nullable="false" />
+    <Property Name="CourseId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cours" Relationship="Self.FK__SubjectIn__Cours__6EF57B66" FromRole="SubjectInCourse" ToRole="Courses" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK__SubjectIn__Subje__6E01572D" FromRole="SubjectInCourse" ToRole="Subjects" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="SubjectId" />
+    </Key>
+    <Property Name="SubjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Courses" Relationship="Self.FK__Courses__Subject__4D94879B" FromRole="Subjects" ToRole="Courses" />
+    <NavigationProperty Name="SubjectInCourses" Relationship="Self.FK__SubjectIn__Subje__6E01572D" FromRole="Subjects" ToRole="SubjectInCourse" />
+    <NavigationProperty Name="TeacherInSubjects" Relationship="Self.FK__TeacherIn__Subje__778AC167" FromRole="Subjects" ToRole="TeacherInSubject" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TeacherInSubject">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Byte" Nullable="false" />
+    <Property Name="SubjectId" Type="Int32" />
+    <NavigationProperty Name="NetUser" Relationship="Self.FK__TeacherIn__UserI__76969D2E" FromRole="TeacherInSubject" ToRole="NetUsers" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK__TeacherIn__Subje__778AC167" FromRole="TeacherInSubject" ToRole="Subjects" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="UserId" Type="Byte" Nullable="false" />
+    <Property Name="RoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="NetRole" Relationship="Self.FK_UserRole_NetRoles" FromRole="UserRole" ToRole="NetRoles" />
+    <NavigationProperty Name="NetUser" Relationship="Self.FK__UserRole__UserId__398D8EEE" FromRole="UserRole" ToRole="NetUsers" />
+    <NavigationProperty Name="NetUser1" Relationship="Self.FK_UserRole_NetUsers" FromRole="UserRole" ToRole="NetUsers" />
+  </EntityType>
+  <Association Name="FK__Address__cityID__6EC0713C">
+    <End Role="Cities" Type="Self.City" Multiplicity="1" />
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="cityID" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="cityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Address__country__6CD828CA">
+    <End Role="countries" Type="Self.country" Multiplicity="1" />
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countries">
+        <PropertyRef Name="countryID" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="countryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Address__stateID__6DCC4D03">
+    <End Role="states" Type="Self.state" Multiplicity="1" />
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="states">
+        <PropertyRef Name="stateID" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="stateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Address__UserId__6B24EA82">
+    <End Role="NetUsers" Type="Self.NetUser" Multiplicity="1" />
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NetUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cities__countryI__59C55456">
+    <End Role="countries" Type="Self.country" Multiplicity="1" />
+    <End Role="Cities" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countries">
+        <PropertyRef Name="countryID" />
+      </Principal>
+      <Dependent Role="Cities">
+        <PropertyRef Name="countryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cities__stateID__5AB9788F">
+    <End Role="states" Type="Self.state" Multiplicity="1" />
+    <End Role="Cities" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="states">
+        <PropertyRef Name="stateID" />
+      </Principal>
+      <Dependent Role="Cities">
+        <PropertyRef Name="stateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__states__countryI__58D1301D">
+    <End Role="countries" Type="Self.country" Multiplicity="1" />
+    <End Role="states" Type="Self.state" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countries">
+        <PropertyRef Name="countryID" />
+      </Principal>
+      <Dependent Role="states">
+        <PropertyRef Name="countryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Courses__Subject__4D94879B">
+    <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Courses" Type="Self.Cours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="SubjectId" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="SubjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubjectIn__Cours__6EF57B66">
+    <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+    <End Role="SubjectInCourse" Type="Self.SubjectInCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="SubjectInCourse">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_NetRoles">
+    <End Role="NetRoles" Type="Self.NetRole" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NetRoles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TeacherIn__UserI__76969D2E">
+    <End Role="NetUsers" Type="Self.NetUser" Multiplicity="1" />
+    <End Role="TeacherInSubject" Type="Self.TeacherInSubject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NetUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="TeacherInSubject">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRole__UserId__398D8EEE">
+    <End Role="NetUsers" Type="Self.NetUser" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NetUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_NetUsers">
+    <End Role="NetUsers" Type="Self.NetUser" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NetUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubjectIn__Subje__6E01572D">
+    <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+    <End Role="SubjectInCourse" Type="Self.SubjectInCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="SubjectId" />
+      </Principal>
+      <Dependent Role="SubjectInCourse">
+        <PropertyRef Name="SubjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TeacherIn__Subje__778AC167">
+    <End Role="Subjects" Type="Self.Subject" Multiplicity="0..1" />
+    <End Role="TeacherInSubject" Type="Self.TeacherInSubject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="SubjectId" />
+      </Principal>
+      <Dependent Role="TeacherInSubject">
+        <PropertyRef Name="SubjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SiplDatabaseEntities22" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Self.Address" />
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="countries" EntityType="Self.country" />
+    <EntitySet Name="Courses" EntityType="Self.Cours" />
+    <EntitySet Name="NetRoles" EntityType="Self.NetRole" />
+    <EntitySet Name="NetUsers" EntityType="Self.NetUser" />
+    <EntitySet Name="states" EntityType="Self.state" />
+    <EntitySet Name="SubjectInCourses" EntityType="Self.SubjectInCourse" />
+    <EntitySet Name="Subjects" EntityType="Self.Subject" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TeacherInSubjects" EntityType="Self.TeacherInSubject" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <AssociationSet Name="FK__Address__cityID__6EC0713C" Association="Self.FK__Address__cityID__6EC0713C">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Address__country__6CD828CA" Association="Self.FK__Address__country__6CD828CA">
+      <End Role="countries" EntitySet="countries" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Address__stateID__6DCC4D03" Association="Self.FK__Address__stateID__6DCC4D03">
+      <End Role="states" EntitySet="states" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Address__UserId__6B24EA82" Association="Self.FK__Address__UserId__6B24EA82">
+      <End Role="NetUsers" EntitySet="NetUsers" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cities__countryI__59C55456" Association="Self.FK__Cities__countryI__59C55456">
+      <End Role="countries" EntitySet="countries" />
+      <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cities__stateID__5AB9788F" Association="Self.FK__Cities__stateID__5AB9788F">
+      <End Role="states" EntitySet="states" />
+      <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__states__countryI__58D1301D" Association="Self.FK__states__countryI__58D1301D">
+      <End Role="countries" EntitySet="countries" />
+      <End Role="states" EntitySet="states" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Courses__Subject__4D94879B" Association="Self.FK__Courses__Subject__4D94879B">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubjectIn__Cours__6EF57B66" Association="Self.FK__SubjectIn__Cours__6EF57B66">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="SubjectInCourse" EntitySet="SubjectInCourses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_NetRoles" Association="Self.FK_UserRole_NetRoles">
+      <End Role="NetRoles" EntitySet="NetRoles" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TeacherIn__UserI__76969D2E" Association="Self.FK__TeacherIn__UserI__76969D2E">
+      <End Role="NetUsers" EntitySet="NetUsers" />
+      <End Role="TeacherInSubject" EntitySet="TeacherInSubjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__UserId__398D8EEE" Association="Self.FK__UserRole__UserId__398D8EEE">
+      <End Role="NetUsers" EntitySet="NetUsers" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_NetUsers" Association="Self.FK_UserRole_NetUsers">
+      <End Role="NetUsers" EntitySet="NetUsers" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubjectIn__Subje__6E01572D" Association="Self.FK__SubjectIn__Subje__6E01572D">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="SubjectInCourse" EntitySet="SubjectInCourses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TeacherIn__Subje__778AC167" Association="Self.FK__TeacherIn__Subje__778AC167">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="TeacherInSubject" EntitySet="TeacherInSubjects" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

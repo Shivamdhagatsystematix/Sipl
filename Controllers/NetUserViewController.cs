@@ -91,32 +91,42 @@ namespace Sipl.Controllers
         // POST: NetUserView/Create
        
         [ValidateAntiForgeryToken]
-        [HttpPost]
-        public ActionResult Create([Bind(Include = "UserId,FirstName,LastName," +
-            "Role,Gender,Email,Password,ConfirmPassword,DOB" +
-            ",IsActive,DateCreated,DateModified")] NetUsers netUsers)
+        public ActionResult Create(NetUserViewModel objNetUserViewModel)
         {
             try
             {
-                NetUserViewModel netUser = new NetUserViewModel
-                    
 
+                if (ModelState.IsValid)
                 {
-                    if (ModelState.IsValid)
+                    NetUsers objNetUsers = new NetUsers
                     {
-                        db.NetUsers.Add(netUsers);
-                       db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
 
-                 
+                        UserId = objNetUserViewModel.UserId,
+                        FirstName = objNetUserViewModel.FirstName,
+                        LastName = objNetUserViewModel.LastName,
+                        Gender = objNetUserViewModel.Gender,
+                        Email = objNetUserViewModel.Email,
+                        Password = objNetUserViewModel.Password,
+                        ConfirmPassword = objNetUserViewModel.ConfirmPassword,
+                        DOB = objNetUserViewModel.DOB,
+                        IsActive = objNetUserViewModel.IsActive,
+                        DateCreated =DateTime.Now,
+                        DateModified = DateTime.Now
+                    };
 
-
+                    objEntities.NetUsers.Add(objNetUsers);
+                
+                    objEntities.SaveChanges();
                     return RedirectToAction("Index");
+
+                }
+
+                return View(objNetUserViewModel);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return View(netUsers);
+
+                throw ex;
             }
         }
 

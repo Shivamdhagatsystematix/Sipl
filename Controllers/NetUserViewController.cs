@@ -27,14 +27,16 @@ namespace Sipl.Controllers
                     UserId = item.UserId,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
+                    Role =item.Role,
                     Gender = item.Gender,
                     Email = item.Email,
                     Password = item.Password,
                     ConfirmPassword = item.ConfirmPassword,
                     DOB = item.DOB,
-                    IsActive = item.IsActive,
-                    DateCreated = item.DateCreated,
-                    DateModified = item.DateModified
+                    IsActive= item.IsActive,
+              
+                    DateCreated = item.DateCreated
+              
                 };
 
                 objNetUserViewModel.Add(netUser);
@@ -62,6 +64,7 @@ namespace Sipl.Controllers
                     UserId = netUsers.UserId,
                     FirstName = netUsers.FirstName,
                     LastName = netUsers.LastName,
+                    Role= netUsers.Role,
                     Gender = netUsers.Gender,
                     Email = netUsers.Email,
                     Password = netUsers.Password,
@@ -89,8 +92,9 @@ namespace Sipl.Controllers
         }
 
         // POST: NetUserView/Create
-       
-        [ValidateAntiForgeryToken]
+
+       [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult Create(NetUserViewModel objNetUserViewModel)
         {
             try
@@ -100,16 +104,16 @@ namespace Sipl.Controllers
                 {
                     NetUsers objNetUsers = new NetUsers
                     {
-
-                        UserId = objNetUserViewModel.UserId,
+                        
                         FirstName = objNetUserViewModel.FirstName,
                         LastName = objNetUserViewModel.LastName,
-                        Gender = objNetUserViewModel.Gender,
+                        Role= objNetUserViewModel.Role,
+                         Gender = objNetUserViewModel.Gender,
                         Email = objNetUserViewModel.Email,
                         Password = objNetUserViewModel.Password,
                         ConfirmPassword = objNetUserViewModel.ConfirmPassword,
                         DOB = objNetUserViewModel.DOB,
-                        IsActive = objNetUserViewModel.IsActive,
+                        IsActive= objNetUserViewModel.IsActive,
                         DateCreated =DateTime.Now,
                         DateModified = DateTime.Now
                     };
@@ -133,44 +137,150 @@ namespace Sipl.Controllers
         // GET: NetUserView/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                NetUsers netUsers = objEntities.NetUsers.Find(id);
+                var data = from d in objEntities.NetUsers
+                           where d.UserId == id
+                           select d;
+                var TEMPlIST = objEntities.NetUsers.ToList();
+
+                NetUserViewModel netUser = new NetUserViewModel
+                {
+                    //UserId = netUsers.UserId,
+                    FirstName = netUsers.FirstName,
+                    LastName = netUsers.LastName,
+                    Role = netUsers.Role,
+                    Gender = netUsers.Gender,
+                    Email = netUsers.Email,
+                    Password = netUsers.Password,
+                    ConfirmPassword = netUsers.ConfirmPassword,
+                    DOB = netUsers.DOB,
+                    IsActive = netUsers.IsActive,
+                    DateCreated = netUsers.DateCreated,
+                    DateModified = netUsers.DateModified
+                };
+
+
+
+                if (netUsers == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(netUser);
+            }
         }
 
         // POST: NetUserView/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(NetUserViewModel objNetUserViewModel)
         {
             try
             {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    NetUsers objNetUsers = new NetUsers
+                    {
+
+                        FirstName = objNetUserViewModel.FirstName,
+                        LastName = objNetUserViewModel.LastName,
+                        Role = objNetUserViewModel.Role,
+                        Gender = objNetUserViewModel.Gender,
+                        Email = objNetUserViewModel.Email,
+                        Password = objNetUserViewModel.Password,
+                        ConfirmPassword = objNetUserViewModel.ConfirmPassword,
+                        DOB = objNetUserViewModel.DOB,
+                        IsActive = objNetUserViewModel.IsActive,
+                        DateCreated = DateTime.Now,
+                        DateModified = DateTime.Now
+                    };
+
+                    objEntities.NetUsers.Add(objNetUsers);
+
+                    objEntities.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+
+                return View(objNetUserViewModel);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+
+                throw ex;
             }
         }
 
         // GET: NetUserView/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                NetUsers netUsers = objEntities.NetUsers.Find(id);
+                var data = from d in objEntities.NetUsers
+                           where d.UserId == id
+                           select d;
 
+                var TEMPlIST = objEntities.NetUsers.ToList();
+
+                NetUserViewModel netUser = new NetUserViewModel
+                {
+                    //UserId = netUsers.UserId,
+                    FirstName = netUsers.FirstName,
+                    LastName = netUsers.LastName,
+                    Role = netUsers.Role,
+                    Gender = netUsers.Gender,
+                    Email = netUsers.Email,
+                    Password = netUsers.Password,
+                    ConfirmPassword = netUsers.ConfirmPassword,
+                    DOB = netUsers.DOB,
+                    IsActive = netUsers.IsActive,
+                    DateCreated = netUsers.DateCreated,
+                    DateModified = netUsers.DateModified
+                };
+
+
+
+                if (netUsers == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(netUser);
+            }
+        }
         // POST: NetUserView/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete( byte id)
         {
             try
             {
-                // TODO: Add delete logic here
+
+                if (ModelState.IsValid)
+                {
+
+                    NetUsers netUsers = objEntities.NetUsers.Find(id);
+                    objEntities.NetUsers.Remove(netUsers);
+
+                    objEntities.SaveChanges();
+                   
+
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+
+                throw ex;
             }
         }
     }

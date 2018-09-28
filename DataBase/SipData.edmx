@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SiplDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SiplDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressId" />
@@ -70,7 +70,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ConfirmPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" Nullable="false" />
@@ -380,8 +380,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SiplDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -399,7 +398,7 @@
           <NavigationProperty Name="Cities" Relationship="Self.FK__Address__cityID__6EC0713C" FromRole="Address" ToRole="Cities" />
           <NavigationProperty Name="countries" Relationship="Self.FK__Address__country__6CD828CA" FromRole="Address" ToRole="countries" />
           <NavigationProperty Name="states" Relationship="Self.FK__Address__stateID__6DCC4D03" FromRole="Address" ToRole="states" />
-          <NavigationProperty Name="NetUsers" Relationship="Self.FK__Address__UserId__6B24EA82" FromRole="Address" ToRole="NetUsers" />
+          <NavigationProperty Name="NetUsers" Relationship="SiplDatabaseModel.FK__Address__UserId__6B24EA82" FromRole="Address" ToRole="NetUsers" />
         </EntityType>
         <EntityType Name="Cities">
           <Key>
@@ -451,27 +450,6 @@
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserRole" Relationship="Self.FK_UserRole_NetRoles" FromRole="NetRoles" ToRole="UserRole" />
         </EntityType>
-        <EntityType Name="NetUsers">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ConfirmPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__UserId__6B24EA82" FromRole="NetUsers" ToRole="Address" />
-          <NavigationProperty Name="TeacherInSubject" Relationship="Self.FK__TeacherIn__UserI__76969D2E" FromRole="NetUsers" ToRole="TeacherInSubject" />
-          <NavigationProperty Name="UserRole" Relationship="Self.FK__UserRole__UserId__398D8EEE" FromRole="NetUsers" ToRole="UserRole" />
-          <NavigationProperty Name="UserRole1" Relationship="Self.FK_UserRole_NetUsers" FromRole="NetUsers" ToRole="UserRole" />
-        </EntityType>
         <EntityType Name="states">
           <Key>
             <PropertyRef Name="stateID" />
@@ -522,8 +500,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Byte" Nullable="false" />
           <Property Name="SubjectId" Type="Int32" />
-          <NavigationProperty Name="NetUsers" Relationship="Self.FK__TeacherIn__UserI__76969D2E" FromRole="TeacherInSubject" ToRole="NetUsers" />
           <NavigationProperty Name="Subjects" Relationship="Self.FK__TeacherIn__Subje__778AC167" FromRole="TeacherInSubject" ToRole="Subjects" />
+          <NavigationProperty Name="NetUsers" Relationship="SiplDatabaseModel.FK__TeacherIn__UserI__76969D2E" FromRole="TeacherInSubject" ToRole="NetUsers" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -533,9 +511,9 @@
           <Property Name="RoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="NetRoles" Relationship="Self.FK_UserRole_NetRoles" FromRole="UserRole" ToRole="NetRoles" />
-          <NavigationProperty Name="NetUsers" Relationship="Self.FK__UserRole__UserId__398D8EEE" FromRole="UserRole" ToRole="NetUsers" />
-          <NavigationProperty Name="NetUsers1" Relationship="Self.FK_UserRole_NetUsers" FromRole="UserRole" ToRole="NetUsers" />
-        </EntityType>
+          <NavigationProperty Name="NetUsers" Relationship="SiplDatabaseModel.FK__UserRole__UserId__398D8EEE" FromRole="UserRole" ToRole="NetUsers" />
+          <NavigationProperty Name="NetUsers1" Relationship="SiplDatabaseModel.FK_UserRole_NetUsers" FromRole="UserRole" ToRole="NetUsers" />
+          </EntityType>
         <Association Name="FK__Address__cityID__6EC0713C">
           <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
@@ -569,18 +547,6 @@
             </Principal>
             <Dependent Role="Address">
               <PropertyRef Name="stateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Address__UserId__6B24EA82">
-          <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NetUsers">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -656,42 +622,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TeacherIn__UserI__76969D2E">
-          <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="1" />
-          <End Role="TeacherInSubject" Type="Self.TeacherInSubject" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NetUsers">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="TeacherInSubject">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UserRole__UserId__398D8EEE">
-          <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="1" />
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NetUsers">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserRole_NetUsers">
-          <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="1" />
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NetUsers">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__SubjectIn__Subje__6E01572D">
           <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
           <End Role="SubjectInCourse" Type="Self.SubjectInCourse" Multiplicity="*" />
@@ -722,7 +652,6 @@
           <EntitySet Name="countries" EntityType="Self.countries" />
           <EntitySet Name="Courses" EntityType="Self.Courses" />
           <EntitySet Name="NetRoles" EntityType="Self.NetRoles" />
-          <EntitySet Name="NetUsers" EntityType="Self.NetUsers" />
           <EntitySet Name="states" EntityType="Self.states" />
           <EntitySet Name="SubjectInCourse" EntityType="Self.SubjectInCourse" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" />
@@ -739,10 +668,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__Address__stateID__6DCC4D03" Association="Self.FK__Address__stateID__6DCC4D03">
             <End Role="states" EntitySet="states" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Address__UserId__6B24EA82" Association="Self.FK__Address__UserId__6B24EA82">
-            <End Role="NetUsers" EntitySet="NetUsers" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
           <AssociationSet Name="FK__Cities__countryI__59C55456" Association="Self.FK__Cities__countryI__59C55456">
@@ -769,18 +694,6 @@
             <End Role="NetRoles" EntitySet="NetRoles" />
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
-          <AssociationSet Name="FK__TeacherIn__UserI__76969D2E" Association="Self.FK__TeacherIn__UserI__76969D2E">
-            <End Role="NetUsers" EntitySet="NetUsers" />
-            <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UserRole__UserId__398D8EEE" Association="Self.FK__UserRole__UserId__398D8EEE">
-            <End Role="NetUsers" EntitySet="NetUsers" />
-            <End Role="UserRole" EntitySet="UserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_NetUsers" Association="Self.FK_UserRole_NetUsers">
-            <End Role="NetUsers" EntitySet="NetUsers" />
-            <End Role="UserRole" EntitySet="UserRole" />
-          </AssociationSet>
           <AssociationSet Name="FK__SubjectIn__Subje__6E01572D" Association="Self.FK__SubjectIn__Subje__6E01572D">
             <End Role="Subjects" EntitySet="Subjects" />
             <End Role="SubjectInCourse" EntitySet="SubjectInCourse" />
@@ -789,7 +702,93 @@
             <End Role="Subjects" EntitySet="Subjects" />
             <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
           </AssociationSet>
+          <EntitySet Name="NetUsers" EntityType="SiplDatabaseModel.NetUsers" />
+          <AssociationSet Name="FK__Address__UserId__6B24EA82" Association="SiplDatabaseModel.FK__Address__UserId__6B24EA82">
+            <End Role="NetUsers" EntitySet="NetUsers" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherIn__UserI__76969D2E" Association="SiplDatabaseModel.FK__TeacherIn__UserI__76969D2E">
+            <End Role="NetUsers" EntitySet="NetUsers" />
+            <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRole__UserId__398D8EEE" Association="SiplDatabaseModel.FK__UserRole__UserId__398D8EEE">
+            <End Role="NetUsers" EntitySet="NetUsers" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_NetUsers" Association="SiplDatabaseModel.FK_UserRole_NetUsers">
+            <End Role="NetUsers" EntitySet="NetUsers" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="NetUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConfirmPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Address" Relationship="SiplDatabaseModel.FK__Address__UserId__6B24EA82" FromRole="NetUsers" ToRole="Address" />
+          <NavigationProperty Name="TeacherInSubject" Relationship="SiplDatabaseModel.FK__TeacherIn__UserI__76969D2E" FromRole="NetUsers" ToRole="TeacherInSubject" />
+          <NavigationProperty Name="UserRole" Relationship="SiplDatabaseModel.FK__UserRole__UserId__398D8EEE" FromRole="NetUsers" ToRole="UserRole" />
+          <NavigationProperty Name="UserRole1" Relationship="SiplDatabaseModel.FK_UserRole_NetUsers" FromRole="NetUsers" ToRole="UserRole" />
+        </EntityType>
+        <Association Name="FK__Address__UserId__6B24EA82">
+          <End Type="SiplDatabaseModel.NetUsers" Role="NetUsers" Multiplicity="1" />
+          <End Type="SiplDatabaseModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherIn__UserI__76969D2E">
+          <End Type="SiplDatabaseModel.NetUsers" Role="NetUsers" Multiplicity="1" />
+          <End Type="SiplDatabaseModel.TeacherInSubject" Role="TeacherInSubject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="TeacherInSubject">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRole__UserId__398D8EEE">
+          <End Type="SiplDatabaseModel.NetUsers" Role="NetUsers" Multiplicity="1" />
+          <End Type="SiplDatabaseModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_NetUsers">
+          <End Type="SiplDatabaseModel.NetUsers" Role="NetUsers" Multiplicity="1" />
+          <End Type="SiplDatabaseModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -854,24 +853,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="NetUsers">
-            <EntityTypeMapping TypeName="SiplDatabaseModel.NetUsers">
-              <MappingFragment StoreEntitySet="NetUsers">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="ConfirmPassword" ColumnName="ConfirmPassword" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="states">
             <EntityTypeMapping TypeName="SiplDatabaseModel.states">
               <MappingFragment StoreEntitySet="states">
@@ -926,6 +907,24 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NetUsers">
+            <EntityTypeMapping TypeName="SiplDatabaseModel.NetUsers">
+              <MappingFragment StoreEntitySet="NetUsers">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="ConfirmPassword" ColumnName="ConfirmPassword" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

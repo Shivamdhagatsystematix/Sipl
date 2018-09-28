@@ -10,8 +10,8 @@ namespace Sipl.Models
     public class NetUserViewModel
     {
         //public Entities db = new Entities();
-
-        public byte UserId { get; set; }
+    
+        public byte? UserId { get; set; }
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -38,9 +38,15 @@ namespace Sipl.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+ 
         [Display(Name = "DOB")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString =
+                "{0:yyyy-MM-dd}",
+          ApplyFormatInEditMode = true)]
         public System.DateTime DOB { get; set; }
         public bool IsActive { get; set; }
+      
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateModified { get; set; }
 

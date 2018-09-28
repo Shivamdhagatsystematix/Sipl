@@ -30,12 +30,12 @@ namespace Sipl.DataBase
         public virtual DbSet<countries> countries { get; set; }
         public virtual DbSet<Courses> Courses { get; set; }
         public virtual DbSet<NetRoles> NetRoles { get; set; }
-        public virtual DbSet<NetUsers> NetUsers { get; set; }
         public virtual DbSet<states> states { get; set; }
         public virtual DbSet<SubjectInCourse> SubjectInCourse { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TeacherInSubject> TeacherInSubject { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<NetUsers> NetUsers { get; set; }
     }
 }

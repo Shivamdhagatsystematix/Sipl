@@ -65,7 +65,7 @@
     <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="ConfirmPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="DOB" Type="date" Nullable="false" />
+    <Property Name="DOB" Type="datetime" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="DateModified" Type="datetime" Nullable="false" />

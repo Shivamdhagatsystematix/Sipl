@@ -30,7 +30,7 @@ namespace Sipl.Controllers
                     UserId = item.UserId,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
-                    //Role =item.RoleId,
+                    //Role =item.Role,
                     Gender = item.Gender,
                     Email = item.Email,
                     Password = item.Password,

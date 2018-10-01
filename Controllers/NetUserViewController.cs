@@ -14,10 +14,13 @@ namespace Sipl.Controllers
     {
         SipDatabaseEntities objEntities = new SipDatabaseEntities();
 
+    
         // GET: NetUserView
         public ActionResult Index()
         {
-            SipDatabaseEntities objEntities = new SipDatabaseEntities();
+            ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
+
+           
             List<NetUserViewModel> objNetUserViewModel = new List<NetUserViewModel>();
             var data = (from p in objEntities.NetUsers select p).ToList();
             foreach (var item in data)
@@ -27,7 +30,7 @@ namespace Sipl.Controllers
                     UserId = item.UserId,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
-                    Role =item.Role,
+                    //Role =item.RoleId,
                     Gender = item.Gender,
                     Email = item.Email,
                     Password = item.Password,
@@ -64,7 +67,7 @@ namespace Sipl.Controllers
                     UserId = netUsers.UserId,
                     FirstName = netUsers.FirstName,
                     LastName = netUsers.LastName,
-                    Role= netUsers.Role,
+                    //Role= netUsers.RoleId,
                     Gender = netUsers.Gender,
                     Email = netUsers.Email,
                     Password = netUsers.Password,
@@ -88,7 +91,19 @@ namespace Sipl.Controllers
         // GET: NetUserView/Create
         public ActionResult Create()
         {
-            return View();
+
+            var Roles = (from b in objEntities.NetRoles select b).ToList();
+
+            var model = new NetUserViewModel
+            {
+                Role = Roles.Select(x => new SelectListItem
+                {
+                    Value = x.RoleId,
+                    Text = x.RoleName
+                })
+            };
+            return View(model);
+
         }
 
         // POST: NetUserView/Create
@@ -97,6 +112,7 @@ namespace Sipl.Controllers
        [ValidateAntiForgeryToken]
         public ActionResult Create(NetUserViewModel objNetUserViewModel)
         {
+            ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
             try
             {
 
@@ -104,26 +120,54 @@ namespace Sipl.Controllers
                 {
                     NetUsers objNetUsers = new NetUsers
                     {
-                        
+
                         FirstName = objNetUserViewModel.FirstName,
                         LastName = objNetUserViewModel.LastName,
-                        Role= objNetUserViewModel.Role,
-                         Gender = objNetUserViewModel.Gender,
+                        Gender = objNetUserViewModel.Gender,
                         Email = objNetUserViewModel.Email,
                         Password = objNetUserViewModel.Password,
                         ConfirmPassword = objNetUserViewModel.ConfirmPassword,
                         DOB = objNetUserViewModel.DOB,
-                        IsActive= objNetUserViewModel.IsActive,
-                        DateCreated =DateTime.Now,
+                        IsActive = objNetUserViewModel.IsActive,
+                        DateCreated = DateTime.Now,
                         DateModified = DateTime.Now
                     };
 
-                    objEntities.NetUsers.Add(objNetUsers);
-                
+
+                    var test = objEntities.NetUsers.Add(objNetUsers);
                     objEntities.SaveChanges();
+                    var userId = objNetUsers.UserId;
+
+
+
+
+                    if (ModelState.IsValid)
+                    {
+                        UserRole objUserRole = new UserRole
+                        {
+                            RoleId = objNetUserViewModel.RoleId,
+                            UserId = userId
+                        };
+
+                        objEntities.UserRole.Add(objUserRole);
+                        //objUserRole.UserRole.Add(objUserRole);
+                        objEntities.SaveChanges();
+
+
+                       
+
+                    }
+
+
                     return RedirectToAction("Index");
 
                 }
+
+              
+
+
+
+
 
                 return View(objNetUserViewModel);
             }
@@ -153,7 +197,7 @@ namespace Sipl.Controllers
                     //UserId = netUsers.UserId,
                     FirstName = netUsers.FirstName,
                     LastName = netUsers.LastName,
-                    Role = netUsers.Role,
+                    //Role = netUsers.RoleId,
                     Gender = netUsers.Gender,
                     Email = netUsers.Email,
                     Password = netUsers.Password,
@@ -189,7 +233,7 @@ namespace Sipl.Controllers
 
                         FirstName = objNetUserViewModel.FirstName,
                         LastName = objNetUserViewModel.LastName,
-                        Role = objNetUserViewModel.Role,
+                        //RoleId = objNetUserViewModel.Role,
                         Gender = objNetUserViewModel.Gender,
                         Email = objNetUserViewModel.Email,
                         Password = objNetUserViewModel.Password,
@@ -236,7 +280,7 @@ namespace Sipl.Controllers
                     //UserId = netUsers.UserId,
                     FirstName = netUsers.FirstName,
                     LastName = netUsers.LastName,
-                    Role = netUsers.Role,
+                    //Role = netUsers.RoleId,
                     Gender = netUsers.Gender,
                     Email = netUsers.Email,
                     Password = netUsers.Password,

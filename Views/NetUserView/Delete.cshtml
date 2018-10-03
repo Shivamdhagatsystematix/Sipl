@@ -5,13 +5,13 @@
     <h4>NetUserViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.UserId)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.UserId)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -29,13 +29,13 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Role)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Role)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Gender)
@@ -53,7 +53,7 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Password)
         </dt>
 
@@ -67,7 +67,7 @@
 
         <dd>
             @Html.DisplayFor(model => model.ConfirmPassword)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.DOB)
@@ -77,7 +77,7 @@
             @Html.DisplayFor(model => model.DOB)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.IsActive)
         </dt>
 
@@ -99,16 +99,16 @@
 
         <dd>
             @Html.DisplayFor(model => model.DateModified)
-        </dd>
+        </dd>*@
 
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        @Html.Partial("_BacktoListButtonPartial", "Index")
+    </div>
     }
 </div>

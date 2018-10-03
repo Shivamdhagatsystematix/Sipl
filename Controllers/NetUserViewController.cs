@@ -2,10 +2,13 @@
 using Sipl.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using static Sipl.Models.NetUserViewModel;
 
 namespace Sipl.Controllers
 {
@@ -14,13 +17,14 @@ namespace Sipl.Controllers
     {
         SipDatabaseEntities objEntities = new SipDatabaseEntities();
 
-    
+
         // GET: NetUserView
         public ActionResult Index()
+
         {
             ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
 
-           
+
             List<NetUserViewModel> objNetUserViewModel = new List<NetUserViewModel>();
             var data = (from p in objEntities.NetUsers select p).ToList();
             foreach (var item in data)
@@ -36,20 +40,33 @@ namespace Sipl.Controllers
                     Password = item.Password,
                     ConfirmPassword = item.ConfirmPassword,
                     DOB = item.DOB,
-                    IsActive= item.IsActive,
-              
+                    IsActive = item.IsActive,
+
                     DateCreated = item.DateCreated
-              
+
                 };
 
                 objNetUserViewModel.Add(netUser);
 
+                Address ojbAddress = new Address
+                {
+                  
+
+
+
+
+                };
+               
+
+
             };
             return View(objNetUserViewModel);
+
         }
 
+
         // GET: NetUserView/Details/5 
-        public ActionResult  Details (int ?id)
+        public ActionResult Details(int? id)
         {
             {
                 if (id == null)
@@ -58,8 +75,8 @@ namespace Sipl.Controllers
                 }
                 NetUsers netUsers = objEntities.NetUsers.Find(id);
                 var data = from d in objEntities.NetUsers
-                                   where d.UserId == id
-                                   select d;
+                           where d.UserId == id
+                           select d;
                 var TEMPlIST = objEntities.NetUsers.ToList();
 
                 NetUserViewModel netUser = new NetUserViewModel
@@ -78,15 +95,15 @@ namespace Sipl.Controllers
                     DateModified = netUsers.DateModified
                 };
 
-               
 
-            if (netUsers == null)
-            {
-                return HttpNotFound();
+
+                if (netUsers == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(netUser);
             }
-            return View(netUser);
         }
-    }
 
         // GET: NetUserView/Create
         public ActionResult Create()
@@ -108,8 +125,8 @@ namespace Sipl.Controllers
 
         // POST: NetUserView/Create
 
-       [HttpPost]
-       [ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(NetUserViewModel objNetUserViewModel)
         {
             ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
@@ -139,31 +156,31 @@ namespace Sipl.Controllers
                     var userId = objNetUsers.UserId;
 
 
-
-
-                    if (ModelState.IsValid)
+                    UserRole objUserRole = new UserRole
                     {
-                        UserRole objUserRole = new UserRole
-                        {
-                            RoleId = objNetUserViewModel.RoleId,
-                            UserId = userId
-                        };
+                        RoleId = objNetUserViewModel.RoleId,
+                        UserId = userId
+                    };
+                    objEntities.UserRole.Add(objUserRole);
+                    Address objAddress = new Address
+                    {
+                        cityID = objNetUserViewModel.cityID,
+                        countryID = objNetUserViewModel.countryID,
+                        stateID = objNetUserViewModel.stateID,
+                        CurrentAddress = objNetUserViewModel.CurrentAddress,
+                        PermanantAddress = objNetUserViewModel.PermanantAddress,
+                        UserId = userId
+                    };
+                    objEntities.Address.Add(objAddress);
 
-                        objEntities.UserRole.Add(objUserRole);
-                        //objUserRole.UserRole.Add(objUserRole);
-                        objEntities.SaveChanges();
-
-
-                       
-
-                    }
-
+                    //objUserRole.UserRole.Add(objUserRole);
+                    objEntities.SaveChanges();
 
                     return RedirectToAction("Index");
 
                 }
 
-              
+
 
 
 
@@ -180,7 +197,9 @@ namespace Sipl.Controllers
 
         // GET: NetUserView/Edit/5
         public ActionResult Edit(int id)
+
         {
+            ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
             {
                 if (id == null)
                 {
@@ -223,6 +242,7 @@ namespace Sipl.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(NetUserViewModel objNetUserViewModel)
         {
+            ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
             try
             {
 
@@ -303,7 +323,7 @@ namespace Sipl.Controllers
         // POST: NetUserView/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete( byte id)
+        public ActionResult Delete(byte id)
         {
             try
             {
@@ -315,7 +335,7 @@ namespace Sipl.Controllers
                     objEntities.NetUsers.Remove(netUsers);
 
                     objEntities.SaveChanges();
-                   
+
 
                 }
 
@@ -327,5 +347,8 @@ namespace Sipl.Controllers
                 throw ex;
             }
         }
+    
+       
     }
 }
+

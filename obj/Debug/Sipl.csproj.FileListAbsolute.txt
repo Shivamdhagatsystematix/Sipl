@@ -93,3 +93,14 @@ C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.csproj.CopyComplete
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.dll
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.pdb
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.csprojAssemblyReference.cache
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Microsoft.Owin.dll
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Owin.dll
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\System.Net.Http.Formatting.dll
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\System.Web.Http.dll
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\System.Web.Http.Owin.dll
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Microsoft.Owin.xml
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\System.Net.Http.Formatting.xml
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\System.Web.Http.xml
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\System.Web.Http.Owin.xml

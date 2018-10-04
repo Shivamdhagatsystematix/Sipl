@@ -12,25 +12,26 @@ namespace Sipl.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class states
+    public partial class States
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public states()
+        public States()
         {
             this.Address = new HashSet<Address>();
+            this.Address1 = new HashSet<Address>();
             this.Cities = new HashSet<Cities>();
         }
     
-        public int stateID { get; set; }
-        public string stateName { get; set; }
-        public string countryID { get; set; }
-        public double latitude { get; set; }
-        public double longitude { get; set; }
+        public int StateId { get; set; }
+        public string StateName { get; set; }
+        public int CountryId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Address1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cities> Cities { get; set; }
-        public virtual countries countries { get; set; }
+        public virtual Countries Countries { get; set; }
     }
 }

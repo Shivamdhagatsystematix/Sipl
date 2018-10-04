@@ -20,16 +20,14 @@ namespace Sipl.DataBase
             this.Address = new HashSet<Address>();
         }
     
-        public int cityID { get; set; }
+        public int CityId { get; set; }
         public string CityName { get; set; }
-        public int stateID { get; set; }
-        public string countryID { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public int CountryId { get; set; }
+        public int StateId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Address { get; set; }
-        public virtual countries countries { get; set; }
-        public virtual states states { get; set; }
+        public virtual Countries Countries { get; set; }
+        public virtual States States { get; set; }
     }
 }

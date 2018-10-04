@@ -10,15 +10,10 @@
 namespace Sipl.DataBase
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TeacherInSubject
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int Id { get; set; }
-        public byte UserId { get; set; }
-        public Nullable<int> SubjectId { get; set; }
-    
-        public virtual NetUsers NetUsers { get; set; }
-        public virtual Subjects Subjects { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

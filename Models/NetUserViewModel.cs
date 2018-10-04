@@ -122,13 +122,21 @@ namespace Sipl.Models
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
         [Display(Name = "Country")]
-        public string CountryId { get; set; }
+        public int CountryId { get; set; }
+        public IEnumerable<SelectListItem> Country { get; set; }
+
         [Display(Name = "State")]
         public int StateId { get; set; }
+        public IEnumerable<SelectListItem> States { get; set; }
+        
         [Display(Name = "City")]
+
         public int CityId { get; set; }
-        }
+        public IEnumerable<SelectListItem> Cities { get; set; }
+
+
     }
+    
     public class ResetPasswordViewModel
     {
         [Required]
@@ -158,4 +166,25 @@ namespace Sipl.Models
         public string Email { get; set; }
     }
 
+    public class CountryModel
+    {
+        public int CountryId { get; set; }
+        public string CountryName { get; set; }
+    }
+    public class StateModel
+    {
+        public int StateId { get; set; }
+        public string StateName { get; set; }
+    }
+    public class  CityModel
+    {
+        public int CityId { get; set; }
+        public string CityName { get; set; }
+    }
+
+
+
+
+
 }
+

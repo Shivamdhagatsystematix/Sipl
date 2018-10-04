@@ -18,13 +18,14 @@ namespace Sipl.DataBase
         public string CurrentAddress { get; set; }
         public string PermanantAddress { get; set; }
         public byte UserId { get; set; }
-        public string countryID { get; set; }
-        public int stateID { get; set; }
-        public int cityID { get; set; }
+        public int CountryId { get; set; }
+        public int StateId { get; set; }
+        public int CityId { get; set; }
     
         public virtual Cities Cities { get; set; }
-        public virtual countries countries { get; set; }
-        public virtual states states { get; set; }
+        public virtual Countries Countries { get; set; }
+        public virtual States States { get; set; }
+        public virtual States States1 { get; set; }
         public virtual NetUsers NetUsers { get; set; }
     }
 }

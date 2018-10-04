@@ -15,7 +15,7 @@ namespace Sipl.Controllers
     public class NetUserViewController : Controller
 
     {
-        SipDatabaseEntities objEntities = new SipDatabaseEntities();
+        SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
 
 
         // GET: NetUserView
@@ -23,42 +23,41 @@ namespace Sipl.Controllers
 
         {
             ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
+ 
 
 
             List<NetUserViewModel> objNetUserViewModel = new List<NetUserViewModel>();
             var data = (from p in objEntities.NetUsers select p).ToList();
             foreach (var item in data)
             {
-                NetUserViewModel netUser = new NetUserViewModel
+                var userAddressInfo = (from p in objEntities.Address select p).ToList().
+                    FirstOrDefault(u => u.UserId == item.UserId);
+                if (userAddressInfo != null)
                 {
-                    UserId = item.UserId,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    //Role =item.Role,
-                    Gender = item.Gender,
-                    Email = item.Email,
-                    Password = item.Password,
-                    ConfirmPassword = item.ConfirmPassword,
-                    DOB = item.DOB,
-                    IsActive = item.IsActive,
+                    NetUserViewModel netUser = new NetUserViewModel
+                    {
+                        UserId = item.UserId,
+                        FirstName = item.FirstName,
+                        LastName = item.LastName,
+                        //Role =item.Role,
+                        Gender = item.Gender,
+                        Email = item.Email,
+                        Password = item.Password,
+                        ConfirmPassword = item.ConfirmPassword,
+                        DOB = item.DOB,
+                        IsActive = item.IsActive,
+                        CurrentAddress = userAddressInfo.CurrentAddress,
+                        PermanantAddress = userAddressInfo.PermanantAddress,
+                        CountryId = userAddressInfo.CountryId,
+                        StateId = userAddressInfo.StateId,
+                        CityId = userAddressInfo.CityId,
+                        DateCreated = item.DateCreated
 
-                    DateCreated = item.DateCreated
+                    };
 
-                };
-
-                objNetUserViewModel.Add(netUser);
-
-                Address ojbAddress = new Address
-                {
-                  
-
-
-
-
-                };
-               
-
-
+                    objNetUserViewModel.Add(netUser);
+                }
+                
             };
             return View(objNetUserViewModel);
 
@@ -79,6 +78,7 @@ namespace Sipl.Controllers
                            select d;
                 var TEMPlIST = objEntities.NetUsers.ToList();
 
+
                 NetUserViewModel netUser = new NetUserViewModel
                 {
                     UserId = netUsers.UserId,
@@ -96,20 +96,24 @@ namespace Sipl.Controllers
                 };
 
 
-
-                if (netUsers == null)
-                {
-                    return HttpNotFound();
-                }
                 return View(netUser);
             }
+
         }
 
+        
         // GET: NetUserView/Create
         public ActionResult Create()
         {
+            List<CountryModel> listCountryModel = new List<CountryModel>();
+            List<StateModel> listStateModel = new List<StateModel>();
+            List<CityModel> listCityModel = new List<CityModel>();
 
             var Roles = (from b in objEntities.NetRoles select b).ToList();
+
+            var country = (from b in objEntities.Countries select b).ToList();
+            var state = (from b in objEntities.States select b).ToList();
+            var city = (from b in objEntities.Cities select b).ToList();
 
             var model = new NetUserViewModel
             {
@@ -118,10 +122,51 @@ namespace Sipl.Controllers
                     Value = x.RoleId,
                     Text = x.RoleName
                 })
+
+
             };
+
+            foreach (var item in country)
+            {
+                CountryModel countryModel = new CountryModel
+                {
+                    CountryId = item.CountryId,
+                    CountryName = item.CountryName
+                };
+                listCountryModel.Add(countryModel);
+
+            }
+            foreach (var item in state)
+            {
+                StateModel stateModel = new StateModel
+                {
+                  StateId = item.StateId,
+                    StateName = item.StateName
+                };
+                listStateModel.Add(stateModel);
+
+            }
+
+            foreach (var item in city)
+            {
+               CityModel cityModel = new CityModel
+                {
+                   CityId = item.CityId,
+                 CityName = item.CityName
+               };
+                listCityModel.Add(cityModel);
+
+            }
+            ViewBag.CountryData = listCountryModel;
+
+            ViewBag.StateData = listStateModel;
+            ViewBag.CityData = listCityModel;
+
+
             return View(model);
 
         }
+
 
         // POST: NetUserView/Create
 
@@ -130,6 +175,7 @@ namespace Sipl.Controllers
         public ActionResult Create(NetUserViewModel objNetUserViewModel)
         {
             ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
+            //ViewBag.Role = new SelectList(objEntities.countries.ToList(), "", "RoleName");
             try
             {
 
@@ -162,18 +208,21 @@ namespace Sipl.Controllers
                         UserId = userId
                     };
                     objEntities.UserRole.Add(objUserRole);
+
+
                     Address objAddress = new Address
                     {
-                        cityID = objNetUserViewModel.cityID,
-                        countryID = objNetUserViewModel.countryID,
-                        stateID = objNetUserViewModel.stateID,
+                        CountryId = objNetUserViewModel.CountryId,
+                        StateId = objNetUserViewModel.StateId,
+                        CityId = objNetUserViewModel.CityId,
                         CurrentAddress = objNetUserViewModel.CurrentAddress,
                         PermanantAddress = objNetUserViewModel.PermanantAddress,
                         UserId = userId
+
                     };
                     objEntities.Address.Add(objAddress);
 
-                    //objUserRole.UserRole.Add(objUserRole);
+                    //  objUserRole.UserRole.Add(objUserRole);
                     objEntities.SaveChanges();
 
                     return RedirectToAction("Index");
@@ -347,8 +396,8 @@ namespace Sipl.Controllers
                 throw ex;
             }
         }
-    
-       
+
+
     }
 }
 

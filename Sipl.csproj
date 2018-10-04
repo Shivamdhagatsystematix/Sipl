@@ -54,6 +54,9 @@
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.4\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
@@ -65,6 +68,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Selectors" />
@@ -143,9 +149,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Diagnostics.DiagnosticSource">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ApplicationInsights">
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>
@@ -179,55 +182,61 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NetUserViewController.cs" />
     <Compile Include="DataBase\Address.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Cities.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\countries.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+    <Compile Include="DataBase\Countries.cs">
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Courses.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\NetRoles.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\NetUsers.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\SipData.Context.cs">
+    <Compile Include="DataBase\SipDatabase.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SipData.Context.tt</DependentUpon>
+      <DependentUpon>SipDatabase.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\SipData.cs">
+    <Compile Include="DataBase\SipDatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\SipData.Designer.cs">
+    <Compile Include="DataBase\SipDatabase.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SipData.edmx</DependentUpon>
+      <DependentUpon>SipDatabase.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\states.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+    <Compile Include="DataBase\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>SipDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\sp_helpdiagrams_Result.cs">
+      <DependentUpon>SipDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\States.cs">
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\SubjectInCourse.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Subjects.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\sysdiagrams.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\TeacherInSubject.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\UserRole.cs">
-      <DependentUpon>SipData.tt</DependentUpon>
+      <DependentUpon>SipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -291,15 +300,15 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="DataBase\SipData.Context.tt">
+    <Content Include="DataBase\SipDatabase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SipData.edmx</DependentUpon>
-      <LastGenOutput>SipData.Context.cs</LastGenOutput>
+      <DependentUpon>SipDatabase.edmx</DependentUpon>
+      <LastGenOutput>SipDatabase.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataBase\SipData.tt">
+    <Content Include="DataBase\SipDatabase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SipData.edmx</DependentUpon>
-      <LastGenOutput>SipData.cs</LastGenOutput>
+      <DependentUpon>SipDatabase.edmx</DependentUpon>
+      <LastGenOutput>SipDatabase.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -312,12 +321,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Admin\Views\web.config" />
-    <EntityDeploy Include="DataBase\SipData.edmx">
+    <EntityDeploy Include="DataBase\SipDatabase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SipData.Designer.cs</LastGenOutput>
+      <LastGenOutput>SipDatabase.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DataBase\SipData.edmx.diagram">
-      <DependentUpon>SipData.edmx</DependentUpon>
+    <Content Include="DataBase\SipDatabase.edmx.diagram">
+      <DependentUpon>SipDatabase.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

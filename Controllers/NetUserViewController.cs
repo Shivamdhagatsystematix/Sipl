@@ -1,4 +1,5 @@
-﻿using Sipl.DataBase;
+﻿
+using Sipl.DataBase;
 using Sipl.Models;
 using System;
 using System.Collections.Generic;
@@ -30,8 +31,8 @@ namespace Sipl.Controllers
             var data = (from p in objEntities.NetUsers select p).ToList();
             foreach (var item in data)
             {
-                var userAddressInfo = (from p in objEntities.Address select p).ToList().
-                    FirstOrDefault(u => u.UserId == item.UserId);
+                var userAddressInfo = (from p in objEntities.Address where p.UserId == item.UserId select p).FirstOrDefault();
+                    //.FirstOrDefault(u => u.UserId == item.UserId);
                 if (userAddressInfo != null)
                 {
                     NetUserViewModel netUser = new NetUserViewModel
@@ -48,9 +49,9 @@ namespace Sipl.Controllers
                         IsActive = item.IsActive,
                         CurrentAddress = userAddressInfo.CurrentAddress,
                         PermanantAddress = userAddressInfo.PermanantAddress,
-                        CountryId = userAddressInfo.CountryId,
-                        StateId = userAddressInfo.StateId,
-                        CityId = userAddressInfo.CityId,
+                        Country = userAddressInfo.Countries.CountryName,
+                        States = userAddressInfo.States.StateName,
+                        Cities = userAddressInfo.Cities.CityName,
                         DateCreated = item.DateCreated
 
                     };
@@ -101,19 +102,15 @@ namespace Sipl.Controllers
 
         }
 
-        
+
         // GET: NetUserView/Create
         public ActionResult Create()
         {
-            List<CountryModel> listCountryModel = new List<CountryModel>();
-            List<StateModel> listStateModel = new List<StateModel>();
-            List<CityModel> listCityModel = new List<CityModel>();
+     
 
             var Roles = (from b in objEntities.NetRoles select b).ToList();
 
-            var country = (from b in objEntities.Countries select b).ToList();
-            var state = (from b in objEntities.States select b).ToList();
-            var city = (from b in objEntities.Cities select b).ToList();
+            
 
             var model = new NetUserViewModel
             {
@@ -126,43 +123,32 @@ namespace Sipl.Controllers
 
             };
 
-            foreach (var item in country)
+           
+
             {
-                CountryModel countryModel = new CountryModel
+
+                var country = objEntities.Countries.ToList();
+                List<SelectListItem> liCountry = new List<SelectListItem>();
+                List<SelectListItem> liState = new List<SelectListItem>();
+                List<SelectListItem> liCity = new List<SelectListItem>();
+
+                liCountry.Add(new SelectListItem { Text = "", Value = "0" });
+                liState.Add(new SelectListItem { Text = "", Value = "0" });
+                liCity.Add(new SelectListItem { Text = "", Value = "0" });
+
+                foreach (var m in country)
                 {
-                    CountryId = item.CountryId,
-                    CountryName = item.CountryName
-                };
-                listCountryModel.Add(countryModel);
+
+
+                    liCountry.Add(new SelectListItem { Text = m.CountryName, Value = m.CountryId.ToString() });
+  
+
+                }
+                ViewBag.country = liCountry;
+                ViewBag.State = liState;
+                ViewBag.City = liCity;
 
             }
-            foreach (var item in state)
-            {
-                StateModel stateModel = new StateModel
-                {
-                  StateId = item.StateId,
-                    StateName = item.StateName
-                };
-                listStateModel.Add(stateModel);
-
-            }
-
-            foreach (var item in city)
-            {
-               CityModel cityModel = new CityModel
-                {
-                   CityId = item.CityId,
-                 CityName = item.CityName
-               };
-                listCityModel.Add(cityModel);
-
-            }
-            ViewBag.CountryData = listCountryModel;
-
-            ViewBag.StateData = listStateModel;
-            ViewBag.CityData = listCityModel;
-
-
             return View(model);
 
         }
@@ -178,7 +164,7 @@ namespace Sipl.Controllers
             //ViewBag.Role = new SelectList(objEntities.countries.ToList(), "", "RoleName");
             try
             {
-
+                 
                 if (ModelState.IsValid)
                 {
                     NetUsers objNetUsers = new NetUsers
@@ -228,12 +214,6 @@ namespace Sipl.Controllers
                     return RedirectToAction("Index");
 
                 }
-
-
-
-
-
-
 
                 return View(objNetUserViewModel);
             }
@@ -396,8 +376,56 @@ namespace Sipl.Controllers
                 throw ex;
             }
         }
+      
+
+        public JsonResult getstate(int id)
+        {
+            var states = objEntities.States.Where(x => x.CountryId == id).ToList();
+            List<SelectListItem> listates = new List<SelectListItem>();
+
+            listates.Add(new SelectListItem { Text = "", Value = "0" });
+            if (states != null)
+            {
+                foreach (var x in states)
+                {
+                    listates.Add(new SelectListItem { Text = x.StateName, Value = x.StateId.ToString() });
+
+                }
+
+
+
+            }
+
+
+            return Json(new SelectList(listates, "Value", "Text", JsonRequestBehavior.AllowGet));
+        }
+
+        public JsonResult getCity(int id)
+        {
+            var city = objEntities.Cities.Where(x => x.StateId == id).ToList();
+            List<SelectListItem> licity = new List<SelectListItem>();
+
+            licity.Add(new SelectListItem { Text = "", Value = "0" });
+            if (city != null)
+            {
+                foreach (var l in city)
+                {
+                    licity.Add(new SelectListItem { Text = l.CityName, Value = l.CityId.ToString() });
+
+                }
+
+
+
+            }
+
+
+            return Json(new SelectList(licity, "Value", "Text", JsonRequestBehavior.AllowGet));
+        }
 
 
     }
-}
+}  
+
+
+
 

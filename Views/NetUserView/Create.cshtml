@@ -9,72 +9,64 @@
     <hr />
     @*Jquery*@
 
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/JavaScript-Google.js"></script>
     <script type="text/javascript">
 
+        $(document).ready(function () {
 
-    $(document).ready(function () {
+            jQuery("#ddlCountry").change(function () {
+                jQuery("#ddlStateData").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("getstate")',
 
-        $("#country").change(function () {
-            $("#State").empty();
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("getstate")',
+                    dataType: 'json',
 
-                dataType: 'json',
-
-                data: { id: $("#country").val() },
-
-
-                success: function (states) {
+                    data: { id: $("#ddlCountry").val() },
 
 
-                    $.each(states, function (i, state) {
-                        $("#State").append('<option value="' + state.Value + '">' +
-                             state.Text + '</option>');
+                    success: function (states) {
 
-                    });
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve states.' + ex);
-                }
+
+                        $.each(states, function (i, state) {
+                            $("#ddlStateData").append('<option value="' + state.Value + '">' +
+                                state.Text + '</option>');
+
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
             });
-            return false;
-        })
-    });
-
-    </script>
-
-    <script type="text/javascript">
 
 
-    $(document).ready(function () {
 
-        $("#State").change(function () {
-            $("#city").empty();
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("getcity")',
-                dataType: 'json',
-                data: { id: $("#State").val() },
-                success: function (city) {
 
-                    $.each(city, function (i, city) {
-                        $("#city").append('<option value="'
-                                                   + city.Value + '">'
-                                             + city.Text + '</option>');
-                    });
-                },
-                error: function (ex) {
-                    alert('Failed.' + ex);
-                }
+            $("#ddlStateData").change(function () {
+                $("#ddlCity").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("getcity")',
+                    dataType: 'json',
+                    data: { id: $("#ddlStateData").val() },
+                    success: function (city) {
+
+                        $.each(city, function (i, city) {
+                            $("#ddlCity").append('<option value="'
+                                + city.Value + '">'
+                                + city.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed.' + ex);
+                    }
+                });
+                return false;
             });
-            return false;
-        })
-    });
+        });
     </script>
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -96,7 +88,7 @@
         @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
 
         <div class="col-md-10">
-          
+
 
             @Html.DropDownListFor(model => model.RoleId, Model.Role)
 
@@ -169,8 +161,13 @@
     <div class="form-group">
         @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("CountryData", new SelectList(ViewBag.CountryData, "CountryId", "CountryName"), "--Select Country--", new { style = "width:200px" })
+            @*@Html.DropDownList("ddlCountry", new SelectList(ViewBag.country, "Value", "Text"),
+        "--Select Country--", new { style = "width:200px" })*@
+            @Html.DropDownListFor(model => model.CountryId, ViewBag.country as IEnumerable<SelectListItem>,
+           htmlAttributes: new { @class = "control-label col-md-2",@id= "ddlCountry" })
+
             @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+        
         </div>
     </div>
 
@@ -178,8 +175,12 @@
     <div class="form-group">
         @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("StateData", new SelectList(ViewBag.StateData, "StateId", "StateName"), "--Select State--", new { style = "width:200px" })
+            @*@Html.DropDownList("ddlStateData", new SelectList(ViewBag.State, "Value", "Text"),
+        "--Select State--", new { style = "width:200px" })*@
+            @Html.DropDownListFor(model => model.StateId, ViewBag.State as IEnumerable<SelectListItem>,
+         htmlAttributes: new { @class = "control-label col-md-2",@id= "ddlStateData" })
             @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+
         </div>
     </div>
 
@@ -187,9 +188,14 @@
     <div class="form-group">
         @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("CityData", new SelectList(ViewBag.CityData, "CityId", "CityName"), "--Select City--", new { style = "width:200px" })
+            @*@Html.DropDownList("ddlCity", new SelectList(ViewBag.City, "Value", "Text"),
+        "--Select City--", new { style = "width:200px" })*@
+            @Html.DropDownListFor(model => model.CityId, ViewBag.State as IEnumerable<SelectListItem>,
+         htmlAttributes: new { @class = "control-label col-md-2",@id= "ddlCity" })
+
 
             @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+
         </div>
     </div>
 

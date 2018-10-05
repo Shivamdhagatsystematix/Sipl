@@ -85,6 +85,8 @@ namespace Sipl.Models
 
         public string RoleId { get; set; }
         public IEnumerable<SelectListItem> Role { get; set; }
+        public string CourseId { get; set; }
+        public IEnumerable<SelectListItem> Course { get; set; }
 
 
 
@@ -121,18 +123,18 @@ namespace Sipl.Models
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
-        [Display(Name = "Country")]
+        //[Display(Name = "Country")]
         public int CountryId { get; set; }
-        public IEnumerable<SelectListItem> Country { get; set; }
+        public string  Country { get; set; }
 
-        [Display(Name = "State")]
+        //[Display(Name = "State")]
         public int StateId { get; set; }
-        public IEnumerable<SelectListItem> States { get; set; }
+        public string States { get; set; }
         
-        [Display(Name = "City")]
+        //[Display(Name = "City")]
 
         public int CityId { get; set; }
-        public IEnumerable<SelectListItem> Cities { get; set; }
+        public string Cities { get; set; }
 
 
     }

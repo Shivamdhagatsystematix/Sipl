@@ -12,13 +12,13 @@ namespace Sipl.Controllers
     {
     
 
-        // GET: Login/Create
+        // GET: LogIn/Create
         public ActionResult LogIn()
         {
             return View();
         }
 
-        // POST: Login/Create
+        // POST: LogIn/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogIn(NetUsers objNetUsers)

@@ -210,8 +210,13 @@ namespace Sipl.Controllers
 
                     //  objUserRole.UserRole.Add(objUserRole);
                     objEntities.SaveChanges();
+               
+                    
+                       
+                        return RedirectToAction("LogIn", "LogIn");
+                    
 
-                    return RedirectToAction("Index");
+                 
 
                 }
 

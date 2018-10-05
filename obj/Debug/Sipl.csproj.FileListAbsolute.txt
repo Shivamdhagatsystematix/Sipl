@@ -103,4 +103,5 @@ C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\System.Web.Http.xml
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\System.Web.Http.Owin.xml
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Microsoft.AspNet.TelemetryCorrelation.dll
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.csprojAssemblyReference.cache
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\bin\Microsoft.AspNet.Identity.EntityFramework.xml

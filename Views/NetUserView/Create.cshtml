@@ -1,9 +1,9 @@
 ﻿@model Sipl.Models.NetUserViewModel
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>NetUserViewModel</h4>
     <hr />
@@ -86,13 +86,16 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
-
         <div class="col-md-10">
-
-
             @Html.DropDownListFor(model => model.RoleId, Model.Role)
-
             @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Course, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CourseId, Model.Course)
+            @Html.ValidationMessageFor(model => model.Course, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -161,13 +164,11 @@
     <div class="form-group">
         @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*@Html.DropDownList("ddlCountry", new SelectList(ViewBag.country, "Value", "Text"),
-        "--Select Country--", new { style = "width:200px" })*@
             @Html.DropDownListFor(model => model.CountryId, ViewBag.country as IEnumerable<SelectListItem>,
-           htmlAttributes: new { @class = "control-label col-md-2",@id= "ddlCountry" })
+               htmlAttributes: new { @class = "control-label col-md-2",@id= "ddlCountry" })
 
             @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
-        
+
         </div>
     </div>
 
@@ -176,7 +177,7 @@
         @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*@Html.DropDownList("ddlStateData", new SelectList(ViewBag.State, "Value", "Text"),
-        "--Select State--", new { style = "width:200px" })*@
+                "--Select State--", new { style = "width:200px" })*@
             @Html.DropDownListFor(model => model.StateId, ViewBag.State as IEnumerable<SelectListItem>,
          htmlAttributes: new { @class = "control-label col-md-2",@id= "ddlStateData" })
             @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
@@ -189,7 +190,7 @@
         @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*@Html.DropDownList("ddlCity", new SelectList(ViewBag.City, "Value", "Text"),
-        "--Select City--", new { style = "width:200px" })*@
+                "--Select City--", new { style = "width:200px" })*@
             @Html.DropDownListFor(model => model.CityId, ViewBag.State as IEnumerable<SelectListItem>,
          htmlAttributes: new { @class = "control-label col-md-2",@id= "ddlCity" })
 

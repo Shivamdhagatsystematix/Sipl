@@ -32,7 +32,8 @@ namespace Sipl.Controllers
             foreach (var item in data)
             {
                 var userAddressInfo = (from p in objEntities.Address where p.UserId == item.UserId select p).FirstOrDefault();
-                    //.FirstOrDefault(u => u.UserId == item.UserId);
+                //var userCourseInfo = (from p in objEntities.Courses where p.CourseId == item.CourseId select p).FirstOrDefault();
+                //.FirstOrDefault(u => u.UserId == item.UserId);
                 if (userAddressInfo != null)
                 {
                     NetUserViewModel netUser = new NetUserViewModel
@@ -53,6 +54,7 @@ namespace Sipl.Controllers
                         States = userAddressInfo.States.StateName,
                         Cities = userAddressInfo.Cities.CityName,
                         DateCreated = item.DateCreated
+                     
 
                     };
 
@@ -107,7 +109,7 @@ namespace Sipl.Controllers
         public ActionResult Create()
         {
      
-
+            //TO GET ROLES FROM DATABASE
             var Roles = (from b in objEntities.NetRoles select b).ToList();
 
             
@@ -122,9 +124,18 @@ namespace Sipl.Controllers
 
 
             };
+            //GET : COURSE FOR USERS
+            var course = (from b in objEntities.Courses select b).ToList();
 
-           
+            model.Course = course.Select(x => new SelectListItem
+            {
+                Value = x.CourseId.ToString(),
+                Text = x.CourseName
+            });
 
+
+
+            //TO GET COUNTRY ,STATES AND CITY
             {
 
                 var country = objEntities.Countries.ToList();
@@ -173,6 +184,7 @@ namespace Sipl.Controllers
                         FirstName = objNetUserViewModel.FirstName,
                         LastName = objNetUserViewModel.LastName,
                         Gender = objNetUserViewModel.Gender,
+                        CourseId= objNetUserViewModel.CourseId,
                         Email = objNetUserViewModel.Email,
                         Password = objNetUserViewModel.Password,
                         ConfirmPassword = objNetUserViewModel.ConfirmPassword,
@@ -194,6 +206,8 @@ namespace Sipl.Controllers
                         UserId = userId
                     };
                     objEntities.UserRole.Add(objUserRole);
+                    objEntities.SaveChanges();
+
 
 
                     Address objAddress = new Address
@@ -210,10 +224,10 @@ namespace Sipl.Controllers
 
                     //  objUserRole.UserRole.Add(objUserRole);
                     objEntities.SaveChanges();
-               
-                    
-                       
-                        return RedirectToAction("LogIn", "LogIn");
+
+
+
+                    return RedirectToAction("RegisteredUser", "LogIn");
                     
 
                  

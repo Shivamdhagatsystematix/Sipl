@@ -50,6 +50,7 @@
     <Property Name="UserId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CourseId" Type="int" />
     <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -192,7 +193,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Courses__Subject__4D94879B">
+  <Association Name="FK__Courses__Subject__7FB5F314">
     <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
     <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
     <ReferentialConstraint>
@@ -201,6 +202,18 @@
       </Principal>
       <Dependent Role="Courses">
         <PropertyRef Name="SubjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NetUsers__Course__0662F0A3">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+    <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="NetUsers">
+        <PropertyRef Name="CourseId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -372,9 +385,13 @@
       <End Role="States" EntitySet="States" />
       <End Role="Cities" EntitySet="Cities" />
     </AssociationSet>
-    <AssociationSet Name="FK__Courses__Subject__4D94879B" Association="Self.FK__Courses__Subject__4D94879B">
+    <AssociationSet Name="FK__Courses__Subject__7FB5F314" Association="Self.FK__Courses__Subject__7FB5F314">
       <End Role="Subjects" EntitySet="Subjects" />
       <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NetUsers__Course__0662F0A3" Association="Self.FK__NetUsers__Course__0662F0A3">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="NetUsers" EntitySet="NetUsers" />
     </AssociationSet>
     <AssociationSet Name="FK__States__CountryI__762C88DA" Association="Self.FK__States__CountryI__762C88DA">
       <End Role="Countries" EntitySet="Countries" />

@@ -17,8 +17,7 @@ namespace Sipl.Controllers
         {
             return View();
         }
-
-        // POST: LogIn/Create
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogIn(NetUsers objNetUsers)
@@ -61,6 +60,42 @@ namespace Sipl.Controllers
             }
         }
 
+
+        // GET:  WELCOME SCREEN
+        public ActionResult RegisteredUser()
+        {
+            return View();
+        }
+
+        //POST:
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisteredUser(NetUsers objNetUsers)
+        {
+            try
+            {
+
+
+                {
+                    if (Session["FirstName"] != null)
+                    {
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("LogIn");
+                    }
+                };
+
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // POST: LogIn/Create
 
 
 

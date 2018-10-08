@@ -26,6 +26,7 @@ namespace Sipl.DataBase
         public byte UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Nullable<int> CourseId { get; set; }
         public string Gender { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -37,6 +38,7 @@ namespace Sipl.DataBase
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Address { get; set; }
+        public virtual Courses Courses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeacherInSubject> TeacherInSubject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

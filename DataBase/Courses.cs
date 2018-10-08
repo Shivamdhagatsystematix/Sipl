@@ -18,6 +18,7 @@ namespace Sipl.DataBase
         public Courses()
         {
             this.SubjectInCourse = new HashSet<SubjectInCourse>();
+            this.NetUsers = new HashSet<NetUsers>();
         }
     
         public int CourseId { get; set; }
@@ -27,5 +28,7 @@ namespace Sipl.DataBase
         public virtual Subjects Subjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubjectInCourse> SubjectInCourse { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NetUsers> NetUsers { get; set; }
     }
 }

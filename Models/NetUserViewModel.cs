@@ -71,7 +71,7 @@ namespace Sipl.Models
 
         public string RoleId { get; set; }
         public IEnumerable<SelectListItem> Role { get; set; }
-        public string CourseId { get; set; }
+        public int CourseId { get; set; }
         public IEnumerable<SelectListItem> Course { get; set; }
 
 

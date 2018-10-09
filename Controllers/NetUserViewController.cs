@@ -1,4 +1,5 @@
 ﻿
+using Sipl.App_Start;
 using Sipl.DataBase;
 using Sipl.Models;
 using System;
@@ -13,6 +14,7 @@ using static Sipl.Models.NetUserViewModel;
 
 namespace Sipl.Controllers
 {
+    [Authorize]
     public class NetUserViewController : Controller
 
     {
@@ -20,11 +22,12 @@ namespace Sipl.Controllers
 
 
         // GET: NetUserView
+      
         public ActionResult Index()
 
         {
             ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
- 
+
 
 
             List<NetUserViewModel> objNetUserViewModel = new List<NetUserViewModel>();
@@ -45,7 +48,6 @@ namespace Sipl.Controllers
                         Gender = item.Gender,
                         Email = item.Email,
                         Password = item.Password,
-                        ConfirmPassword = item.ConfirmPassword,
                         DOB = item.DOB,
                         IsActive = item.IsActive,
                         CurrentAddress = userAddressInfo.CurrentAddress,
@@ -54,13 +56,13 @@ namespace Sipl.Controllers
                         States = userAddressInfo.States.StateName,
                         Cities = userAddressInfo.Cities.CityName,
                         DateCreated = item.DateCreated
-                     
+
 
                     };
 
                     objNetUserViewModel.Add(netUser);
                 }
-                
+
             };
             return View(objNetUserViewModel);
 
@@ -91,7 +93,7 @@ namespace Sipl.Controllers
                     Gender = netUsers.Gender,
                     Email = netUsers.Email,
                     Password = netUsers.Password,
-                    ConfirmPassword = netUsers.ConfirmPassword,
+                  
                     DOB = netUsers.DOB,
                     IsActive = netUsers.IsActive,
                     DateCreated = netUsers.DateCreated,
@@ -108,11 +110,11 @@ namespace Sipl.Controllers
         // GET: NetUserView/Create
         public ActionResult Create()
         {
-     
+
             //TO GET ROLES FROM DATABASE
             var Roles = (from b in objEntities.NetRoles select b).ToList();
 
-            
+
 
             var model = new NetUserViewModel
             {
@@ -152,7 +154,7 @@ namespace Sipl.Controllers
 
 
                     liCountry.Add(new SelectListItem { Text = m.CountryName, Value = m.CountryId.ToString() });
-  
+
 
                 }
                 ViewBag.country = liCountry;
@@ -175,24 +177,42 @@ namespace Sipl.Controllers
             //ViewBag.Role = new SelectList(objEntities.countries.ToList(), "", "RoleName");
             try
             {
-                 
+
+
                 if (ModelState.IsValid)
                 {
                     NetUsers objNetUsers = new NetUsers
                     {
 
+
                         FirstName = objNetUserViewModel.FirstName,
                         LastName = objNetUserViewModel.LastName,
                         Gender = objNetUserViewModel.Gender,
-                        CourseId= objNetUserViewModel.CourseId,
+                        CourseId = objNetUserViewModel.CourseId,
                         Email = objNetUserViewModel.Email,
                         Password = objNetUserViewModel.Password,
-                        ConfirmPassword = objNetUserViewModel.ConfirmPassword,
+                        //ConfirmPassword = objNetUserViewModel.ConfirmPassword,
                         DOB = objNetUserViewModel.DOB,
                         IsActive = objNetUserViewModel.IsActive,
                         DateCreated = DateTime.Now,
-                        DateModified = DateTime.Now
+                        DateModified = DateTime.Now,
+
                     };
+
+
+                    {
+                        var keyNew = Helper.GeneratePassword(10);
+                        var password = Helper.EncodePassword(objNetUserViewModel.Password, keyNew);
+                        objNetUserViewModel.Password = password;
+
+                        objNetUserViewModel.Password = keyNew;
+                        objEntities.NetUsers.Add(objNetUsers);
+                        objEntities.SaveChanges();
+                        ModelState.Clear();
+
+                    }
+                    ViewBag.ErrorMessage = "User Allredy Exixts!!!!!!!!!!";
+
 
 
                     var test = objEntities.NetUsers.Add(objNetUsers);
@@ -228,9 +248,9 @@ namespace Sipl.Controllers
 
 
                     return RedirectToAction("RegisteredUser", "LogIn");
-                    
 
-                 
+
+
 
                 }
 
@@ -268,7 +288,7 @@ namespace Sipl.Controllers
                     Gender = netUsers.Gender,
                     Email = netUsers.Email,
                     Password = netUsers.Password,
-                    ConfirmPassword = netUsers.ConfirmPassword,
+                  
                     DOB = netUsers.DOB,
                     IsActive = netUsers.IsActive,
                     DateCreated = netUsers.DateCreated,
@@ -305,7 +325,7 @@ namespace Sipl.Controllers
                         Gender = objNetUserViewModel.Gender,
                         Email = objNetUserViewModel.Email,
                         Password = objNetUserViewModel.Password,
-                        ConfirmPassword = objNetUserViewModel.ConfirmPassword,
+                        
                         DOB = objNetUserViewModel.DOB,
                         IsActive = objNetUserViewModel.IsActive,
                         DateCreated = DateTime.Now,
@@ -352,7 +372,7 @@ namespace Sipl.Controllers
                     Gender = netUsers.Gender,
                     Email = netUsers.Email,
                     Password = netUsers.Password,
-                    ConfirmPassword = netUsers.ConfirmPassword,
+                
                     DOB = netUsers.DOB,
                     IsActive = netUsers.IsActive,
                     DateCreated = netUsers.DateCreated,
@@ -395,7 +415,7 @@ namespace Sipl.Controllers
                 throw ex;
             }
         }
-      
+
 
         public JsonResult getstate(int id)
         {
@@ -443,7 +463,7 @@ namespace Sipl.Controllers
 
 
     }
-}  
+}
 
 
 

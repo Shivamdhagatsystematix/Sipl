@@ -34,7 +34,7 @@
         <AssociationConnector Association="SiplDatabaseModel.FK__TeacherIn__UserI__76969D2E" />
         <AssociationConnector Association="SiplDatabaseModel.FK__UserRole__UserId__398D8EEE" />
         <AssociationConnector Association="SiplDatabaseModel.FK_UserRole_NetUsers" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

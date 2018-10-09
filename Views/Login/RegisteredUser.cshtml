@@ -5,17 +5,23 @@
 }
 
 
-<h2>Registered User</h2>
-<fieldset>
-    <legend>
-        <text>
-            @if (Session["FirstName"] != null)
-            {
-                <text>
+<h2>   Thankyou For Registration !!!</h2>
+<div>
 
-                    Thankyou For Registration !!!  @Session["FirstName"].ToString()
-                </text>
-            }
+    @if (Session["FirstName"] != null)
+    {
+        <text>
+
+            Thankyou For Registration !!!  @Session["FirstName"].ToString()
         </text>
-    </legend>
-</fieldset>
+    }
+
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value=" LogIn To Continue" class="btn btn-success"
+               onclick="window.location.href='@Url.Action("LogIn", "LogIn")'" />
+    </div>
+</div>
+
+

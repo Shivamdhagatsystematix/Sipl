@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Sipl.Controllers
 {
@@ -20,26 +21,32 @@ namespace Sipl.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogIn(NetUsers objNetUsers)
+        public ActionResult LogIn(LoginViewModel model)
         {
             try
             {
-                if (objNetUsers.Email != null && objNetUsers.Password != null)
+                if (model.Email != null && model.Password != null)
                 {
                     using (SiplDatabaseEntities objSiplDatabaseEntities = new SiplDatabaseEntities())
                     {
                         var obj = objSiplDatabaseEntities.NetUsers.Where(u => u.Email.Equals
-                        (objNetUsers.Email) && u.Password.Equals(objNetUsers.Password)).FirstOrDefault();
+                        (model.Email) && u.Password.Equals(model.Password)).FirstOrDefault();
                         if (obj != null)
                         {
                             Session["Email"] = obj.Email.ToString();
                             Session["Password"] = obj.Password.ToString();
                             return RedirectToAction("LoggedIn");
                         }
+                        else
+                        {
+                            Session["Email"] = null;
+                            Session["Password"] = null;
+                            return View(model);
+                        }
                     }
                 }
-
-                        return View(objNetUsers);
+                else { return View(model); }
+                       
 
 
         }
@@ -67,7 +74,8 @@ namespace Sipl.Controllers
             return View();
         }
 
-        //POST:
+
+        // POST: Welcome Screen
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisteredUser(NetUsers objNetUsers)
@@ -94,8 +102,33 @@ namespace Sipl.Controllers
                 return View();
             }
         }
+        public ActionResult LogOut()
+        {
+            Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+            Session.Abandon();
 
-        // POST: LogIn/Create
+            Session.Clear();
+            Response.Cookies.Clear();
+            Session.RemoveAll();
+
+            Session["Login"] = null;
+            return RedirectToAction("Index", "Home");
+            //Session["Email"] = null;
+            ////FormsAuthentication.SignOut();
+            //return RedirectToAction("Index", "Home");
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
 
 
 

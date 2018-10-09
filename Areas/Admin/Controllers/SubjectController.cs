@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Sipl.Areas.Admin.Controllers
 {
+    [Authorize]
     public class SubjectController : Controller
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();

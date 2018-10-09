@@ -30,7 +30,6 @@ namespace Sipl.DataBase
         public string Gender { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
         public System.DateTime DOB { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }

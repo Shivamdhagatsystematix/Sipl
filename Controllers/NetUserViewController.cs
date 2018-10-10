@@ -14,7 +14,7 @@ using static Sipl.Models.NetUserViewModel;
 
 namespace Sipl.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class NetUserViewController : Controller
 
     {
@@ -108,6 +108,7 @@ namespace Sipl.Controllers
 
 
         // GET: NetUserView/Create
+        [HttpGet]
         public ActionResult Create()
         {
 
@@ -181,16 +182,17 @@ namespace Sipl.Controllers
 
                 if (ModelState.IsValid)
                 {
+
+                    var keyNew = "Test";
+                    var password = Helper.EncodePassword(objNetUserViewModel.Password, keyNew);
                     NetUsers objNetUsers = new NetUsers
                     {
-
-
                         FirstName = objNetUserViewModel.FirstName,
                         LastName = objNetUserViewModel.LastName,
                         Gender = objNetUserViewModel.Gender,
                         CourseId = objNetUserViewModel.CourseId,
                         Email = objNetUserViewModel.Email,
-                        Password = objNetUserViewModel.Password,
+                        Password = password,
                         //ConfirmPassword = objNetUserViewModel.ConfirmPassword,
                         DOB = objNetUserViewModel.DOB,
                         IsActive = objNetUserViewModel.IsActive,
@@ -199,24 +201,13 @@ namespace Sipl.Controllers
 
                     };
 
-
-                    {
-                        var keyNew = Helper.GeneratePassword(10);
-                        var password = Helper.EncodePassword(objNetUserViewModel.Password, keyNew);
-                        objNetUserViewModel.Password = password;
-
-                        objNetUserViewModel.Password = keyNew;
                         objEntities.NetUsers.Add(objNetUsers);
                         objEntities.SaveChanges();
-                        ModelState.Clear();
 
-                    }
-                    ViewBag.ErrorMessage = "User Allredy Exixts!!!!!!!!!!";
-
+                    
+                    //ViewBag.ErrorMessage = "User Allredy Exixts!!!!!!!!!!";
 
 
-                    var test = objEntities.NetUsers.Add(objNetUsers);
-                    objEntities.SaveChanges();
                     var userId = objNetUsers.UserId;
 
 
@@ -245,6 +236,7 @@ namespace Sipl.Controllers
                     //  objUserRole.UserRole.Add(objUserRole);
                     objEntities.SaveChanges();
 
+                    ModelState.Clear();
 
 
                     return RedirectToAction("RegisteredUser", "LogIn");

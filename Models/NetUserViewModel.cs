@@ -79,6 +79,7 @@ namespace Sipl.Models
         public string Gender { get; set; }
 
         [Required]
+
         [Display(Name = "Email")]
 
         public string Email { get; set; }

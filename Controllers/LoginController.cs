@@ -1,4 +1,5 @@
-﻿using Sipl.DataBase;
+﻿using Sipl.App_Start;
+using Sipl.DataBase;
 using Sipl.Models;
 using System;
 using System.Collections.Generic;
@@ -19,68 +20,89 @@ namespace Sipl.Controllers
         {
             return View();
         }
-       
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult LogIn(LoginViewModel model, string returnUrl)
         {
+            SiplDatabaseEntities objNetUserViewModel = new SiplDatabaseEntities();
+            NetUsers netuser = new NetUsers();
+
             try
             {
+                if (model.Email != null && model.Password != null)
                 {
-                    if (!ModelState.IsValid)
+                    using (SiplDatabaseEntities objSiplDatabaseEntities = new SiplDatabaseEntities())
                     {
-                        return View(model);
-                    }
-                    using (var SiplDatabaseEntities = new SiplDatabaseEntities())
-                    {
-                        var result = SiplDatabaseEntities.NetUsers.Any(x => x.Email == model.Email && x.Password == model.Password);
-                        switch (result)
+                        var keyNew = "Test";
+                        var password = Helper.EncodePassword(model.Password, keyNew);
+
+                        var obj = objSiplDatabaseEntities.NetUsers.Where(u => u.Email == model.Email && u.Password == password).FirstOrDefault();
+
+                        if (obj != null)
                         {
-                            case true:
-                                FormsAuthentication.SetAuthCookie(model.Email, true);
-                                resetRequest();
-                                return RedirectToAction("LoggedIn");
-                            default:
-                                ModelState.AddModelError("", "Invalid login attempt.");
-                                return View(model);
+                            FormsAuthentication.SetAuthCookie(model.Email, true);
+
+                            //var temp = obj.UserRole.Where(x => x.UserId == obj.UserId).Select(x => x.RoleId).FirstOrDefault();
+                            //var AdminTemp = objSiplDatabaseEntities.NetRoles.Where(u => u.RoleId == temp).Select(x => x.RoleName).FirstOrDefault();
+                            //    (u => u.RoleId
+                            //string  isAdmin = objSiplDatabaseEntities.NetRoles.Where
+                            //    (u => u.RoleId == obj.UserRole.Where(x => x.UserId == obj.UserId)
+                            //    .Select(x => x.RoleId).FirstOrDefault()).Select(x => x.RoleName).FirstOrDefault();
+
+                            var isAdmin = (from role in objSiplDatabaseEntities.NetRoles
+                                         join user in objSiplDatabaseEntities.UserRole
+                                         on role.RoleId equals user.RoleId
+                                         where user.UserId == obj.UserId                                        
+                                         select role.RoleName).FirstOrDefault();
+
+                            if (isAdmin == "Admin")
+                            {
+                                Session["Admin"] = true;
+                                Session["Teacher"] = false;
+                                Session["Student"] = false;
+                            }
+                            else if (isAdmin == "teacher")
+                            {
+                                Session["Admin"] = false;
+                                Session["Teacher"] = true;
+                                Session["Student"] = false;
+                            }
+                            else
+                            {
+                                Session["Admin"] = false;
+                                Session["Teacher"] = false;
+                                Session["Student"] = true;
+
+                            }
+                            Session["Email"] = obj.Email.ToString();
+                            Session["Password"] = obj.Password.ToString();
+                            return RedirectToAction("LoggedIn");
+                        }
+                        else
+                        {
+                            Session["Email"] = null;
+                            Session["Password"] = null;
+
+                            return View(model);
                         }
                     }
                 }
-                //if (model.Email != null && model.Password != null)
-                //{
-                //    using (SiplDatabaseEntities objSiplDatabaseEntities = new SiplDatabaseEntities())
-                //    {
-                //        var obj = objSiplDatabaseEntities.NetUsers.Where(u => u.Email.Equals
-                //        (model.Email) && u.Password.Equals(model.Password)).FirstOrDefault();
-                //        if (obj != null)
-                //        {
-                //            Session["Email"] = obj.Email.ToString();
-                //            Session["Password"] = obj.Password.ToString();
-                //            return RedirectToAction("LoggedIn");
-                //        }
-                //        else
-                //        {
-                //            Session["Email"] = null;
-                //            Session["Password"] = null;
-
-                //            return View(model);
-                //        }
-                //    }
-                //}
-                //else { return View(model); }
-
-
+                else
+                {
+                    return View(model);
+                }
 
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
         }
         public ActionResult LoggedIn()
         {
-            if(Request.IsAuthenticated)
+            if (Request.IsAuthenticated)
             {
                 return View();
             }
@@ -135,6 +157,7 @@ namespace Sipl.Controllers
             Session.Clear();
             Response.Cookies.Clear();
             Session.RemoveAll();
+
 
             Session["Login"] = null;
             //return RedirectToAction("Index", "Home");

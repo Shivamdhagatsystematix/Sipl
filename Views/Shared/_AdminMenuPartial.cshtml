@@ -1,5 +1,5 @@
 ﻿
-@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+@if(Convert.ToBoolean(Session["Admin"])  && Request.IsAuthenticated)
 {
     <li class="dropdown" data-admin-menu>
         <a href="#">

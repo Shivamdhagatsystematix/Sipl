@@ -13,6 +13,11 @@ namespace Sipl.Areas.Admin.Controllers
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
 
+       
+        /// <summary>
+        ///  List of all Courses Added by Admin
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             List<CourseViewModel> objCourseViewModel = new List<CourseViewModel>();
@@ -25,20 +30,19 @@ namespace Sipl.Areas.Admin.Controllers
                     CourseName = item.CourseName
 
                 };
-
                 objCourseViewModel.Add(course);
             };
             return View(objCourseViewModel);
         }
 
 
-        //get
+        
+        /// <summary>
+        /// Create Method For Course
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
-            //ViewBag.SubjectId = new SelectList(objEntities.Subjects,
-            //           "SubjectId", "SubjectName");
-            //return View();
-
             var Subjects = (from b in objEntities.Subjects select b).ToList();
             var model = new CourseViewModel
             {
@@ -52,29 +56,32 @@ namespace Sipl.Areas.Admin.Controllers
             return View(model);
         }
 
+        
+        /// <summary>
+        /// Create Method For Course
+        /// </summary>
+        /// <param name="objCourseViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseViewModel objCourseViewModel)
         {
-            //ViewBag.Subject = new SelectList(objEntities.Subjects.ToList(), "SubjectId", "SubjectName");
             try
             {
-
                 if (ModelState.IsValid)
-
                 {
                     Courses objCourses = new Courses
                     {
-
                         CourseName = objCourseViewModel.CourseName,
                         SubjectId = objCourseViewModel.SubjectId
-
 
                     };
                     var test = objEntities.Courses.Add(objCourses);
                     objEntities.SaveChanges();
+                    //To get CourseId
                     var courseId = objCourses.CourseId;
 
+                    //To add Respective Subject in Course in SubjectInCourse Table
                     SubjectInCourse objSubjectInCourse = new SubjectInCourse
                     {
                         SubjectId = objCourseViewModel.SubjectId,
@@ -83,15 +90,10 @@ namespace Sipl.Areas.Admin.Controllers
                     objEntities.SubjectInCourse.Add(objSubjectInCourse);
                     objEntities.SaveChanges();
                 };
-
-
-
-                return RedirectToAction("Index","Course", objCourseViewModel);
+                return RedirectToAction("Index", "Course", objCourseViewModel);
             }
-
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

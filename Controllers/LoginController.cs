@@ -2,9 +2,7 @@
 using Sipl.DataBase;
 using Sipl.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -13,14 +11,22 @@ namespace Sipl.Controllers
     public class LogInController : Controller
     {
 
-
-        // GET: LogIn/Create
+        /// <summary>
+        ///  Method for LogIn
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult LogIn()
         {
             return View();
         }
 
+        /// <summary>
+        /// Method for LogIn
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -37,25 +43,17 @@ namespace Sipl.Controllers
                     {
                         var keyNew = "Test";
                         var password = Helper.EncodePassword(model.Password, keyNew);
-
-                        var obj = objSiplDatabaseEntities.NetUsers.Where(u => u.Email == model.Email && u.Password == password).FirstOrDefault();
+                        var obj = objSiplDatabaseEntities.NetUsers.Where
+                            (u => u.Email == model.Email && u.Password == password).FirstOrDefault();
 
                         if (obj != null)
                         {
                             FormsAuthentication.SetAuthCookie(model.Email, true);
-
-                            //var temp = obj.UserRole.Where(x => x.UserId == obj.UserId).Select(x => x.RoleId).FirstOrDefault();
-                            //var AdminTemp = objSiplDatabaseEntities.NetRoles.Where(u => u.RoleId == temp).Select(x => x.RoleName).FirstOrDefault();
-                            //    (u => u.RoleId
-                            //string  isAdmin = objSiplDatabaseEntities.NetRoles.Where
-                            //    (u => u.RoleId == obj.UserRole.Where(x => x.UserId == obj.UserId)
-                            //    .Select(x => x.RoleId).FirstOrDefault()).Select(x => x.RoleName).FirstOrDefault();
-
                             var isAdmin = (from role in objSiplDatabaseEntities.NetRoles
-                                         join user in objSiplDatabaseEntities.UserRole
-                                         on role.RoleId equals user.RoleId
-                                         where user.UserId == obj.UserId                                        
-                                         select role.RoleName).FirstOrDefault();
+                                           join user in objSiplDatabaseEntities.UserRole
+                                           on role.RoleId equals user.RoleId
+                                           where user.UserId == obj.UserId
+                                           select role.RoleName).FirstOrDefault();
 
                             if (isAdmin == "Admin")
                             {
@@ -100,6 +98,11 @@ namespace Sipl.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        ///  LoggedIn method
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LoggedIn()
         {
             if (Request.IsAuthenticated)
@@ -113,14 +116,21 @@ namespace Sipl.Controllers
         }
 
 
-        // GET:  WELCOME SCREEN
+        /// <summary>
+        /// Registered User Method for Welcome Page after Successfull Registration
+        /// </summary>
+        /// <returns></returns>
         public ActionResult RegisteredUser()
         {
             return View();
         }
 
 
-        // POST: Welcome Screen
+        /// <summary>
+        /// Registered User Method for Welcome Page after Successfull Registration
+        /// </summary>
+        /// <param name="objNetUsers"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisteredUser(NetUsers objNetUsers)
@@ -140,13 +150,17 @@ namespace Sipl.Controllers
                     }
                 };
 
-
             }
             catch
             {
                 return View();
             }
         }
+
+        /// <summary>
+        /// : LogOutMethod for Clearing sessions
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LogOut()
         {
             Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
@@ -160,12 +174,15 @@ namespace Sipl.Controllers
 
 
             Session["Login"] = null;
-            //return RedirectToAction("Index", "Home");
-            //Session["Email"] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        ///  Redirect Method For Unsuccessfull LogIn Attempts
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -174,6 +191,10 @@ namespace Sipl.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        /// <summary>
+        /// Method for Form Authentication
+        /// </summary>
         private void resetRequest()
         {
             var authCookie = System.Web.HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
@@ -187,10 +208,6 @@ namespace Sipl.Controllers
                 }
             }
         }
-
-
-
-
 
     }
 }

@@ -13,7 +13,11 @@ namespace Sipl.Areas.Admin.Controllers
     public class SubjectController : Controller
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
-        // GET: Admin/Subject
+      
+        /// <summary>
+        ///  List of all Subjects
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             List<SubjectViewModel> objSubjectViewModel = new List<SubjectViewModel>();
@@ -30,13 +34,22 @@ namespace Sipl.Areas.Admin.Controllers
             return View(objSubjectViewModel);
         }
 
-        // GET: Admin/Subject/Create
+       
+        /// <summary>
+        ///  Admin/Subject/To Create Subject
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Subject/Create
+       
+        /// <summary>
+        ///  Admin/Subject/To Create Subject
+        /// </summary>
+        /// <param name="objSubjectViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(SubjectViewModel objSubjectViewModel)
@@ -61,7 +74,11 @@ namespace Sipl.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/Subject/Edit/5
+        /// <summary>
+        /// Admin/Subject/Edit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Edit(int id)
         {
             if (id == null)
@@ -87,7 +104,13 @@ namespace Sipl.Areas.Admin.Controllers
             return View(subjectView);
         }
 
-        // POST: Admin/Subject/Edit/5
+    
+        /// <summary>
+        ///  Admin/Subject/Edit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -103,13 +126,23 @@ namespace Sipl.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/Subject/Delete/5
+        /// <summary>
+        /// Admin/Subject/Delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Admin/Subject/Delete/5
+        // POST: 
+        /// <summary>
+        /// Admin/Subject/Delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

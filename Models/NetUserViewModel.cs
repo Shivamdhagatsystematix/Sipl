@@ -52,11 +52,12 @@ namespace Sipl.Models
     }
 
 
-
+    
+    /// <summary>
+    /// ViewModel For Registration
+    /// </summary>
     public class NetUserViewModel
     {
-        //public Entities db = new Entities();
-
         public byte? UserId { get; set; }
 
         [Required]
@@ -66,22 +67,14 @@ namespace Sipl.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
-        //[Required]
-
         public string RoleId { get; set; }
         public IEnumerable<SelectListItem> Role { get; set; }
         public int CourseId { get; set; }
         public IEnumerable<SelectListItem> Course { get; set; }
-
-
-
         public string Gender { get; set; }
 
         [Required]
-
         [Display(Name = "Email")]
-
         public string Email { get; set; }
 
         [Required]
@@ -100,32 +93,23 @@ namespace Sipl.Models
         [DisplayFormat(DataFormatString =
                 "{0:yyyy-MM-dd}",
           ApplyFormatInEditMode = true)]
+
         public System.DateTime DOB { get; set; }
-
         public bool IsActive { get; set; }
-
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateModified { get; set; }
         [Display(Name = "Current Address")]
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
-        //[Display(Name = "Country")]
         public int CountryId { get; set; }
-        public string  Country { get; set; }
-
-        //[Display(Name = "State")]
+        public string Country { get; set; }
         public int StateId { get; set; }
         public string States { get; set; }
-        
-        //[Display(Name = "City")]
-
         public int CityId { get; set; }
         public string Cities { get; set; }
-
-
     }
-    
+
     public class ResetPasswordViewModel
     {
         [Required]
@@ -165,7 +149,7 @@ namespace Sipl.Models
         public int StateId { get; set; }
         public string StateName { get; set; }
     }
-    public class  CityModel
+    public class CityModel
     {
         public int CityId { get; set; }
         public string CityName { get; set; }

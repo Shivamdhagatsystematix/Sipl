@@ -1,17 +1,11 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "Registered User";
 }
-
-
 <h2>   Thankyou For Registration !!!</h2>
 <div>
-
     @if (Session["FirstName"] != null)
     {
         <text>
-
             Thankyou For Registration !!!  @Session["FirstName"].ToString()
         </text>
     }

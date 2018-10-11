@@ -10,9 +10,9 @@ namespace Sipl.Controllers
 {
     public class LogInController : Controller
     {
-
+        SiplDatabaseEntities objNetUserViewModel = new SiplDatabaseEntities();
         /// <summary>
-        ///  Method for LogIn
+        ///  Get :Method for LogIn by Users
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
@@ -22,7 +22,7 @@ namespace Sipl.Controllers
         }
 
         /// <summary>
-        /// Method for LogIn
+        ///POST : Method for LogIn
         /// </summary>
         /// <param name="model"></param>
         /// <param name="returnUrl"></param>
@@ -32,19 +32,20 @@ namespace Sipl.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogIn(LoginViewModel model, string returnUrl)
         {
-            SiplDatabaseEntities objNetUserViewModel = new SiplDatabaseEntities();
             NetUsers netuser = new NetUsers();
-
             try
             {
                 if (model.Email != null && model.Password != null)
                 {
                     using (SiplDatabaseEntities objSiplDatabaseEntities = new SiplDatabaseEntities())
                     {
+                        //To Encode Password enter by User to match it with Database
                         var keyNew = "Test";
                         var password = Helper.EncodePassword(model.Password, keyNew);
+                        //To check Email & Password From DB
                         var obj = objSiplDatabaseEntities.NetUsers.Where
-                            (u => u.Email == model.Email && u.Password == password).FirstOrDefault();
+                         (u => u.Email == model.Email && u.Password == password)
+                         .FirstOrDefault();
 
                         if (obj != null)
                         {
@@ -82,7 +83,6 @@ namespace Sipl.Controllers
                         {
                             Session["Email"] = null;
                             Session["Password"] = null;
-
                             return View(model);
                         }
                     }
@@ -91,7 +91,6 @@ namespace Sipl.Controllers
                 {
                     return View(model);
                 }
-
             }
             catch (Exception ex)
             {
@@ -127,7 +126,7 @@ namespace Sipl.Controllers
 
 
         /// <summary>
-        /// Registered User Method for Welcome Page after Successfull Registration
+        ///Successfull Registraion 
         /// </summary>
         /// <param name="objNetUsers"></param>
         /// <returns></returns>
@@ -137,8 +136,6 @@ namespace Sipl.Controllers
         {
             try
             {
-
-
                 {
                     if (Session["FirstName"] != null)
                     {
@@ -149,7 +146,6 @@ namespace Sipl.Controllers
                         return RedirectToAction("LogIn");
                     }
                 };
-
             }
             catch
             {
@@ -167,12 +163,9 @@ namespace Sipl.Controllers
             Response.AddHeader("Pragma", "no-cache");
             Response.AddHeader("Expires", "0");
             Session.Abandon();
-
             Session.Clear();
             Response.Cookies.Clear();
             Session.RemoveAll();
-
-
             Session["Login"] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
@@ -208,6 +201,5 @@ namespace Sipl.Controllers
                 }
             }
         }
-
     }
 }

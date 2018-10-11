@@ -381,12 +381,12 @@
     <Content Include="Views\Shared\_BackToListButtonPartial.cshtml" />
     <Content Include="Views\Shared\_CreateButtonPartial.cshtml" />
     <Content Include="Views\Shared\_SmallButtonPartial.cshtml" />
-    <Content Include="Views\NetUserView\Index.cshtml" />
-    <Content Include="Views\NetUserView\Details.cshtml" />
+    <Content Include="Views\NetUserView\RegisteredUserList.cshtml" />
+    <Content Include="Views\NetUserView\RegisteredUserDetails.cshtml" />
     <Content Include="Views\NetUserView\RegisterUser.cshtml" />
     <Content Include="Views\Date.cshtml" />
-    <Content Include="Views\NetUserView\Edit.cshtml" />
-    <Content Include="Views\NetUserView\Delete.cshtml" />
+    <Content Include="Views\NetUserView\UpdateRegisteredUsers.cshtml" />
+    <Content Include="Views\NetUserView\DeleteRegisteredUsers.cshtml" />
     <Content Include="Views\Shared\_EditButtonPartial.cshtml" />
     <Content Include="Views\Login\LogIn.cshtml" />
     <Content Include="Views\Login\LoggedIn.cshtml" />

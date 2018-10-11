@@ -67,13 +67,16 @@ namespace Sipl.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        [Required(ErrorMessage = "Please Select Role.")]
         public string RoleId { get; set; }
-        public IEnumerable<SelectListItem> Role { get; set; }
+        [Required(ErrorMessage = "Please Select Role.")]
+        public List<SelectListItem> Role { get; set; }
         public int CourseId { get; set; }
         public IEnumerable<SelectListItem> Course { get; set; }
         public string Gender { get; set; }
 
         [Required]
+        [Remote("EmailExists", "NetUserView", HttpMethod = "POST", ErrorMessage = "Email address already registered.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -102,11 +105,15 @@ namespace Sipl.Models
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
+       
         public int CountryId { get; set; }
+       
         public string Country { get; set; }
         public int StateId { get; set; }
+
         public string States { get; set; }
         public int CityId { get; set; }
+    
         public string Cities { get; set; }
     }
 

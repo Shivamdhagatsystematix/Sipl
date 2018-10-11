@@ -340,11 +340,11 @@
     </Content>
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Course\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Course\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Subject\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Subject\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Subject\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\CreateCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\GetCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\GetSubject.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\CreateSubject.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\EditCourse.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\JavaScript-Google.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

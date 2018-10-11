@@ -13,12 +13,11 @@ namespace Sipl.Areas.Admin.Controllers
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
 
-       
         /// <summary>
         ///  List of all Courses Added by Admin
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public ActionResult GetCourse()
         {
             List<CourseViewModel> objCourseViewModel = new List<CourseViewModel>();
             var data = (from p in objEntities.Courses select p).ToList();
@@ -28,20 +27,17 @@ namespace Sipl.Areas.Admin.Controllers
                 {
                     CourseId = item.CourseId,
                     CourseName = item.CourseName
-
                 };
                 objCourseViewModel.Add(course);
             };
             return View(objCourseViewModel);
         }
 
-
-        
         /// <summary>
-        /// Create Method For Course
+        /// GET: Create Method For Course
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public ActionResult CreateCourse()
         {
             var Subjects = (from b in objEntities.Subjects select b).ToList();
             var model = new CourseViewModel
@@ -51,20 +47,18 @@ namespace Sipl.Areas.Admin.Controllers
                     Value = x.SubjectId.ToString(),
                     Text = x.SubjectName
                 })
-
             };
             return View(model);
         }
 
-        
         /// <summary>
-        /// Create Method For Course
+        /// POST :Create Method For Course
         /// </summary>
         /// <param name="objCourseViewModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CourseViewModel objCourseViewModel)
+        public ActionResult CreateCourse(CourseViewModel objCourseViewModel)
         {
             try
             {
@@ -74,7 +68,6 @@ namespace Sipl.Areas.Admin.Controllers
                     {
                         CourseName = objCourseViewModel.CourseName,
                         SubjectId = objCourseViewModel.SubjectId
-
                     };
                     var test = objEntities.Courses.Add(objCourses);
                     objEntities.SaveChanges();

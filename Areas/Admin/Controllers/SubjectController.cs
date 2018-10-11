@@ -13,12 +13,12 @@ namespace Sipl.Areas.Admin.Controllers
     public class SubjectController : Controller
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
-      
+
         /// <summary>
         ///  List of all Subjects
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public ActionResult GetSubject()
         {
             List<SubjectViewModel> objSubjectViewModel = new List<SubjectViewModel>();
             var data = (from p in objEntities.Subjects select p).ToList();
@@ -34,25 +34,24 @@ namespace Sipl.Areas.Admin.Controllers
             return View(objSubjectViewModel);
         }
 
-       
+
         /// <summary>
-        ///  Admin/Subject/To Create Subject
+        ///  GET :Admin/Subject/To Create Subject
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public ActionResult CreateSubject()
         {
             return View();
         }
 
-       
         /// <summary>
-        ///  Admin/Subject/To Create Subject
+        /// POST : Admin/Subject/To Create Subject
         /// </summary>
         /// <param name="objSubjectViewModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SubjectViewModel objSubjectViewModel)
+        public ActionResult CreateSubject(SubjectViewModel objSubjectViewModel)
         {
             try
             {
@@ -75,11 +74,11 @@ namespace Sipl.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Admin/Subject/Edit
+        /// GET :Admin/Subject/Edit
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int id)
+        public ActionResult EditCourse(int id)
         {
             if (id == null)
             {
@@ -89,14 +88,12 @@ namespace Sipl.Areas.Admin.Controllers
             var data = from d in objEntities.Subjects
                        where d.SubjectId == id
                        select d;
-            var TEMPlIST = objEntities.Subjects.ToList();
-
+            //var TEMPlIST = objEntities.Subjects.ToList();
             SubjectViewModel subjectView = new SubjectViewModel
             {
                 SubjectId = subjects.SubjectId,
                 SubjectName = subjects.SubjectName
             };
-
             if (subjects == null)
             {
                 return HttpNotFound();
@@ -104,15 +101,14 @@ namespace Sipl.Areas.Admin.Controllers
             return View(subjectView);
         }
 
-    
         /// <summary>
-        ///  Admin/Subject/Edit
+        ///  POST :Admin/Subject/Edit
         /// </summary>
         /// <param name="id"></param>
         /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult EditCourse(int id, FormCollection collection)
         {
             try
             {
@@ -135,8 +131,7 @@ namespace Sipl.Areas.Admin.Controllers
         {
             return View();
         }
-
-        // POST: 
+        
         /// <summary>
         /// Admin/Subject/Delete
         /// </summary>

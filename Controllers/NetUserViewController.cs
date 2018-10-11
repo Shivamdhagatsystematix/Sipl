@@ -98,14 +98,14 @@ namespace Sipl.Controllers
         public ActionResult RegisterUser()
         {
             //TO GET ROLES FROM DATABASE
-            var Roles = (from b in objEntities.NetRoles select b).ToList();
+            var roles = (from b in objEntities.NetRoles select b).ToList();
             var model = new NetUserViewModel
             {
-                Role = Roles.Select(x => new SelectListItem
+                Role = roles.Select(x => new SelectListItem
                 {
                     Value = x.RoleId,
                     Text = x.RoleName
-                })
+                }).ToList()
             };
             //GET : COURSE FOR USERS
             var course = (from b in objEntities.Courses select b).ToList();
@@ -382,6 +382,16 @@ namespace Sipl.Controllers
                 }
             }
             return Json(new SelectList(licity, "Value", "Text", JsonRequestBehavior.AllowGet));
+        }
+
+        /// <summary>
+        /// To Check Existing Email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public JsonResult EmailExists(string email)
+        {
+            return Json(!String.Equals(email, "Shivamdhagat@gmail.com", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

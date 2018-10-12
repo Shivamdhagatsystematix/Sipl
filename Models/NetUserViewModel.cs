@@ -8,51 +8,49 @@ using System.Web.Mvc;
 
 namespace Sipl.Models
 {
-    public class ExternalLoginConfirmationViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-    }
+    //public class ExternalLoginConfirmationViewModel
+    //{
+    //    [Required]
+    //    [Display(Name = "Email")]
+    //    public string Email { get; set; }
+    //}
 
-    public class ExternalLoginListViewModel
-    {
-        public string ReturnUrl { get; set; }
-    }
+    //public class ExternalLoginListViewModel
+    //{
+    //    public string ReturnUrl { get; set; }
+    //}
 
-    public class SendCodeViewModel
-    {
-        public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
-        public string ReturnUrl { get; set; }
-        public bool RememberMe { get; set; }
-    }
+    //public class SendCodeViewModel
+    //{
+    //    public string SelectedProvider { get; set; }
+    //    public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+    //    public string ReturnUrl { get; set; }
+    //    public bool RememberMe { get; set; }
+    //}
 
-    public class VerifyCodeViewModel
-    {
-        [Required]
-        public string Provider { get; set; }
+    //public class VerifyCodeViewModel
+    //{
+    //    [Required]
+    //    public string Provider { get; set; }
 
-        [Required]
-        [Display(Name = "Code")]
-        public string Code { get; set; }
-        public string ReturnUrl { get; set; }
+    //    [Required]
+    //    [Display(Name = "Code")]
+    //    public string Code { get; set; }
+    //    public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
-        public bool RememberBrowser { get; set; }
+    //    [Display(Name = "Remember this browser?")]
+    //    public bool RememberBrowser { get; set; }
 
-        public bool RememberMe { get; set; }
-    }
+    //    public bool RememberMe { get; set; }
+    //}
 
-    public class ForgotViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-    }
+    //public class ForgotViewModel
+    //{
+    //    [Required]
+    //    [Display(Name = "Email")]
+    //    public string Email { get; set; }
+    //}
 
-
-    
     /// <summary>
     /// ViewModel For Registration
     /// </summary>
@@ -67,16 +65,14 @@ namespace Sipl.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Please Select Role.")]
         public string RoleId { get; set; }
-        [Required(ErrorMessage = "Please Select Role.")]
         public List<SelectListItem> Role { get; set; }
         public int CourseId { get; set; }
         public IEnumerable<SelectListItem> Course { get; set; }
         public string Gender { get; set; }
 
         [Required]
-        [Remote("EmailExists", "NetUserView", HttpMethod = "POST", ErrorMessage = "Email address already registered.")]
+        [Remote("CheckEmailExists", "NetUserView", HttpMethod = "POST", ErrorMessage = "Email address already registered.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -105,46 +101,41 @@ namespace Sipl.Models
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
-       
         public int CountryId { get; set; }
-       
         public string Country { get; set; }
         public int StateId { get; set; }
-
         public string States { get; set; }
         public int CityId { get; set; }
-    
         public string Cities { get; set; }
     }
+    //public class ResetPasswordViewModel
+    //{
+    //    [Required]
+    //    [EmailAddress]
+    //    [Display(Name = "Email")]
+    //    public string Email { get; set; }
 
-    public class ResetPasswordViewModel
-    {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+    //    [Required]
+    //    [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+    //    [DataType(DataType.Password)]
+    //    [Display(Name = "Password")]
+    //    public string Password { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+    //    [DataType(DataType.Password)]
+    //    [Display(Name = "Confirm password")]
+    //    [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+    //    public string ConfirmPassword { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+    //    public string Code { get; set; }
+    //}
 
-        public string Code { get; set; }
-    }
-
-    public class ForgotPasswordViewModel
-    {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-    }
+    //public class ForgotPasswordViewModel
+    //{
+    //    [Required]
+    //    [EmailAddress]
+    //    [Display(Name = "Email")]
+    //    public string Email { get; set; }
+    //}
 
     public class CountryModel
     {

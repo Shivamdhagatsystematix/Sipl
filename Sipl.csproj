@@ -340,11 +340,11 @@
     </Content>
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\CreateSubject.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\EditCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Course\CreateCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Course\GetCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\GetSubject.cshtml" />
-    <Content Include="Areas\Admin\Views\Subject\CreateSubject.cshtml" />
-    <Content Include="Areas\Admin\Views\Subject\EditCourse.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\JavaScript-Google.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -363,7 +363,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -393,11 +395,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Login\RegisteredUser.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
-    <Folder Include="Views\Manage\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

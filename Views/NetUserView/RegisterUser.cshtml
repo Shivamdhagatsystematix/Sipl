@@ -13,7 +13,7 @@
                 jQuery("#ddlCountry").change(function () {
                     jQuery("#ddlStateData").empty(); $.ajax({
                         type: 'POST',
-                        url: '@Url.Action("Getstate")', dataType: 'json', data:
+                        url: '@Url.Action("GetState")', dataType: 'json', data:
                             { id: $("#ddlCountry").val() }, success: function (states) {
                                 $.each(states, function (i, state) {
                                     $("#ddlStateData").append
@@ -35,6 +35,7 @@
                 })
             });
 
+            //Jquery for Hiding Course Div
             function toggleDIvDisplay(e) {
                 if (e == "2") {
                     $('#divCourse').show();

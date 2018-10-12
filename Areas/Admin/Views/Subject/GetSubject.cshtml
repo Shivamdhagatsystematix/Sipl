@@ -1,12 +1,14 @@
 ﻿@model IEnumerable<Sipl.Areas.Admin.Models.SubjectViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "GetSubject";
 }
-<h2>
-    Total Subjects<h2>
-        <p>
-            @Html.Partial("_CreateButtonPartial")
-        </p>
+<h2>Total Subjects</h2>
+   <p><a type="button" class="btn btn-primary btn-sm"
+                             href="@Url.Action("CreateSubject")">
+                              <span class="glyphicon glyphicon-plus"></span>
+                              <span>Create New</span>
+                          </a>
+  </p>
         <table class="table table-striped table ">
             <tr class="success">
             <tr>
@@ -29,3 +31,6 @@
                 </tr>
             }
         </table>
+
+
+

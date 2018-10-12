@@ -13,7 +13,6 @@ namespace Sipl.Controllers
     public class NetUserViewController : Controller
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
-
         /// <summary>
         /// List of all Registered User 
         /// </summary>
@@ -145,64 +144,68 @@ namespace Sipl.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RegisterUser(NetUserViewModel objNetUserViewModel)
         {
-            ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
-            //ViewBag.Role = new SelectList(objEntities.countries.ToList(), "", "RoleName");
-            try
+            using (var dbTransaction = objEntities.Database.BeginTransaction())
             {
-                if (ModelState.IsValid)
+                ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
+                try
                 {
-                    //Encrytion For Password
-                    var keyNew = "Test";
-                    var password = Helper.EncodePassword(objNetUserViewModel.Password, keyNew);
-
-                    NetUsers objNetUsers = new NetUsers
+                    if (ModelState.IsValid)
                     {
-                        FirstName = objNetUserViewModel.FirstName,
-                        LastName = objNetUserViewModel.LastName,
-                        Gender = objNetUserViewModel.Gender,
-                        CourseId = objNetUserViewModel.CourseId,
-                        Email = objNetUserViewModel.Email,
-                        Password = password,
-                        DOB = objNetUserViewModel.DOB,
-                        IsActive = objNetUserViewModel.IsActive,
-                        DateCreated = DateTime.Now,
-                        DateModified = DateTime.Now,
-                    };
+                        //Encrytion For Password
+                        var keyNew = "Test";
+                        var password = Helper.EncodePassword(objNetUserViewModel.Password, keyNew);
 
-                    objEntities.NetUsers.Add(objNetUsers);
-                    objEntities.SaveChanges();
-                    //to get userId
-                    var userId = objNetUsers.UserId;
+                        NetUsers objNetUsers = new NetUsers
+                        {
+                            FirstName = objNetUserViewModel.FirstName,
+                            LastName = objNetUserViewModel.LastName,
+                            Gender = objNetUserViewModel.Gender,
+                            CourseId = objNetUserViewModel.CourseId,
+                            Email = objNetUserViewModel.Email,
+                            Password = password,
+                            DOB = objNetUserViewModel.DOB,
+                            IsActive = objNetUserViewModel.IsActive,
+                            DateCreated = DateTime.Now,
+                            DateModified = DateTime.Now,
+                        };
+                        objEntities.NetUsers.Add(objNetUsers);
+                        objEntities.SaveChanges();
+                        //to get userId
+                        var userId = objNetUsers.UserId;
 
-                    // to specify UserRole according to their UserI
-                    UserRole objUserRole = new UserRole
-                    {
-                        RoleId = objNetUserViewModel.RoleId,
-                        UserId = userId
-                    };
-                    objEntities.UserRole.Add(objUserRole);
-                    objEntities.SaveChanges();
+                        // to specify UserRole according to their UserI
+                        UserRole objUserRole = new UserRole
+                        {
+                            RoleId = objNetUserViewModel.RoleId,
+                            UserId = userId
+                        };
+                        objEntities.UserRole.Add(objUserRole);
+                        objEntities.SaveChanges();
 
-                    //to add data in Address Table
-                    Address objAddress = new Address
-                    {
-                        CountryId = objNetUserViewModel.CountryId,
-                        StateId = objNetUserViewModel.StateId,
-                        CityId = objNetUserViewModel.CityId,
-                        CurrentAddress = objNetUserViewModel.CurrentAddress,
-                        PermanantAddress = objNetUserViewModel.PermanantAddress,
-                        UserId = userId
-                    };
-                    objEntities.Address.Add(objAddress);
-                    objEntities.SaveChanges();
-                    ModelState.Clear();
-                    return RedirectToAction("RegisteredUser", "LogIn");
+                        //to add data in Address Table
+                        Address objAddress = new Address
+                        {
+                            CountryId = objNetUserViewModel.CountryId,
+                            StateId = objNetUserViewModel.StateId,
+                            CityId = objNetUserViewModel.CityId,
+                            CurrentAddress = objNetUserViewModel.CurrentAddress,
+                            PermanantAddress = objNetUserViewModel.PermanantAddress,
+                            UserId = userId
+                        };
+                        objEntities.Address.Add(objAddress);
+                        objEntities.SaveChanges();
+                        dbTransaction.Commit();
+                        ModelState.Clear();
+                        return RedirectToAction("RegisteredUser", "LogIn");
+                    }
+                    return View(objNetUserViewModel);
                 }
-                return View(objNetUserViewModel);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                catch (Exception ex)
+                {
+                    dbTransaction.Rollback();
+                    Console.WriteLine("Exception source: {0} user is failed to register", ex.Message);
+                    return View(ex);
+                }
             }
         }
 
@@ -349,7 +352,7 @@ namespace Sipl.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public JsonResult Getstate(int id)
+        public JsonResult GetState(int id)
         {
             var states = objEntities.States.Where(x => x.CountryId == id).ToList();
             List<SelectListItem> listates = new List<SelectListItem>();
@@ -389,9 +392,18 @@ namespace Sipl.Controllers
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public JsonResult EmailExists(string email)
+        public JsonResult CheckEmailExists(string email)
         {
-            return Json(!String.Equals(email, "Shivamdhagat@gmail.com", StringComparison.OrdinalIgnoreCase));
+            try
+            {
+                bool isValid = !objEntities.NetUsers.ToList().Exists(p => p.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
+                return Json(isValid, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception source: {0}", ex.Source);
+                return null;
+            }
         }
     }
 }

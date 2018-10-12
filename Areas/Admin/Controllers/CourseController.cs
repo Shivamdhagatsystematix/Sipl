@@ -12,7 +12,6 @@ namespace Sipl.Areas.Admin.Controllers
     public class CourseController : Controller
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
-
         /// <summary>
         ///  List of all Courses Added by Admin
         /// </summary>
@@ -66,7 +65,7 @@ namespace Sipl.Areas.Admin.Controllers
                 {
                     Courses objCourses = new Courses
                     {
-                        CourseName = objCourseViewModel.CourseName,
+                        CourseName = objCourseViewModel.CourseName,s
                         SubjectId = objCourseViewModel.SubjectId
                     };
                     var test = objEntities.Courses.Add(objCourses);
@@ -83,7 +82,7 @@ namespace Sipl.Areas.Admin.Controllers
                     objEntities.SubjectInCourse.Add(objSubjectInCourse);
                     objEntities.SaveChanges();
                 };
-                return RedirectToAction("Index", "Course", objCourseViewModel);
+                return RedirectToAction("GetCourse", "Course", objCourseViewModel);
             }
             catch (Exception ex)
             {

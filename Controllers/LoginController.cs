@@ -114,7 +114,6 @@ namespace Sipl.Controllers
             }
         }
 
-
         /// <summary>
         /// Registered User Method for Welcome Page after Successfull Registration
         /// </summary>
@@ -123,7 +122,6 @@ namespace Sipl.Controllers
         {
             return View();
         }
-
 
         /// <summary>
         ///Successfull Registraion 

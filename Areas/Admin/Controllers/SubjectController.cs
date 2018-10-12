@@ -13,7 +13,6 @@ namespace Sipl.Areas.Admin.Controllers
     public class SubjectController : Controller
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
-
         /// <summary>
         ///  List of all Subjects
         /// </summary>
@@ -33,7 +32,6 @@ namespace Sipl.Areas.Admin.Controllers
             };
             return View(objSubjectViewModel);
         }
-
 
         /// <summary>
         ///  GET :Admin/Subject/To Create Subject
@@ -63,7 +61,7 @@ namespace Sipl.Areas.Admin.Controllers
                     };
                     objEntities.Subjects.Add(objSubjects);
                     objEntities.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("GetSubject");
                 };
                 return View(objSubjectViewModel);
             }
@@ -131,7 +129,7 @@ namespace Sipl.Areas.Admin.Controllers
         {
             return View();
         }
-        
+
         /// <summary>
         /// Admin/Subject/Delete
         /// </summary>

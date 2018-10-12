@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sipl.DataBase;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace Sipl.Areas.Admin.Models
 {
     public class CourseViewModel
     {
-       
        public int? CourseId { get; set; }
 
         [Required]

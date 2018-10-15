@@ -94,6 +94,7 @@ namespace Sipl.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Exception source: {0} Login Failed", ex.Message);
                 return View();
             }
         }

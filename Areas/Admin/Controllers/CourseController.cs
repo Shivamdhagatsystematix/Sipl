@@ -66,7 +66,6 @@ namespace Sipl.Areas.Admin.Controllers
                     Courses objCourses = new Courses
                     {
                         CourseName = objCourseViewModel.CourseName,
-                        s
                         SubjectId = objCourseViewModel.SubjectId
                     };
                     var test = objEntities.Courses.Add(objCourses);

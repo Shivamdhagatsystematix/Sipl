@@ -184,8 +184,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SearchViewController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
     <Compile Include="Areas\Admin\Models\CourseViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SearchViewModel.cs" />
     <Compile Include="Areas\Admin\Models\SubjectViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
@@ -345,6 +347,8 @@
     <Content Include="Areas\Admin\Views\Course\CreateCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Course\GetCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\GetSubject.cshtml" />
+    <Content Include="Areas\Admin\Views\SearchView\SearchView.cshtml" />
+    <Content Include="Areas\Admin\Views\SearchView\_SearchGridPartial.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\JavaScript-Google.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -394,6 +398,7 @@
     <Content Include="Views\Login\LoggedIn.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Login\RegisteredUser.cshtml" />
+    <Content Include="Views\Shared\1_SearchGridPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

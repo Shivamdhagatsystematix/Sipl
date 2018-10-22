@@ -9,7 +9,7 @@ namespace Sipl.Areas.Admin.Models
 {
     public class SearchViewModel
     {
-      
+
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -39,26 +39,33 @@ namespace Sipl.Areas.Admin.Models
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
+        [Display(Name = "Country")]
 
         public int CountryId { get; set; }
         public string Country { get; set; }
+        [Display(Name = "State")]
         public int StateId { get; set; }
         public string States { get; set; }
+        [Display(Name = "City")]
         public int CityId { get; set; }
         public string Cities { get; set; }
     }
 
-    public class Test
+    public class FilterViewModel
     {
         public List<SearchViewModel> List { get; set; }
-      
-        public string FirstName { get; set; }
+        [Display(Name = "First Name")]
 
-        
+        public string FirstName { get; set; }
+        [Display(Name = "Last Name")]
+
+
         public string LastName { get; set; }
         public string RoleId { get; set; }
-        public List<SelectListItem> Role { get; set; }
-        public int CourseId { get; set; }
+        public string RoleName { get; set; }
+        public IEnumerable<SelectListItem> Role { get; set; }
+        public int? CourseId { get; set; }
+        public string CourseName { get; set; }
         public IEnumerable<SelectListItem> Course { get; set; }
         public string Gender { get; set; }
 
@@ -71,7 +78,7 @@ namespace Sipl.Areas.Admin.Models
                 "{0:yyyy-MM-dd}",
           ApplyFormatInEditMode = true)]
 
-        public System.DateTime DOB { get; set; }
+        public System.DateTime? DOB { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
 
@@ -79,11 +86,14 @@ namespace Sipl.Areas.Admin.Models
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
+        [Display(Name = "Country")]
 
         public int CountryId { get; set; }
         public string Country { get; set; }
+        [Display(Name = "State")]
         public int StateId { get; set; }
         public string States { get; set; }
+        [Display(Name = "City")]
         public int CityId { get; set; }
         public string Cities { get; set; }
     }

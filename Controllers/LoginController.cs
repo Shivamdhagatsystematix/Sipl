@@ -3,6 +3,7 @@ using Sipl.DataBase;
 using Sipl.Models;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -18,8 +19,24 @@ namespace Sipl.Controllers
         [AllowAnonymous]
         public ActionResult LogIn()
         {
-            return View();
+
+            var model = new LoginViewModel();
+            ViewBag.Title = "Login";
+            model.Email = CheckLoginCookie();
+            model.RememberMe = !string.IsNullOrEmpty(model.Email);
+            return View("Login", model);
+
         }
+        [HttpGet]
+        private string CheckLoginCookie()
+        {
+            if (Request.Cookies.Get("Email") != null)
+            {
+                return Request.Cookies["Email"].Value;
+            }
+            return string.Empty;
+        }
+
 
         /// <summary>
         ///POST : Method for LogIn
@@ -32,10 +49,21 @@ namespace Sipl.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogIn(LoginViewModel model, string returnUrl)
         {
+            {
+                //do lots of stuff
+                //Create username remember cookie
+                if (model.RememberMe)
+                {
+                    HttpCookie ckEmail = new HttpCookie("Email");
+                    ckEmail.Expires = DateTime.Now.AddSeconds(500);
+                    ckEmail.Value = model.Email;
+                    Response.Cookies.Add(ckEmail);
+                }
+            }
             NetUsers netuser = new NetUsers();
             try
             {
-                if (model.Email != null && model.Password != null)
+                if (model.Email != null && model.Password != null && model.RememberMe != null)
                 {
                     using (SiplDatabaseEntities objSiplDatabaseEntities = new SiplDatabaseEntities())
                     {
@@ -55,6 +83,11 @@ namespace Sipl.Controllers
                                            on role.RoleId equals user.RoleId
                                            where user.UserId == obj.UserId
                                            select role.RoleName).FirstOrDefault();
+
+
+
+
+
 
                             if (isAdmin == "Admin")
                             {
@@ -199,6 +232,11 @@ namespace Sipl.Controllers
                     System.Web.HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new FormsIdentity(authTicket), roles);
                 }
             }
+
         }
     }
 }
+
+
+
+

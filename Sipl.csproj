@@ -261,6 +261,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\listIcon.jpg" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -343,12 +344,17 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\CreateSubject.cshtml" />
-    <Content Include="Areas\Admin\Views\Subject\EditCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\EditSubject.cshtml" />
     <Content Include="Areas\Admin\Views\Course\CreateCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Course\GetCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\GetSubject.cshtml" />
     <Content Include="Areas\Admin\Views\SearchView\SearchView.cshtml" />
     <Content Include="Areas\Admin\Views\SearchView\_SearchGridPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_BackToListButtonPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\DeleteSubject.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\EditCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\DeleteCourse.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\JavaScript-Google.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

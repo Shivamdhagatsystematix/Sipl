@@ -19,6 +19,6 @@ namespace Sipl.DataBase
         public Nullable<int> SubjectId { get; set; }
     
         public virtual Subjects Subjects { get; set; }
-        public virtual NetUsers NetUsers { get; set; }
+        public virtual Subjects Subjects1 { get; set; }
     }
 }

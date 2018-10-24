@@ -2,14 +2,19 @@
 @{
     ViewBag.Title = "Index";
 }
-<h2>Index</h2>
+<h2>List of Courses</h2>
 <p>
-<p>
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("Index", "Home", new { area = "" })">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to Main menu</span>
+
+    </a>
     <a type="button" class="btn btn-primary btn-sm"
        href="@Url.Action("CreateCourse")">
         <span class="glyphicon glyphicon-plus"></span>
         <span>Create New</span>
-        </a>
+    </a>
 </p>
 <table class="table">
     <tr>
@@ -25,9 +30,8 @@
                 @Html.DisplayFor(modelItem => item.CourseName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+                @Html.ActionLink("Edit", "EditCourse", new { id = item.CourseId }) |
+                @Html.ActionLink("Delete", "DeleteCourse", new { id = item.CourseId })
             </td>
         </tr>
     }

@@ -18,7 +18,7 @@ namespace Sipl.DataBase
         public int SubjectId { get; set; }
         public int CourseId { get; set; }
     
-        public virtual Subjects Subjects { get; set; }
         public virtual Courses Courses { get; set; }
+        public virtual Subjects Subjects { get; set; }
     }
 }

@@ -20,6 +20,5 @@ namespace Sipl.DataBase
     
         public virtual NetRoles NetRoles { get; set; }
         public virtual NetUsers NetUsers { get; set; }
-        public virtual NetUsers NetUsers1 { get; set; }
     }
 }

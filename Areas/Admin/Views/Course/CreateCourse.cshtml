@@ -21,7 +21,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Subject, "Subject", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SubjectId, Model.Subject)
+                @Html.DropDownListFor(model => model.SubjectId, Model.Subject, new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -33,7 +33,12 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a type="button" class="btn btn-primary btn-sm"
+       href="@Url.Action("GetSubject","Subject")">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Back to List</span>
+    </a>
+
 </div>
 
 @section Scripts {

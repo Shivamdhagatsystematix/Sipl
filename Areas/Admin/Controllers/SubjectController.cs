@@ -2,6 +2,7 @@
 using Sipl.DataBase;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -76,7 +77,7 @@ namespace Sipl.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult EditCourse(int id)
+        public ActionResult EditSubject(int id)
         {
             if (id == null)
             {
@@ -106,28 +107,53 @@ namespace Sipl.Areas.Admin.Controllers
         /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditCourse(int id, FormCollection collection)
+        public ActionResult EditSubject(int id, Subjects objSubjects)
+
         {
-            try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
 
-                return RedirectToAction("Index");
+                {
+                    Subjects objSubject = new Subjects
+                    {
+                        SubjectId = id,
+                        SubjectName = objSubjects.SubjectName
+
+                    };
+                    objEntities.Entry(objSubject).State = EntityState.Modified;
+                    objEntities.SaveChanges();
+                    return RedirectToAction("GetSubject");
+                }
+                return View(objSubjects);
             }
-            catch
-            {
-                return View();
-            }
+
         }
-
         /// <summary>
         /// Admin/Subject/Delete
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int id)
+        public ActionResult DeleteSubject(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Subjects subjects = objEntities.Subjects.Find(id);
+            var data = from d in objEntities.Subjects
+                       where d.SubjectId == id
+                       select d;
+            //var TEMPlIST = objEntities.Subjects.ToList();
+            SubjectViewModel subjectView = new SubjectViewModel
+            {
+                SubjectId = subjects.SubjectId,
+                SubjectName = subjects.SubjectName
+            };
+            if (subjects == null)
+            {
+                return HttpNotFound();
+            }
+            return View(subjectView);
         }
 
         /// <summary>
@@ -137,18 +163,22 @@ namespace Sipl.Areas.Admin.Controllers
         /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult DeleteSubject(int id)
+     
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                Subjects subjects = objEntities.Subjects.Find(id);
+                objEntities.Subjects.Remove(subjects);
+                objEntities.SaveChanges();
+                return RedirectToAction("GetSubject");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+             Console.WriteLine("Exception source: {0} user is failed to register", ex.Message);
+                return View(ex);
             }
+
         }
     }
 }

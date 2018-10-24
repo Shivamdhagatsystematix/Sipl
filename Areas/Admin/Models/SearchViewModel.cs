@@ -18,8 +18,10 @@ namespace Sipl.Areas.Admin.Models
         public string LastName { get; set; }
         public string RoleId { get; set; }
         public List<SelectListItem> Role { get; set; }
+        public string RoleName { get; set; }
         public int CourseId { get; set; }
         public IEnumerable<SelectListItem> Course { get; set; }
+        public string CourseName { get; set; }
         public string Gender { get; set; }
 
         [Display(Name = "Email")]

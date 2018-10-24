@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Sipl.Areas.Admin.Controllers
 {
+    [Authorize]
     public class SearchViewController : Controller
 
     {
@@ -16,56 +17,7 @@ namespace Sipl.Areas.Admin.Controllers
 
         public ActionResult _SearchGridPartial()
         {
-            //FilterViewModel objFilterViewModel = new FilterViewModel();
-            //// Get user roles from DB
-            //var roles = (from b in objEntities.NetRoles select b).ToList();
-            //var model = new SearchViewModel
-            //{
-            //    Role = roles.Select(x => new SelectListItem
-            //    {
-            //        Value = x.RoleId,
-            //        Text = x.RoleName
-            //    }).ToList()
-            //};
-            //var course = (from b in objEntities.Courses select b).ToList();
-            //model.Course = course.Select(x => new SelectListItem
-            //{
-            //    Value = x.CourseId.ToString(),
-            //    Text = x.CourseName
-            //});
-
-            //ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
-            //List<SearchViewModel> objSearchViewModel = new List<SearchViewModel>();
-
-            ////Get List of users from DB
-            //var data = (from p in objEntities.NetUsers select p).ToList();
-            //foreach (var item in data)
-            //{
-            //    //To get Address From DB
-            //    var userAddressInfo = (from p in objEntities.Address where p.UserId == item.UserId select p).FirstOrDefault();
-            //    if (userAddressInfo != null)
-            //    {
-            //        SearchViewModel searchView = new SearchViewModel
-            //        {
-
-            //            FirstName = item.FirstName,
-            //            LastName = item.LastName,
-            //            Gender = item.Gender,
-            //            Email = item.Email,
-            //            DOB = item.DOB,
-            //            IsActive = item.IsActive,
-            //            CurrentAddress = userAddressInfo.CurrentAddress,
-            //            PermanantAddress = userAddressInfo.PermanantAddress,
-            //            Country = userAddressInfo.Countries.CountryName,
-            //            States = userAddressInfo.States.StateName,
-            //            Cities = userAddressInfo.Cities.CityName,
-            //            DateCreated = item.DateCreated
-            //        };
-            //        objSearchViewModel.Add(searchView);
-            //    }
-            //};
-            //objFilterViewModel.List = objSearchViewModel;
-            //return PartialView(objFilterViewModel);
+        
             return View();
         }
         /// <summary>
@@ -120,9 +72,20 @@ namespace Sipl.Areas.Admin.Controllers
             {
                 //To get Address From DB
                 var userAddressInfo = (from p in objEntities.Address where p.UserId == item.UserId
-                                       select p).FirstOrDefault();
+                                      select p).FirstOrDefault();
 
-            if (userAddressInfo != null)
+                var getCourse= (from c in objEntities.Courses
+                                where c.CourseId == item.CourseId
+                                select c).FirstOrDefault();
+
+                var getRole = (from role in objEntities.NetRoles
+                               join user in objEntities.UserRole
+                               on role.RoleId equals user.RoleId
+                               where user.UserId == item.UserId
+                               select role.RoleName).FirstOrDefault();
+
+
+                if (userAddressInfo != null)
 
                 {
                     SearchViewModel searchView = new SearchViewModel
@@ -132,6 +95,8 @@ namespace Sipl.Areas.Admin.Controllers
                         LastName = item.LastName,
                         Gender = item.Gender,
                         Email = item.Email,
+                        CourseName = getCourse.CourseName,
+                        RoleName= getRole,
                         DOB = item.DOB,
                         IsActive = item.IsActive,
                         CurrentAddress = userAddressInfo.CurrentAddress,
@@ -144,7 +109,6 @@ namespace Sipl.Areas.Admin.Controllers
                     objSearchViewModel.Add(searchView);
                 }
             };
-            //test.List = objSearchViewModel;
             model.List = objSearchViewModel;
 
             return View(model);
@@ -200,19 +164,22 @@ namespace Sipl.Areas.Admin.Controllers
             var searchBar = (from
                                   user in objEntities.NetUsers
                               join userRole in objEntities.UserRole on user.UserId equals userRole.UserId
+                              join Address in objEntities.Address on user.UserId equals Address.UserId
                               where user.FirstName == objFilterViewModel.FirstName || string.IsNullOrEmpty(objFilterViewModel.FirstName)
                              where user.LastName == objFilterViewModel.LastName || string.IsNullOrEmpty(objFilterViewModel.LastName)
-                             //where user.Gender == objFilterViewModel.Gender || string.IsNullOrEmpty(objFilterViewModel.Gender)
-                             //where user.DOB == objFilterViewModel.DOB || objFilterViewModel.DOB == null
+                             where user.Gender == objFilterViewModel.Gender || string.IsNullOrEmpty(objFilterViewModel.Gender)
+                             where user.Email == objFilterViewModel.Email || string.IsNullOrEmpty(objFilterViewModel.Email)
+                             where user.DOB == objFilterViewModel.DOB || objFilterViewModel.DOB == null
 
-                             //where user.Email == objFilterViewModel.Email || string.IsNullOrEmpty(objFilterViewModel.Email)
+
                              //where user.Is == objFilterViewModel.IsEmailVerified || string.IsNullOrEmpty(objFilterViewModel.IsEmailVerified)
                              //where user.IsActive == objFilterViewModel.IsActive
-                             //where user.Courses.CourseId == objFilterViewModel.CourseId || string.IsNullOrEmpty(objFilterViewModel.CourseId)
-                             //where user.Address.AddressLine == objFilterViewModel.AddressLine || string.IsNullOrEmpty(objFilterViewModel.AddressLine)
-                             //where user.Address.Country.CountryName == model.CountryName || string.IsNullOrEmpty(model.CountryName)
-                             //where user.Address.State.StateName == model.StateName || string.IsNullOrEmpty(model.StateName)
-                             //where user.Address.City.CityName == model.CityName || string.IsNullOrEmpty(model.CityName)
+                             where user.Courses.CourseName == objFilterViewModel.CourseName || string.IsNullOrEmpty(objFilterViewModel.CourseName)
+                             where Address.CurrentAddress == objFilterViewModel.CurrentAddress || string.IsNullOrEmpty(objFilterViewModel.CurrentAddress)
+                             where Address.PermanantAddress == objFilterViewModel.PermanantAddress || string.IsNullOrEmpty(objFilterViewModel.PermanantAddress)
+                             where Address.Countries.CountryId == objFilterViewModel.CountryId || string.IsNullOrEmpty(objFilterViewModel.Country)
+                             where Address.States.StateId == objFilterViewModel.StateId || string.IsNullOrEmpty(objFilterViewModel.States)
+                             where Address.Cities.CityId == objFilterViewModel.CityId || string.IsNullOrEmpty(objFilterViewModel.Cities)
                              //where user.Address.Pincode == model.Pincode || model.Pincode == null
                              //where user.DateCreated == objFilterViewModel.DateCreated || objFilterViewModel.DateCreated == null
                              //where user.DateModified == objFilterViewModel.DateModified || objFilterViewModel.DateModified == null
@@ -224,19 +191,19 @@ namespace Sipl.Areas.Admin.Controllers
                                   LastName = user.LastName,
                                   Gender = user.Gender,
                                   DOB = user.DOB,
-                                  //Hobbies = user.Hobbies,
                                   Email = user.Email,
                                   //IsEmailVerified = user.IsEmailVerified,
                                   IsActive = user.IsActive,
-                                  CourseId = user.Courses.CourseId,
-                                  //AddressLine = user.Address.AddressLine,
-                                  //CountryName = user.Address.Country.CountryName,
-                                  //StateName = user.Address.State.StateName,
-                                  //CityName = user.Address.City.CityName,
-                                  //Pincode = user.Address.Pincode,
-                                  //DateCreated = user.DateCreated,
-                                  //DateModified = user.DateModified,
-                                  RoleId = userRole.NetRoles.RoleName
+                                  CourseName = user.Courses.CourseName,
+                                 CurrentAddress = Address.CurrentAddress,
+                                 PermanantAddress = Address.PermanantAddress,
+                                 Country = Address.Countries.CountryName,
+                                 States = Address.States.StateName,
+                                 Cities = Address.Cities.CityName,
+                                 //Pincode = user.Address.Pincode,
+                                 DateCreated = user.DateCreated,
+                                 //DateModified = user.DateModified,
+                                 RoleName = userRole.NetRoles.RoleName
                               }).ToList();
             
             model.List = searchBar;

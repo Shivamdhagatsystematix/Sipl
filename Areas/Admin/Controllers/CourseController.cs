@@ -2,12 +2,15 @@
 using Sipl.DataBase;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Sipl.Areas.Admin.Controllers
 {
+  
     [Authorize]
     public class CourseController : Controller
     {
@@ -89,5 +92,115 @@ namespace Sipl.Areas.Admin.Controllers
                 throw ex;
             }
         }
+        /// <summary>
+        /// get method for update 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EditCourse(int id)
+         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Courses courses = objEntities.Courses.Find(id);
+            var data = from d in objEntities.Courses
+                       where d.SubjectId == id
+                       select d;
+            //var TEMPlIST = objEntities.Subjects.ToList();
+            CourseViewModel courseView = new CourseViewModel
+            {
+                 CourseId= courses.CourseId,
+                CourseName = courses.CourseName,
+                SubjectId=courses.SubjectId
+            };
+            if (courses == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.SubjectId = new SelectList(objEntities.Subjects, "SubjectId", "SubjectName", courses.SubjectId);
+            return View(courseView);
+        }
+
+     /// <summary>
+     /// 
+     /// </summary>
+     /// <param name="id"></param>
+     /// <param name="objCourses"></param>
+     /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditCourse(int id, Courses objCourses)
+
+        {
+            {
+                if (ModelState.IsValid)
+
+                {
+                    Courses objCourse = new Courses
+                    {
+                        CourseId = id,
+                        CourseName = objCourses.CourseName,
+                        SubjectId=objCourses.SubjectId
+                      
+                   
+
+                    };
+                    objEntities.Entry(objCourse).State = EntityState.Modified;
+                    objEntities.SaveChanges();
+                    return RedirectToAction("GetCourse");
+                }
+                return View(objCourses);
+            }
+
+        }
+        /// <summary>
+        /// Delete method for only courses
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult DeleteCourse(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Courses courses = objEntities.Courses.Find(id);
+            var data = from d in objEntities.Courses
+                       where d.CourseId == id
+                       select d;
+            //var TEMPlIST = objEntities.Subjects.ToList();
+            CourseViewModel courseView = new CourseViewModel
+            {
+                CourseId = courses.CourseId,
+                CourseName = courses.CourseName
+            };
+            if (courses == null)
+            {
+                return HttpNotFound();
+            }
+            return View(courseView);
+        }
+
+     
+        [HttpPost]
+        public ActionResult DeleteCourse(int id)
+
+        {
+            try
+            {
+                Courses courses = objEntities.Courses.Find(id);
+                objEntities.Courses.Remove(courses);
+                objEntities.SaveChanges();
+                return RedirectToAction("GetCourse");
+            }
+            catch (Exception ex)
+            {
+              Console.WriteLine("Exception source: delete failed", ex.Message);
+                return View(ex);
+            }
+        }
+
+
+
     }
 }

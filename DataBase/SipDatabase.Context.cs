@@ -27,17 +27,17 @@ namespace Sipl.DataBase
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<NetRoles> NetRoles { get; set; }
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
-        public virtual DbSet<NetRoles> NetRoles { get; set; }
         public virtual DbSet<States> States { get; set; }
-        public virtual DbSet<SubjectInCourse> SubjectInCourse { get; set; }
-        public virtual DbSet<Subjects> Subjects { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TeacherInSubject> TeacherInSubject { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Courses> Courses { get; set; }
+        public virtual DbSet<SubjectInCourse> SubjectInCourse { get; set; }
+        public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<NetUsers> NetUsers { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

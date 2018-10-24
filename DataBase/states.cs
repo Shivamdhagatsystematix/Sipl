@@ -18,7 +18,6 @@ namespace Sipl.DataBase
         public States()
         {
             this.Address = new HashSet<Address>();
-            this.Address1 = new HashSet<Address>();
             this.Cities = new HashSet<Cities>();
         }
     
@@ -28,8 +27,6 @@ namespace Sipl.DataBase
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Address { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Address1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cities> Cities { get; set; }
         public virtual Countries Countries { get; set; }

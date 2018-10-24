@@ -18,9 +18,7 @@ namespace Sipl.DataBase
         public NetUsers()
         {
             this.Address = new HashSet<Address>();
-            this.TeacherInSubject = new HashSet<TeacherInSubject>();
             this.UserRole = new HashSet<UserRole>();
-            this.UserRole1 = new HashSet<UserRole>();
         }
     
         public byte UserId { get; set; }
@@ -34,15 +32,12 @@ namespace Sipl.DataBase
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateModified { get; set; }
+        public Nullable<bool> IsVerified { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Address { get; set; }
         public virtual Courses Courses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeacherInSubject> TeacherInSubject { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRole1 { get; set; }
     }
 }

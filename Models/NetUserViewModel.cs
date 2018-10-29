@@ -66,10 +66,17 @@ namespace Sipl.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public string RoleId { get; set; }
+        public string RoleName { get; set; }
         public List<SelectListItem> Role { get; set; }
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
+        public string CourseName { get; set; }
+        public int? SubjectId { get; set; }
+        public string SubjectName { get; set; }
+
         public IEnumerable<SelectListItem> Course { get; set; }
+        
         public string Gender { get; set; }
+
 
         [Required]
         [Remote("CheckEmailExists", "NetUserView", HttpMethod = "POST", ErrorMessage = "Email address already registered.")]
@@ -95,6 +102,7 @@ namespace Sipl.Models
 
         public System.DateTime DOB { get; set; }
         public bool IsActive { get; set; }
+        public bool IsVerified { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateModified { get; set; }
         [Display(Name = "Current Address")]
@@ -107,6 +115,64 @@ namespace Sipl.Models
         public string States { get; set; }
         public int CityId { get; set; }
         public string Cities { get; set; }
+        public string Pincode { get; set; }
+        public List<NetUserViewModel> List { get; set; }
+
+    }
+    public class CrudViewModel
+    {
+        public byte UserId { get; set; }
+        public int Id { get; set; }
+        public int AddressId { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+        public string RoleId { get; set; }
+        public string RoleName { get; set; }
+        public List<SelectListItem> Role { get; set; }
+        public int? CourseId { get; set; }
+        public int SubjectId { get; set; }
+        public string CourseName { get; set; }
+
+        public IEnumerable<SelectListItem> Course { get; set; }
+        public string Gender { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+    
+        [Display(Name = "DOB")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString =
+                "{0:yyyy-MM-dd}",
+          ApplyFormatInEditMode = true)]
+
+        public System.DateTime DOB { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsVerified { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public System.DateTime DateModified { get; set; }
+        [Display(Name = "Current Address")]
+        public string CurrentAddress { get; set; }
+        [Display(Name = " Permanant Address")]
+        public string PermanantAddress { get; set; }
+        public int CountryId { get; set; }
+        public string Country { get; set; }
+        public int StateId { get; set; }
+        public string States { get; set; }
+        public int CityId { get; set; }
+        public string Cities { get; set; }
+        public string Pincode { get; set; }
+        public List<CrudViewModel> List { get; set; }
+
     }
     //public class ResetPasswordViewModel
     //{

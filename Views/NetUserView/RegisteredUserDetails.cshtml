@@ -1,7 +1,6 @@
 ﻿@model Sipl.Models.NetUserViewModel
-
 <div>
-    <h4>NetUserViewModel</h4>
+    <h4>Details </h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -28,6 +27,13 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Gender)
         </dt>
 
@@ -50,10 +56,79 @@
         <dd>
             @Html.DisplayFor(model => model.DOB)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentAddress)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.CurrentAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PermanantAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PermanantAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.States)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.States)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cities)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cities)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pincode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pincode)
+        </dd>
     </dl>
 </div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
-    @Html.Partial("_BacktoListButtonPartial", "Index")
+    @if (Convert.ToInt32(Session["RoleId"]) == 1)
+    {
+        <div>
+            <a type="button" class="btn btn-primary btn-sm"
+               href="@Url.Action("_TeacherPage", "Admin/TeacherInfo")">
+                <span class="glyphicon glyphicon-list"></span>
+                <span>Back to Main Menu Teacher</span>
+            </a>
+        </div>
+    }
+    @*@if (Convert.ToInt32(Session["RoleId"]) == 2)
+    {
+        <div>
+            <a type="button" class="btn btn-primary btn-sm"
+               href="@Url.Action("StudentProfile", "Admin/TeacherInfo")">
+                <span class="glyphicon glyphicon-list"></span>
+                <span>Back to Main Menu Student</span>
+            </a>
+        </div>
+    }*@
+
+</p>
+<p>
+    @if (Convert.ToInt32(Session["RoleId"]) == 2)
+    {
+     
+        @Html.RouteLink("Edit Profile ", "Default",
+       new { action = "UpdateRegisteredUsers", controller ="NetUserView",   id =Model.UserId})
+    }
 </p>

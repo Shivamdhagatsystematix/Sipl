@@ -10,7 +10,7 @@ namespace Sipl.Areas.Admin.Models
     public class SearchViewModel
     {
 
-
+        public byte? UserId { get; set; }
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
@@ -19,9 +19,12 @@ namespace Sipl.Areas.Admin.Models
         public string RoleId { get; set; }
         public List<SelectListItem> Role { get; set; }
         public string RoleName { get; set; }
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
+        public int SubjectId { get; set; }
+        public IEnumerable<SelectListItem> Subject { get; set; }
         public IEnumerable<SelectListItem> Course { get; set; }
         public string CourseName { get; set; }
+        public string SubjectName { get; set; }
         public string Gender { get; set; }
 
         [Display(Name = "Email")]
@@ -33,14 +36,16 @@ namespace Sipl.Areas.Admin.Models
                 "{0:yyyy-MM-dd}",
           ApplyFormatInEditMode = true)]
 
-        public System.DateTime DOB { get; set; }
+        public System.DateTime? DOB { get; set; }
         public bool IsActive { get; set; }
+        public bool IsVerified { get; set; }
         public System.DateTime DateCreated { get; set; }
 
         [Display(Name = "Current Address")]
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
+
         [Display(Name = "Country")]
 
         public int CountryId { get; set; }
@@ -51,18 +56,27 @@ namespace Sipl.Areas.Admin.Models
         [Display(Name = "City")]
         public int CityId { get; set; }
         public string Cities { get; set; }
+        public string Pincode { get; set; }
+
+
     }
 
     public class FilterViewModel
     {
+
         public List<SearchViewModel> List { get; set; }
+        public byte UserId { get; set; }
+        public int? SubjectId { get; set; }
+        public virtual DataBase.Subjects Subjects { get; set; }
+
+        public IEnumerable<SelectListItem> SubjectAssign { get; set; }
+
         [Display(Name = "First Name")]
-
         public string FirstName { get; set; }
+
         [Display(Name = "Last Name")]
-
-
         public string LastName { get; set; }
+        public string Password { get; set; }
         public string RoleId { get; set; }
         public string RoleName { get; set; }
         public IEnumerable<SelectListItem> Role { get; set; }
@@ -82,22 +96,26 @@ namespace Sipl.Areas.Admin.Models
 
         public System.DateTime? DOB { get; set; }
         public bool IsActive { get; set; }
+        public bool IsVerified { get; set; }
         public System.DateTime DateCreated { get; set; }
 
         [Display(Name = "Current Address")]
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
+
         [Display(Name = "Country")]
 
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
         public string Country { get; set; }
         [Display(Name = "State")]
-        public int StateId { get; set; }
+        public int? StateId { get; set; }
         public string States { get; set; }
         [Display(Name = "City")]
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
         public string Cities { get; set; }
+
+        public string Pincode { get; set; }
     }
 
     public class CountryModel

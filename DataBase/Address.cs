@@ -21,11 +21,10 @@ namespace Sipl.DataBase
         public int CountryId { get; set; }
         public int StateId { get; set; }
         public int CityId { get; set; }
-        public Nullable<byte> Pincode { get; set; }
+        public string Pincode { get; set; }
     
         public virtual Cities Cities { get; set; }
         public virtual Countries Countries { get; set; }
         public virtual States States { get; set; }
-        public virtual NetUsers NetUsers { get; set; }
     }
 }

@@ -16,7 +16,7 @@
     <AssemblyName>Sipl</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -186,6 +186,7 @@
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\SearchViewController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TeacherInfoController.cs" />
     <Compile Include="Areas\Admin\Models\CourseViewModel.cs" />
     <Compile Include="Areas\Admin\Models\SearchViewModel.cs" />
     <Compile Include="Areas\Admin\Models\SubjectViewModel.cs" />
@@ -193,61 +194,55 @@
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\NetUserViewController.cs" />
     <Compile Include="DataBase\Address.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Cities.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Countries.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Courses.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\NetRoles.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\NetUsers.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\SipDatabase.Context.cs">
+    <Compile Include="DataBase\SiplDatabaseEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SipDatabase.Context.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\SipDatabase.cs">
+    <Compile Include="DataBase\SiplDatabaseEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase\SipDatabase.Designer.cs">
+    <Compile Include="DataBase\SiplDatabaseEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SipDatabase.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataBase\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataBase\sp_helpdiagrams_Result.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataBase\States.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\SubjectInCourse.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\Subjects.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\sysdiagrams.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\TeacherInSubject.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\UserRole.cs">
-      <DependentUpon>SipDatabase.tt</DependentUpon>
+      <DependentUpon>SiplDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -313,15 +308,15 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="DataBase\SipDatabase.Context.tt">
+    <Content Include="DataBase\SiplDatabaseEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SipDatabase.edmx</DependentUpon>
-      <LastGenOutput>SipDatabase.Context.cs</LastGenOutput>
+      <DependentUpon>SiplDatabaseEntities.edmx</DependentUpon>
+      <LastGenOutput>SiplDatabaseEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataBase\SipDatabase.tt">
+    <Content Include="DataBase\SiplDatabaseEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SipDatabase.edmx</DependentUpon>
-      <LastGenOutput>SipDatabase.cs</LastGenOutput>
+      <DependentUpon>SiplDatabaseEntities.edmx</DependentUpon>
+      <LastGenOutput>SiplDatabaseEntities.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -334,13 +329,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Admin\Views\web.config" />
-    <EntityDeploy Include="DataBase\SipDatabase.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SipDatabase.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DataBase\SipDatabase.edmx.diagram">
-      <DependentUpon>SipDatabase.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\CreateSubject.cshtml" />
@@ -355,6 +343,22 @@
     <Content Include="Areas\Admin\Views\Subject\DeleteSubject.cshtml" />
     <Content Include="Areas\Admin\Views\Course\EditCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Course\DeleteCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\UserSearchView.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\_TeacherGridPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\SubjectAssign.cshtml" />
+    <EntityDeploy Include="DataBase\SiplDatabaseEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SiplDatabaseEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DataBase\SiplDatabaseEntities.edmx.diagram">
+      <DependentUpon>SiplDatabaseEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Shared\_AdminPage.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\TeacherInSubjectlist.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\_TeacherPage.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminMenuPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\_StudentPage.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\StudentProfile.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\JavaScript-Google.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -405,6 +409,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Login\RegisteredUser.cshtml" />
     <Content Include="Views\Shared\1_SearchGridPartial.cshtml" />
+    <Content Include="Views\Login\_AdminPage.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -442,7 +447,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55080/</IISUrl>
+          <IISUrl>http://localhost/Sipl</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

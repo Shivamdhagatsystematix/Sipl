@@ -17,22 +17,22 @@ namespace Sipl.DataBase
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Subjects()
         {
-            this.Courses = new HashSet<Courses>();
-            this.SubjectInCourse = new HashSet<SubjectInCourse>();
             this.TeacherInSubject = new HashSet<TeacherInSubject>();
             this.TeacherInSubject1 = new HashSet<TeacherInSubject>();
+            this.SubjectInCourse = new HashSet<SubjectInCourse>();
+            this.Courses = new HashSet<Courses>();
         }
     
         public int SubjectId { get; set; }
         public string SubjectName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Courses> Courses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubjectInCourse> SubjectInCourse { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeacherInSubject> TeacherInSubject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeacherInSubject> TeacherInSubject1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubjectInCourse> SubjectInCourse { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Courses> Courses { get; set; }
     }
 }

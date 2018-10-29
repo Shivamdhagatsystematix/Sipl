@@ -11,7 +11,7 @@ namespace Sipl.Controllers
 {
     public class LogInController : Controller
     {
-        SiplDatabaseEntities objNetUserViewModel = new SiplDatabaseEntities();
+        SiplDatabaseEntities objEntities = new SiplDatabaseEntities();
         /// <summary>
         ///  Get :Method for LogIn by Users
         /// </summary>
@@ -19,14 +19,17 @@ namespace Sipl.Controllers
         [AllowAnonymous]
         public ActionResult LogIn()
         {
-
             var model = new LoginViewModel();
             ViewBag.Title = "Login";
             model.Email = CheckLoginCookie();
             model.RememberMe = !string.IsNullOrEmpty(model.Email);
             return View("Login", model);
-
         }
+
+        /// <summary>
+        /// To check login Cookies
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         private string CheckLoginCookie()
         {
@@ -36,7 +39,6 @@ namespace Sipl.Controllers
             }
             return string.Empty;
         }
-
 
         /// <summary>
         ///POST : Method for LogIn
@@ -85,50 +87,95 @@ namespace Sipl.Controllers
                                            select role.RoleName).FirstOrDefault();
 
 
-
-
-
-
                             if (isAdmin == "Admin")
                             {
-                                Session["Admin"] = true;
-                                Session["Teacher"] = false;
-                                Session["Student"] = false;
+                                Session["RoleId"] = 3;
+                                Session["RoleName"] = "Admin";
+
+
+
+                                return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
                             }
-                            else if (isAdmin == "teacher")
+                            else if (isAdmin == "Teacher")
                             {
-                                Session["Admin"] = false;
-                                Session["Teacher"] = true;
-                                Session["Student"] = false;
+                                Session["RoleId"] = 1;
+                                return RedirectToAction("_TeacherPage", "Admin/TeacherInfo");
+
+
+                            }
+                            else if (isAdmin == "Student")
+                            {
+                                Session["RoleId"] = 2;
+                               
+                                
+                                return RedirectToAction("StudentProfile", "Admin/TeacherInfo", new { id = obj.UserId });
+
                             }
                             else
                             {
-                                Session["Admin"] = false;
-                                Session["Teacher"] = false;
-                                Session["Student"] = true;
+                                Session["Email"] = null;
+                                Session["Password"] = null;
+                                return View(model);
 
                             }
-                            Session["Email"] = obj.Email.ToString();
-                            Session["Password"] = obj.Password.ToString();
-                            return RedirectToAction("LoggedIn");
                         }
                         else
                         {
-                            Session["Email"] = null;
-                            Session["Password"] = null;
                             return View(model);
                         }
+
                     }
                 }
-                else
+                else return View(model);
                 {
-                    return View(model);
+
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Exception source: {0} Login Failed", ex.Message);
                 return View();
+            }
+        }
+
+        /// <summary>
+        /// Admin page
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _AdminPage()
+        {
+            if (Request.IsAuthenticated)
+            {
+                var userList = (from d in objEntities.NetUsers
+                                join c in objEntities.UserRole on d.UserId equals c.UserId
+                                join s in objEntities.Address on c.UserId equals s.UserId
+                                where c.RoleId != "3"
+
+                                select new NetUserViewModel
+                                {
+                                    UserId = d.UserId,
+                                    RoleId = c.RoleId,
+                                    CourseId = Convert.ToInt16(d.Courses.CourseName),
+                                    FirstName = d.FirstName,
+                                    LastName = d.LastName,
+                                    Gender = d.Gender,
+                                    Email = d.Email,
+                                    Password = d.Password,
+                                    DOB = d.DOB,
+                                    IsActive = d.IsActive,
+                                    IsVerified = d.IsVerified,
+                                    CurrentAddress = s.CurrentAddress,
+                                    PermanantAddress = s.PermanantAddress,
+                                    Country = s.Countries.CountryName,
+                                    States = s.States.StateName,
+                                    Cities = s.Cities.CityName,
+                                    DateCreated = d.DateCreated
+                                }).ToList();
+                return View(userList);
+            }
+            else
+            {
+                return RedirectToAction("LogIn");
             }
         }
 
@@ -232,7 +279,6 @@ namespace Sipl.Controllers
                     System.Web.HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new FormsIdentity(authTicket), roles);
                 }
             }
-
         }
     }
 }

@@ -17,7 +17,6 @@ namespace Sipl.DataBase
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public NetUsers()
         {
-            this.Address = new HashSet<Address>();
             this.UserRole = new HashSet<UserRole>();
         }
     
@@ -32,10 +31,8 @@ namespace Sipl.DataBase
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateModified { get; set; }
-        public Nullable<bool> IsVerified { get; set; }
+        public bool IsVerified { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Address { get; set; }
         public virtual Courses Courses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }

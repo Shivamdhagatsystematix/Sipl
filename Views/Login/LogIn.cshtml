@@ -32,8 +32,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Log in " class="btn btn-success" />
-                <input type="submit" value=" Register" class="btn btn-success"
-                       onclick="window.location.href='@Url.Action("Create", "NetUserView")'" />
+                
             </div>
         </div>
     </div>
@@ -41,6 +40,8 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
-}
-
+}<p>
+    <input type="submit" value=" Register" class="btn btn-success"
+           onclick="window.location.href='@Url.Action("RegisterUser", "NetUserView")'" />
+    </p>
 

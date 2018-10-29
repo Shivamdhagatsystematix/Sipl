@@ -9,7 +9,7 @@
 <a type="button" class="btn btn-primary btn-sm"
            href="@Url.Action("Index", "Home", new { area = "" })">
             <span class="glyphicon glyphicon-list"></span>
-            <span>Back to List</span>
+            <span>Back to Main Menu</span>
         </a>
 
     </div>
@@ -80,10 +80,10 @@
         <div class="col-md-12">
             <div class="col-md-4">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Course, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.CourseId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.DropDownListFor(model => model.CourseId, Model.Course, "--select--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Course, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.CountryId, ViewBag.country as IEnumerable<SelectListItem>,
+                        @Html.DropDownListFor(model => model.CountryId, ViewBag.country as IEnumerable<SelectListItem>, "- Please select your country -",
     htmlAttributes: new { @class = "form-control", @id = "ddlCountry" })
                         @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                     </div>
@@ -163,7 +163,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.StateId, ViewBag.State as IEnumerable<SelectListItem>,
+                        @Html.DropDownListFor(model => model.StateId, ViewBag.State as IEnumerable<SelectListItem>, "- Please select your state -",
 htmlAttributes: new { @class = "form-control", @id = "ddlStateData" })
                         @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
 
@@ -176,7 +176,7 @@ htmlAttributes: new { @class = "form-control", @id = "ddlStateData" })
                 <div class="form-group">
                     @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.CityId, ViewBag.State as IEnumerable<SelectListItem>,
+                        @Html.DropDownListFor(model => model.CityId, ViewBag.State as IEnumerable<SelectListItem>, "- Please select your city -",
 htmlAttributes: new { @class = "form-control", @id = "ddlCity" })
                         @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
 
@@ -185,19 +185,49 @@ htmlAttributes: new { @class = "form-control", @id = "ddlCity" })
             </div>
         </div>
         <div class="col-md-12">
-            <div class="col-md-4"></div>
             <div class="col-md-4">
-
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Search" align="center" class="btn btn-success" />
+                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div>
+                        @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-            <div class="col-md-4"></div>
-        </div>
-    </div>
-</div>
+           
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsVerified, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div>
+                            @Html.EditorFor(model => model.IsVerified, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.IsVerified, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Pincode, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div>
+                            <div>
+                                @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              
+                    
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Search" align="center" class="btn btn-success" />
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+    
 
 }
 

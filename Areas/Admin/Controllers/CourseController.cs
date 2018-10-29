@@ -7,10 +7,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Sipl.Areas.Admin.Controllers
 {
-  
     [Authorize]
     public class CourseController : Controller
     {
@@ -27,19 +27,18 @@ namespace Sipl.Areas.Admin.Controllers
             {
                 CourseViewModel course = new CourseViewModel
                 {
-                    CourseId = item.CourseId,
+                    //CourseId = Convert.ToInt32(item.CourseId),
                     CourseName = item.CourseName
                 };
                 objCourseViewModel.Add(course);
             };
             return View(objCourseViewModel);
         }
-
         /// <summary>
         /// GET: Create Method For Course
         /// </summary>
         /// <returns></returns>
-        public ActionResult CreateCourse()
+        public ActionResult CreateCourse(string id)
         {
             var Subjects = (from b in objEntities.Subjects select b).ToList();
             var model = new CourseViewModel
@@ -52,7 +51,6 @@ namespace Sipl.Areas.Admin.Controllers
             };
             return View(model);
         }
-
         /// <summary>
         /// POST :Create Method For Course
         /// </summary>
@@ -98,7 +96,7 @@ namespace Sipl.Areas.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         public ActionResult EditCourse(int id)
-         {
+        {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -110,9 +108,9 @@ namespace Sipl.Areas.Admin.Controllers
             //var TEMPlIST = objEntities.Subjects.ToList();
             CourseViewModel courseView = new CourseViewModel
             {
-                 CourseId= courses.CourseId,
+                CourseId = Convert.ToInt32(courses.CourseId),
                 CourseName = courses.CourseName,
-                SubjectId=courses.SubjectId
+                SubjectId = courses.SubjectId
             };
             if (courses == null)
             {
@@ -121,13 +119,12 @@ namespace Sipl.Areas.Admin.Controllers
             ViewBag.SubjectId = new SelectList(objEntities.Subjects, "SubjectId", "SubjectName", courses.SubjectId);
             return View(courseView);
         }
-
-     /// <summary>
-     /// 
-     /// </summary>
-     /// <param name="id"></param>
-     /// <param name="objCourses"></param>
-     /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objCourses"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult EditCourse(int id, Courses objCourses)
 
@@ -140,9 +137,9 @@ namespace Sipl.Areas.Admin.Controllers
                     {
                         CourseId = id,
                         CourseName = objCourses.CourseName,
-                        SubjectId=objCourses.SubjectId
-                      
-                   
+                        SubjectId = objCourses.SubjectId
+
+
 
                     };
                     objEntities.Entry(objCourse).State = EntityState.Modified;
@@ -171,7 +168,7 @@ namespace Sipl.Areas.Admin.Controllers
             //var TEMPlIST = objEntities.Subjects.ToList();
             CourseViewModel courseView = new CourseViewModel
             {
-                CourseId = courses.CourseId,
+                CourseId = Convert.ToInt32(courses.CourseId),
                 CourseName = courses.CourseName
             };
             if (courses == null)
@@ -180,8 +177,11 @@ namespace Sipl.Areas.Admin.Controllers
             }
             return View(courseView);
         }
-
-     
+        /// <summary>
+        /// method for deletting course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult DeleteCourse(int id)
 
@@ -195,10 +195,15 @@ namespace Sipl.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-              Console.WriteLine("Exception source: delete failed", ex.Message);
+                Console.WriteLine("Exception source: delete failed", ex.Message);
                 return View(ex);
             }
         }
+        /// <summary>
+        /// logout
+        /// </summary>
+        /// <returns></returns>
+
 
 
 

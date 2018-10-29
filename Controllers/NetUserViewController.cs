@@ -4,6 +4,7 @@ using Sipl.DataBase;
 using Sipl.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -61,31 +62,42 @@ namespace Sipl.Controllers
         /// <returns></returns>
         public ActionResult RegisteredUserDetails(int? id)
         {
+            NetUserViewModel objNetUserViewModel = new NetUserViewModel();
+            try
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                //To Find Details of Particular Registered User
-                NetUsers netUsers = objEntities.NetUsers.Find(id);
-                var data = from d in objEntities.NetUsers
-                           where d.UserId == id
-                           select d;
-                //var TEMPlIST = objEntities.NetUsers.ToList();
-                NetUserViewModel netUser = new NetUserViewModel
-                {
-                    UserId = netUsers.UserId,
-                    FirstName = netUsers.FirstName,
-                    LastName = netUsers.LastName,
-                    Gender = netUsers.Gender,
-                    Email = netUsers.Email,
-                    Password = netUsers.Password,
-                    DOB = netUsers.DOB,
-                    IsActive = netUsers.IsActive,
-                    DateCreated = netUsers.DateCreated,
-                    DateModified = netUsers.DateModified
-                };
-                return View(netUser);
+                var getUser = (from d in objEntities.Address
+                               join c in objEntities.NetUsers on d.UserId equals c.UserId
+                               join s in objEntities.UserRole on c.UserId equals s.UserId
+                               join e in objEntities.SubjectInCourse on c.CourseId equals e.CourseId
+                               where d.UserId == id
+
+                               select new NetUserViewModel
+                               {
+                                   UserId = c.UserId,
+                                   FirstName = c.FirstName,
+                                   LastName = c.LastName,
+                                   Password = c.Password,
+                                   RoleId = s.RoleId,
+                                   Gender = c.Gender,
+                                   DOB = c.DOB,
+                                   Email = c.Email,
+                                   IsVerified = c.IsVerified,
+                                   IsActive = c.IsActive,
+                                   DateCreated = c.DateCreated,
+                                   CourseName = c.Courses.CourseName,
+                                   CurrentAddress = d.CurrentAddress,
+                                   PermanantAddress = d.PermanantAddress,
+                                   Country = d.Countries.CountryName,
+                                   States = d.States.StateName,
+                                   Cities = d.Cities.CityName,
+                                   Pincode = d.Pincode
+                               }).FirstOrDefault();
+                return View(getUser);
+            }
+            catch (Exception er)
+            {
+                Console.Write(er.Message);
+                return View();
             }
         }
 
@@ -120,9 +132,6 @@ namespace Sipl.Controllers
                 List<SelectListItem> listState = new List<SelectListItem>();
                 List<SelectListItem> listCity = new List<SelectListItem>();
 
-                listCountry.Add(new SelectListItem { Text = "", Value = "0" });
-                listState.Add(new SelectListItem { Text = "", Value = "0" });
-                listCity.Add(new SelectListItem { Text = "", Value = "0" });
 
                 foreach (var m in country)
                 {
@@ -190,6 +199,7 @@ namespace Sipl.Controllers
                             CityId = objNetUserViewModel.CityId,
                             CurrentAddress = objNetUserViewModel.CurrentAddress,
                             PermanantAddress = objNetUserViewModel.PermanantAddress,
+                            Pincode = objNetUserViewModel.Pincode,
                             UserId = userId
                         };
                         objEntities.Address.Add(objAddress);
@@ -214,38 +224,101 @@ namespace Sipl.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult UpdateRegisteredUsers(int id)
+        public ActionResult UpdateRegisteredUsers(int? id)
         {
-            ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
+            CrudViewModel objCrudViewModel = new CrudViewModel();
+            try
             {
-                if (id == null)
+                //TO GET ROLES FROM DATABASE
+                var roles = (from b in objEntities.NetRoles select b).ToList();
+                List<SelectListItem> listRoles = new List<SelectListItem>();
+                foreach (var x in roles)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    listRoles.Add(new SelectListItem
+                    {
+                        Value = x.RoleId,
+                        Text = x.RoleName
+                    });
                 }
-                NetUsers netUsers = objEntities.NetUsers.Find(id);
-                var data = from d in objEntities.NetUsers
-                           where d.UserId == id
-                           select d;
-                var TEMPlIST = objEntities.NetUsers.ToList();
-                NetUserViewModel netUser = new NetUserViewModel
+                ViewBag.roles = listRoles;
+
+                //GET : COURSE FOR USERS
+                var course = (from b in objEntities.Courses select b).ToList();
+
+                List<SelectListItem> listCourse = new List<SelectListItem>();
+                foreach (var x in course)
                 {
-                    FirstName = netUsers.FirstName,
-                    LastName = netUsers.LastName,
-                    Gender = netUsers.Gender,
-                    Email = netUsers.Email,
-                    Password = netUsers.Password,
-                    DOB = netUsers.DOB,
-                    IsActive = netUsers.IsActive,
-                    DateCreated = netUsers.DateCreated,
-                    DateModified = netUsers.DateModified
-                };
-                if (netUsers == null)
-                {
-                    return HttpNotFound();
+                    listCourse.Add(new SelectListItem
+                    {
+                        Value = x.CourseId.ToString(),
+                        Text = x.CourseName
+                    });
                 }
-                return View(netUser);
+                ViewBag.course = listCourse;
+
+                //TO GET COUNTRY ,STATES AND CITY
+                var country = objEntities.Countries.ToList();
+                var states = objEntities.States.ToList();
+                var cities = objEntities.Cities.ToList();
+                List<SelectListItem> listCountry = new List<SelectListItem>();
+                List<SelectListItem> listState = new List<SelectListItem>();
+                List<SelectListItem> listCity = new List<SelectListItem>();
+
+
+                foreach (var m in country)
+                {
+                    listCountry.Add(new SelectListItem { Text = m.CountryName, Value = m.CountryId.ToString() });
+                }
+                foreach (var m in states)
+                {
+                    listState.Add(new SelectListItem { Text = m.StateName, Value = m.StateId.ToString() });
+                }
+                foreach (var m in cities)
+                {
+                    listCity.Add(new SelectListItem { Text = m.CityName, Value = m.CityId.ToString() });
+                }
+                ViewBag.country = listCountry;
+                ViewBag.state = listState;
+                ViewBag.city = listCity;
+
+                var getUser = (from d in objEntities.Address
+                               join c in objEntities.NetUsers on d.UserId equals c.UserId
+                               join s in objEntities.UserRole on c.UserId equals s.UserId
+                               where d.UserId == id
+
+                               select new CrudViewModel
+                               {
+                                   UserId = c.UserId,
+                                   FirstName = c.FirstName,
+                                   LastName = c.LastName,
+                                   Password = c.Password,
+                                   Id = s.Id,
+                                   AddressId = d.AddressId,
+                                   RoleId = s.RoleId,
+                                   Gender = c.Gender,
+                                   DOB = c.DOB,
+                                   Email = c.Email,
+                                   IsVerified = c.IsVerified,
+                                   IsActive = c.IsActive,
+                                   DateCreated = c.DateCreated,
+                                   CourseId = c.CourseId,
+                                   CurrentAddress = d.CurrentAddress,
+                                   PermanantAddress = d.PermanantAddress,
+                                   CountryId = d.CountryId,
+                                   StateId = d.StateId,
+                                   CityId = d.CityId,
+                                   Pincode = d.Pincode
+                               }).FirstOrDefault();
+
+                return View(getUser);
+            }
+            catch (Exception er)
+            {
+                Console.Write(er.Message);
+                return View();
             }
         }
+
 
         /// <summary>
         /// Update Method for all users
@@ -254,71 +327,170 @@ namespace Sipl.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateRegisteredUsers(NetUserViewModel objNetUserViewModel)
+        public ActionResult UpdateRegisteredUsers(CrudViewModel objCrudViewModel)
         {
             ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
             try
             {
                 if (ModelState.IsValid)
                 {
+                    // to specify UserRole according to their UserId
+                    UserRole objUserRole = new UserRole
+                    {
+                        Id = objCrudViewModel.Id,
+                        RoleId = objCrudViewModel.RoleId,
+                        UserId = objCrudViewModel.UserId
+                    };
+                    objEntities.Entry(objUserRole).State = EntityState.Modified;
+                    objEntities.UserRole.Add(objUserRole);
+                    objEntities.SaveChanges();
+
+                    //Encrytion For Password
+                    //Encrytion For Password
+                    var keyNew = "Test";
+                    var password = Helper.EncodePassword(objCrudViewModel.Password, keyNew);
+
                     NetUsers objNetUsers = new NetUsers
                     {
-                        FirstName = objNetUserViewModel.FirstName,
-                        LastName = objNetUserViewModel.LastName,
-                        Gender = objNetUserViewModel.Gender,
-                        Email = objNetUserViewModel.Email,
-                        Password = objNetUserViewModel.Password,
-                        DOB = objNetUserViewModel.DOB,
-                        IsActive = objNetUserViewModel.IsActive,
+                        UserId = objCrudViewModel.UserId,
+                        FirstName = objCrudViewModel.FirstName,
+                        LastName = objCrudViewModel.LastName,
+                        Gender = objCrudViewModel.Gender,
+                        CourseId = objCrudViewModel.CourseId,
+                        Email = objCrudViewModel.Email,
+                        Password = objCrudViewModel.Password,
+                        DOB = objCrudViewModel.DOB,
+                        IsActive = objCrudViewModel.IsActive,
+                        IsVerified = objCrudViewModel.IsVerified,
                         DateCreated = DateTime.Now,
-                        DateModified = DateTime.Now
+                        DateModified = DateTime.Now,
                     };
-                    objEntities.NetUsers.Add(objNetUsers);
+                    objEntities.Entry(objNetUsers).State = EntityState.Modified;
                     objEntities.SaveChanges();
-                    return RedirectToAction("Index");
+                    //to get userId
+                    var userId = objNetUsers.UserId;
+
+                    //to add data in Address Table
+                    Address objAddress = new Address
+                    {
+                        AddressId = objCrudViewModel.AddressId,
+                        CountryId = objCrudViewModel.CountryId,
+                        StateId = objCrudViewModel.StateId,
+                        CityId = objCrudViewModel.CityId,
+                        CurrentAddress = objCrudViewModel.CurrentAddress,
+                        PermanantAddress = objCrudViewModel.PermanantAddress,
+                        Pincode = objCrudViewModel.Pincode,
+                        UserId = userId
+                    };
+                    objEntities.Entry(objAddress).State = EntityState.Modified;
+                    objEntities.SaveChanges();
+                    return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
                 }
-                return View(objNetUserViewModel);
+                return View(objCrudViewModel);
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine("Exception source: {0} user is failed to Update", ex.Message);
+                return View(ex);
             }
         }
 
         /// <summary>
-        ///  Delete Method for all users
+        /// Get Delete Method for all users
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult DeleteRegisteredUsers(int id)
+        public ActionResult DeleteRegisteredUsers(int? id)
         {
+            CrudViewModel objCrudViewModel = new CrudViewModel();
+            try
             {
-                if (id == null)
+                //TO GET ROLES FROM DATABASE
+                var roles = (from b in objEntities.NetRoles select b).ToList();
+
+                List<SelectListItem> listRoles = new List<SelectListItem>();
+                foreach (var x in roles)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    listRoles.Add(new SelectListItem
+                    {
+                        Value = x.RoleId,
+                        Text = x.RoleName
+                    });
                 }
-                NetUsers netUsers = objEntities.NetUsers.Find(id);
-                var data = from d in objEntities.NetUsers
-                           where d.UserId == id
-                           select d;
-                var TEMPlIST = objEntities.NetUsers.ToList();
-                NetUserViewModel netUser = new NetUserViewModel
+                ViewBag.roles = listRoles;
+
+                //GET : COURSE FOR USERS
+                var course = (from b in objEntities.Courses select b).ToList();
+                List<SelectListItem> listCourse = new List<SelectListItem>();
+                foreach (var x in course)
                 {
-                    FirstName = netUsers.FirstName,
-                    LastName = netUsers.LastName,
-                    Gender = netUsers.Gender,
-                    Email = netUsers.Email,
-                    Password = netUsers.Password,
-                    DOB = netUsers.DOB,
-                    IsActive = netUsers.IsActive,
-                    DateCreated = netUsers.DateCreated,
-                    DateModified = netUsers.DateModified
-                };
-                if (netUsers == null)
-                {
-                    return HttpNotFound();
+                    listCourse.Add(new SelectListItem
+                    {
+                        Value = x.CourseId.ToString(),
+                        Text = x.CourseName
+                    });
                 }
-                return View(netUser);
+                ViewBag.course = listCourse;
+
+                //TO GET COUNTRY ,STATES AND CITY
+                var country = objEntities.Countries.ToList();
+                var states = objEntities.States.ToList();
+                var cities = objEntities.Cities.ToList();
+                List<SelectListItem> listCountry = new List<SelectListItem>();
+                List<SelectListItem> listState = new List<SelectListItem>();
+                List<SelectListItem> listCity = new List<SelectListItem>();
+
+
+                foreach (var m in country)
+                {
+                    listCountry.Add(new SelectListItem { Text = m.CountryName, Value = m.CountryId.ToString() });
+                }
+                foreach (var m in states)
+                {
+                    listState.Add(new SelectListItem { Text = m.StateName, Value = m.StateId.ToString() });
+                }
+                foreach (var m in cities)
+                {
+                    listCity.Add(new SelectListItem { Text = m.CityName, Value = m.CityId.ToString() });
+                }
+                ViewBag.country = listCountry;
+                ViewBag.state = listState;
+                ViewBag.city = listCity;
+
+                var getUser = (from d in objEntities.Address
+                               join c in objEntities.NetUsers on d.UserId equals c.UserId
+                               join s in objEntities.UserRole on c.UserId equals s.UserId
+                               where d.UserId == id
+
+                               select new CrudViewModel
+                               {
+                                   UserId = c.UserId,
+                                   FirstName = c.FirstName,
+                                   LastName = c.LastName,
+                                   Password = c.Password,
+                                   Id = s.Id,
+                                   AddressId = d.AddressId,
+                                   RoleId = s.RoleId,
+                                   Gender = c.Gender,
+                                   DOB = c.DOB,
+                                   Email = c.Email,
+                                   IsVerified = c.IsVerified,
+                                   IsActive = c.IsActive,
+                                   DateCreated = c.DateCreated,
+                                   CourseId = c.CourseId,
+                                   CurrentAddress = d.CurrentAddress,
+                                   PermanantAddress = d.PermanantAddress,
+                                   CountryId = d.CountryId,
+                                   StateId = d.StateId,
+                                   CityId = d.CityId,
+                                   Pincode = d.Pincode
+                               }).FirstOrDefault();
+                return View(getUser);
+            }
+            catch (Exception er)
+            {
+                Console.Write(er.Message);
+                return View();
             }
         }
 
@@ -339,7 +511,7 @@ namespace Sipl.Controllers
                     objEntities.NetUsers.Remove(netUsers);
                     objEntities.SaveChanges();
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
             }
             catch (Exception ex)
             {

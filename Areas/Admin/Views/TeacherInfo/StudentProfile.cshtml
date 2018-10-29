@@ -1,0 +1,26 @@
+﻿@model Sipl.Models.NetUserViewModel
+@{
+    ViewBag.Title = "LoggedIn";
+}
+<h2>Hello!! Buddy</h2>
+<fieldset>
+    <legend>
+        <text>
+            @if (Session["Email"] != null)
+            {
+                <text>
+                    Welcome!!!!! @Session["Email"].ToString()
+                </text>
+            }
+        </text>
+    </legend>
+</fieldset>
+<div>
+@Html.RouteLink("View Teacher ", "Default",
+       new { action = "_StudentPage", controller = "Admin/TeacherInfo" })
+    </div>
+<div>
+@Html.RouteLink("Edit Profile ", "Default",
+       new { action = "RegisteredUserDetails", controller ="NetUserView",   id =Model.UserId})
+    </div>
+

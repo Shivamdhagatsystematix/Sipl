@@ -1,0 +1,54 @@
+﻿@model Sipl.Areas.Admin.Models.FilterViewModel
+@{
+    ViewBag.Title = "UserSearchView";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <div>
+            <a type="button" class="btn btn-primary btn-sm"
+               href="@Url.Action("Index", "Home", new { area = "" })">
+                <span class="glyphicon glyphicon-list"></span>
+                <span>Back to Main Menu</span>
+            </a>
+            <hr>
+            <h2>Search User based on their Roles</h2>
+            <br>
+            <hr>
+        </div>
+        <div class="form-horizontal">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.DropDownListFor(model => model.RoleId, Model.Role, "Select", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Course, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.CourseId, Model.Course, "--select--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Search" align="center" class="btn btn-success" />
+        </div>
+    </div>
+}
+<div>
+    @Html.Partial("_TeacherGridPartial", Model)
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

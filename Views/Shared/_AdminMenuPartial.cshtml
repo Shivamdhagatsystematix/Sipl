@@ -1,4 +1,5 @@
-﻿@if(Convert.ToBoolean(Session["Admin"])  && Request.IsAuthenticated)
+﻿@if (Convert.ToInt32(Session["RoleId"]) == 3)
+
 {
     <li class="dropdown" data-admin-menu>
         <a href="#">
@@ -8,14 +9,13 @@
         <ul class="dropdown-menu" role="menu">
             <li class="dropdown-header">Management</li>
             <li class="divider" />
-            <li><a href="/NetUserView/RegisterUser">&nbsp;&nbsp;Registration Page</a></li>
-            <li><a href="/Admin/SearchView/SearchView">&nbsp;&nbsp;Search Page</a></li>
-            <li><a href="/Admin/Subject/GetSubject">&nbsp;&nbsp;Manage Subjects</a></li>
-            <li><a href="/Admin/Course/GetCourse">&nbsp;&nbsp;Manage Courses</a></li>
-            <li><a href="/Admin/Manage Teacher">&nbsp;&nbsp;Manage Teachers</a></li>
-            <li><a href="/Admin/Manage Student">&nbsp;&nbsp;Manage Student</a></li>
+            <li><a href="/Sipl/NetUserView/RegisterUser">&nbsp;&nbsp;Registration Page</a></li>
+            <li><a href="/Sipl/Admin/SearchView/SearchView">&nbsp;&nbsp;Search Page</a></li>
+            <li><a href="/Sipl/Admin/Subject/GetSubject">&nbsp;&nbsp;Manage Subjects</a></li>
+            <li><a href="/Sipl/Admin/Course/GetCourse">&nbsp;&nbsp;Manage Courses</a></li>
+            <li><a href="/Sipl/Admin/TeacherInfo/UserSearchView">&nbsp;&nbsp;Manage Users(Teachers/Students)</a></li>
+
 
         </ul>
     </li>
 }
-s

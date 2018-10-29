@@ -10,7 +10,7 @@ namespace Sipl.Areas.Admin.Models
 {
     public class CourseViewModel
     {
-       public int? CourseId { get; set; }
+       public int CourseId { get; set; }
 
         [Required]
         public string CourseName { get; set; }

@@ -80,6 +80,7 @@ namespace Sipl.Models
 
         [Required]
         [Remote("CheckEmailExists", "NetUserView", HttpMethod = "POST", ErrorMessage = "Email address already registered.")]
+       [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

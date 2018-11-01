@@ -121,11 +121,13 @@ namespace Sipl.Controllers
                         }
                         else
                         {
+                            ModelState.AddModelError("Email", "Email and Password not found or matched");
                             return View(model);
                         }
 
                     }
                 }
+               
                 else return View(model);
                 {
 

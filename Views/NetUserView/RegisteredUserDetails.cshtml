@@ -113,22 +113,26 @@
         </div>
     }
     @*@if (Convert.ToInt32(Session["RoleId"]) == 2)
-    {
-        <div>
-            <a type="button" class="btn btn-primary btn-sm"
-               href="@Url.Action("StudentProfile", "Admin/TeacherInfo")">
-                <span class="glyphicon glyphicon-list"></span>
-                <span>Back to Main Menu Student</span>
-            </a>
-        </div>
-    }*@
+        {
+            <div>
+                <a type="button" class="btn btn-primary btn-sm"
+                   href="@Url.Action("StudentProfile", "Admin/TeacherInfo")">
+                    <span class="glyphicon glyphicon-list"></span>
+                    <span>Back to Main Menu Student</span>
+                </a>
+            </div>
+        }*@
 
 </p>
 <p>
+
     @if (Convert.ToInt32(Session["RoleId"]) == 2)
     {
-     
+
         @Html.RouteLink("Edit Profile ", "Default",
-       new { action = "UpdateRegisteredUsers", controller ="NetUserView",   id =Model.UserId})
+              new { action = "UpdateRegisteredUsers", controller ="NetUserView",   id =Model.UserId}) 
+        @Html.RouteLink("|Back To Main Menu ", "Default",
+          new { action = "StudentProfile", controller = "Admin/TeacherInfo",   id =Model.UserId})
     }
+
 </p>

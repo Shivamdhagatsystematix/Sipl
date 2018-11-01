@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Sipl.Controllers
 {
@@ -328,63 +329,199 @@ namespace Sipl.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UpdateRegisteredUsers(CrudViewModel objCrudViewModel)
+
         {
             ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
             try
             {
-                if (ModelState.IsValid)
+                if (Convert.ToInt32(Session["RoleId"]) == 2)
                 {
-                    // to specify UserRole according to their UserId
-                    UserRole objUserRole = new UserRole
+                    if (ModelState.IsValid)
                     {
-                        Id = objCrudViewModel.Id,
-                        RoleId = objCrudViewModel.RoleId,
-                        UserId = objCrudViewModel.UserId
-                    };
-                    objEntities.Entry(objUserRole).State = EntityState.Modified;
-                    objEntities.UserRole.Add(objUserRole);
-                    objEntities.SaveChanges();
+                        // to specify UserRole according to their UserId
+                        UserRole objUserRole = new UserRole
+                        {
+                            Id = objCrudViewModel.Id,
+                            RoleId = objCrudViewModel.RoleId,
+                            UserId = objCrudViewModel.UserId
+                        };
+                        objEntities.Entry(objUserRole).State = EntityState.Modified;
+                        objEntities.UserRole.Add(objUserRole);
+                        objEntities.SaveChanges();
 
-                    //Encrytion For Password
-                    //Encrytion For Password
-                    var keyNew = "Test";
-                    var password = Helper.EncodePassword(objCrudViewModel.Password, keyNew);
+                        //Encrytion For Password
+                        //Encrytion For Password
+                        var keyNew = "Test";
+                        var password = Helper.EncodePassword(objCrudViewModel.Password, keyNew);
 
-                    NetUsers objNetUsers = new NetUsers
+                        NetUsers objNetUsers = new NetUsers
+                        {
+                            UserId = objCrudViewModel.UserId,
+                            FirstName = objCrudViewModel.FirstName,
+                            LastName = objCrudViewModel.LastName,
+                            Gender = objCrudViewModel.Gender,
+                            CourseId = objCrudViewModel.CourseId,
+                            Email = objCrudViewModel.Email,
+                            Password = objCrudViewModel.Password,
+                            DOB = objCrudViewModel.DOB,
+                            IsActive = objCrudViewModel.IsActive,
+                            IsVerified = objCrudViewModel.IsVerified,
+                            DateCreated = DateTime.Now,
+                            DateModified = DateTime.Now,
+                        };
+                        objEntities.Entry(objNetUsers).State = EntityState.Modified;
+                        objEntities.SaveChanges();
+                        //to get userId
+                        var userId = objNetUsers.UserId;
+
+                        //to add data in Address Table
+                        Address objAddress = new Address
+                        {
+                            AddressId = objCrudViewModel.AddressId,
+                            CountryId = objCrudViewModel.CountryId,
+                            StateId = objCrudViewModel.StateId,
+                            CityId = objCrudViewModel.CityId,
+                            CurrentAddress = objCrudViewModel.CurrentAddress,
+                            PermanantAddress = objCrudViewModel.PermanantAddress,
+                            Pincode = objCrudViewModel.Pincode,
+                            UserId = userId
+                        };
+                        objEntities.Entry(objAddress).State = EntityState.Modified;
+                        objEntities.SaveChanges();
+                        return RedirectToAction("StudentProfile", "Admin/TeacherInfo", new { id = userId });
+                        //return RedirectToAction("StudentProfile", , Id = userId }));
+                    }
+                    return View(objCrudViewModel);
+
+                }
+
+
+
+                else if (Convert.ToInt32(Session["RoleId"]) == 1)
+                {
                     {
-                        UserId = objCrudViewModel.UserId,
-                        FirstName = objCrudViewModel.FirstName,
-                        LastName = objCrudViewModel.LastName,
-                        Gender = objCrudViewModel.Gender,
-                        CourseId = objCrudViewModel.CourseId,
-                        Email = objCrudViewModel.Email,
-                        Password = objCrudViewModel.Password,
-                        DOB = objCrudViewModel.DOB,
-                        IsActive = objCrudViewModel.IsActive,
-                        IsVerified = objCrudViewModel.IsVerified,
-                        DateCreated = DateTime.Now,
-                        DateModified = DateTime.Now,
-                    };
-                    objEntities.Entry(objNetUsers).State = EntityState.Modified;
-                    objEntities.SaveChanges();
-                    //to get userId
-                    var userId = objNetUsers.UserId;
+                        if (ModelState.IsValid)
+                        {
+                            // to specify UserRole according to their UserId
+                            UserRole objUserRole = new UserRole
+                            {
+                                Id = objCrudViewModel.Id,
+                                RoleId = objCrudViewModel.RoleId,
+                                UserId = objCrudViewModel.UserId
+                            };
+                            objEntities.Entry(objUserRole).State = EntityState.Modified;
+                            objEntities.UserRole.Add(objUserRole);
+                            objEntities.SaveChanges();
 
-                    //to add data in Address Table
-                    Address objAddress = new Address
+                            //Encrytion For Password
+                            //Encrytion For Password
+                            var keyNew = "Test";
+                            var password = Helper.EncodePassword(objCrudViewModel.Password, keyNew);
+
+                            NetUsers objNetUsers = new NetUsers
+                            {
+                                UserId = objCrudViewModel.UserId,
+                                FirstName = objCrudViewModel.FirstName,
+                                LastName = objCrudViewModel.LastName,
+                                Gender = objCrudViewModel.Gender,
+                                CourseId = objCrudViewModel.CourseId,
+                                Email = objCrudViewModel.Email,
+                                Password = objCrudViewModel.Password,
+                                DOB = objCrudViewModel.DOB,
+                                IsActive = objCrudViewModel.IsActive,
+                                IsVerified = objCrudViewModel.IsVerified,
+                                DateCreated = DateTime.Now,
+                                DateModified = DateTime.Now,
+                            };
+                            objEntities.Entry(objNetUsers).State = EntityState.Modified;
+                            objEntities.SaveChanges();
+                            //to get userId
+                            var userId = objNetUsers.UserId;
+
+                            //to add data in Address Table
+                            Address objAddress = new Address
+                            {
+                                AddressId = objCrudViewModel.AddressId,
+                                CountryId = objCrudViewModel.CountryId,
+                                StateId = objCrudViewModel.StateId,
+                                CityId = objCrudViewModel.CityId,
+                                CurrentAddress = objCrudViewModel.CurrentAddress,
+                                PermanantAddress = objCrudViewModel.PermanantAddress,
+                                Pincode = objCrudViewModel.Pincode,
+                                UserId = userId
+                            };
+                            objEntities.Entry(objAddress).State = EntityState.Modified;
+                            objEntities.SaveChanges();
+                            return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
+                        }
+
+                    }
+
+
+                }
+                else if (Convert.ToInt32(Session["RoleId"]) == 3)
+                {
                     {
-                        AddressId = objCrudViewModel.AddressId,
-                        CountryId = objCrudViewModel.CountryId,
-                        StateId = objCrudViewModel.StateId,
-                        CityId = objCrudViewModel.CityId,
-                        CurrentAddress = objCrudViewModel.CurrentAddress,
-                        PermanantAddress = objCrudViewModel.PermanantAddress,
-                        Pincode = objCrudViewModel.Pincode,
-                        UserId = userId
-                    };
-                    objEntities.Entry(objAddress).State = EntityState.Modified;
-                    objEntities.SaveChanges();
-                    return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
+                        {
+                            if (ModelState.IsValid)
+                            {
+                                // to specify UserRole according to their UserId
+                                UserRole objUserRole = new UserRole
+                                {
+                                    Id = objCrudViewModel.Id,
+                                    RoleId = objCrudViewModel.RoleId,
+                                    UserId = objCrudViewModel.UserId
+                                };
+                                objEntities.Entry(objUserRole).State = EntityState.Modified;
+                                objEntities.UserRole.Add(objUserRole);
+                                objEntities.SaveChanges();
+
+                                //Encrytion For Password
+                                //Encrytion For Password
+                                var keyNew = "Test";
+                                var password = Helper.EncodePassword(objCrudViewModel.Password, keyNew);
+
+                                NetUsers objNetUsers = new NetUsers
+                                {
+                                    UserId = objCrudViewModel.UserId,
+                                    FirstName = objCrudViewModel.FirstName,
+                                    LastName = objCrudViewModel.LastName,
+                                    Gender = objCrudViewModel.Gender,
+                                    CourseId = objCrudViewModel.CourseId,
+                                    Email = objCrudViewModel.Email,
+                                    Password = objCrudViewModel.Password,
+                                    DOB = objCrudViewModel.DOB,
+                                    IsActive = objCrudViewModel.IsActive,
+                                    IsVerified = objCrudViewModel.IsVerified,
+                                    DateCreated = DateTime.Now,
+                                    DateModified = DateTime.Now,
+                                };
+                                objEntities.Entry(objNetUsers).State = EntityState.Modified;
+                                objEntities.SaveChanges();
+                                //to get userId
+                                var userId = objNetUsers.UserId;
+
+                                //to add data in Address Table
+                                Address objAddress = new Address
+                                {
+                                    AddressId = objCrudViewModel.AddressId,
+                                    CountryId = objCrudViewModel.CountryId,
+                                    StateId = objCrudViewModel.StateId,
+                                    CityId = objCrudViewModel.CityId,
+                                    CurrentAddress = objCrudViewModel.CurrentAddress,
+                                    PermanantAddress = objCrudViewModel.PermanantAddress,
+                                    Pincode = objCrudViewModel.Pincode,
+                                    UserId = userId
+                                };
+                                objEntities.Entry(objAddress).State = EntityState.Modified;
+                                objEntities.SaveChanges();
+                                return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
+                            }
+
+                        }
+
+
+                    }
                 }
                 return View(objCrudViewModel);
             }

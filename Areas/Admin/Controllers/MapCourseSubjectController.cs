@@ -10,6 +10,7 @@ using Sipl.DataBase;
 
 namespace Sipl.Areas.Admin.Controllers
 {
+    [Authorize]
     public class MapCourseSubjectController : Controller
     {
         private SiplDatabaseEntities db = new SiplDatabaseEntities();

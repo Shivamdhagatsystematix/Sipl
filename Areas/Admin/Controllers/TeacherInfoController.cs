@@ -16,7 +16,7 @@ using Sipl.Models;
 
 namespace Sipl.Areas.Admin.Controllers
 {
-
+    [Authorize]
     public class TeacherInfoController : Controller
     {
         SiplDatabaseEntities objEntities = new SiplDatabaseEntities();

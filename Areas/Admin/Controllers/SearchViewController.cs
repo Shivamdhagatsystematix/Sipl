@@ -168,16 +168,16 @@ namespace Sipl.Areas.Admin.Controllers
                                   user in objEntities.NetUsers
                              join userRole in objEntities.UserRole on user.UserId equals userRole.UserId
                              join Address in objEntities.Address on user.UserId equals Address.UserId
-                             where user.FirstName == objFilterViewModel.FirstName || string.IsNullOrEmpty(objFilterViewModel.FirstName)
-                             where user.LastName == objFilterViewModel.LastName || string.IsNullOrEmpty(objFilterViewModel.LastName)
+                             where user.FirstName == objFilterViewModel.FirstName.Trim() || string.IsNullOrEmpty(objFilterViewModel.FirstName)
+                             where user.LastName == objFilterViewModel.LastName.Trim() || string.IsNullOrEmpty(objFilterViewModel.LastName)
                              where user.Gender == objFilterViewModel.Gender || string.IsNullOrEmpty(objFilterViewModel.Gender)
-                             where user.Email == objFilterViewModel.Email || string.IsNullOrEmpty(objFilterViewModel.Email)
+                             where user.Email == objFilterViewModel.Email.Trim() || string.IsNullOrEmpty(objFilterViewModel.Email)
                              where user.DOB == objFilterViewModel.DOB || objFilterViewModel.DOB == null
                              where user.IsActive == objFilterViewModel.IsActive
                              where user.IsVerified == objFilterViewModel.IsVerified
                              where user.Courses.CourseId == objFilterViewModel.CourseId || objFilterViewModel.CourseId == null
-                             where Address.CurrentAddress == objFilterViewModel.CurrentAddress || string.IsNullOrEmpty(objFilterViewModel.CurrentAddress)
-                             where Address.PermanantAddress == objFilterViewModel.PermanantAddress || string.IsNullOrEmpty(objFilterViewModel.PermanantAddress)
+                             where Address.CurrentAddress == objFilterViewModel.CurrentAddress.Trim() || string.IsNullOrEmpty(objFilterViewModel.CurrentAddress)
+                             where Address.PermanantAddress == objFilterViewModel.PermanantAddress.Trim() || string.IsNullOrEmpty(objFilterViewModel.PermanantAddress)
                              where Address.Countries.CountryId == objFilterViewModel.CountryId || string.IsNullOrEmpty(objFilterViewModel.Country)
                              where Address.States.StateId == objFilterViewModel.StateId || string.IsNullOrEmpty(objFilterViewModel.States)
                              where Address.Cities.CityId == objFilterViewModel.CityId || string.IsNullOrEmpty(objFilterViewModel.Cities)

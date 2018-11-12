@@ -489,7 +489,41 @@ namespace Sipl.Areas.Admin.Controllers
                                     Pincode = s.Pincode
                                 }).FirstOrDefault();
 
-                return View(userList);
+                if (userList == null)
+                {
+                    var userListnull = (from d in objEntities.NetUsers
+                                        join c in objEntities.UserRole on d.UserId equals c.UserId
+                                        join s in objEntities.Address on c.UserId equals s.UserId
+                                        where d.UserId == id
+                                        select new NetUserViewModel
+                                        {
+                                            UserId = d.UserId,
+                                            RoleId = c.RoleId,
+                                            //SubjectName = su.SubjectName,
+                                            FirstName = d.FirstName,
+                                            LastName = d.LastName,
+                                            Gender = d.Gender,
+                                            Email = d.Email,
+                                            Password = d.Password,
+                                            DOB = d.DOB,
+                                            IsActive = d.IsActive,
+                                            IsVerified = d.IsVerified,
+                                            CurrentAddress = s.CurrentAddress,
+                                            PermanantAddress = s.PermanantAddress,
+                                            Country = s.Countries.CountryName,
+                                            States = s.States.StateName,
+                                            Cities = s.Cities.CityName,
+                                            DateCreated = d.DateCreated,
+                                            Pincode = s.Pincode
+                                        }).FirstOrDefault();
+                    return View(userListnull);
+
+
+                }
+                else {
+
+                    return View(userList);
+                }
             }
             else
             {

@@ -105,4 +105,3 @@ C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.csproj.CoreCompileI
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.csproj.CopyComplete
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.dll
 C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.pdb
-C:\Users\Shivam dhagat\source\repos\Sipl\Sipl\obj\Debug\Sipl.csprojAssemblyReference.cache

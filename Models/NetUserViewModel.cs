@@ -65,10 +65,10 @@ namespace Sipl.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required]
+       
         public string RoleId { get; set; }
         public string RoleName { get; set; }
-        [Required]
+       
         public List<SelectListItem> Role { get; set; }
         public int? CourseId { get; set; }
         public string CourseName { get; set; }

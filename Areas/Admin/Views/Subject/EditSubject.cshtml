@@ -24,9 +24,14 @@
         </div>
     </div>
 }
-<div>
-    @Html.Partial("_BacktoListButtonPartial", "Index")
-</div>
+    <div>
+        <a type="button" class="btn btn-primary btn-sm"
+           href="@Url.Action("GetSubject","Subject")">
+            <span class="glyphicon glyphicon-list"></span>
+            <span>Back to List</span>
+        </a>
+
+    </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

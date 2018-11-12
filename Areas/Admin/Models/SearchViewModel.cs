@@ -9,7 +9,6 @@ namespace Sipl.Areas.Admin.Models
 {
     public class SearchViewModel
     {
-
         public byte? UserId { get; set; }
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -35,7 +34,6 @@ namespace Sipl.Areas.Admin.Models
         [DisplayFormat(DataFormatString =
                 "{0:yyyy-MM-dd}",
           ApplyFormatInEditMode = true)]
-
         public System.DateTime? DOB { get; set; }
         public bool IsActive { get; set; }
         public bool IsVerified { get; set; }
@@ -47,7 +45,6 @@ namespace Sipl.Areas.Admin.Models
         public string PermanantAddress { get; set; }
 
         [Display(Name = "Country")]
-
         public int CountryId { get; set; }
         public string Country { get; set; }
         [Display(Name = "State")]
@@ -57,18 +54,13 @@ namespace Sipl.Areas.Admin.Models
         public int CityId { get; set; }
         public string Cities { get; set; }
         public string Pincode { get; set; }
-
-
     }
-
     public class FilterViewModel
     {
-
         public List<SearchViewModel> List { get; set; }
         public byte UserId { get; set; }
         public int? SubjectId { get; set; }
         public virtual DataBase.Subjects Subjects { get; set; }
-
         public IEnumerable<SelectListItem> SubjectAssign { get; set; }
 
         [Display(Name = "First Name")]
@@ -105,7 +97,6 @@ namespace Sipl.Areas.Admin.Models
         public string PermanantAddress { get; set; }
 
         [Display(Name = "Country")]
-
         public int? CountryId { get; set; }
         public string Country { get; set; }
         [Display(Name = "State")]
@@ -114,10 +105,8 @@ namespace Sipl.Areas.Admin.Models
         [Display(Name = "City")]
         public int? CityId { get; set; }
         public string Cities { get; set; }
-
         public string Pincode { get; set; }
     }
-
     public class CountryModel
     {
         public int CountryId { get; set; }

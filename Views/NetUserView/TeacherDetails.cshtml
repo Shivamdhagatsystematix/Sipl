@@ -27,11 +27,11 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
+            @Html.DisplayNameFor(model => model.SubjectName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CourseName)
+            @Html.DisplayFor(model => model.SubjectName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Gender)
@@ -105,33 +105,28 @@
     @if (Convert.ToInt32(Session["RoleId"]) == 1)
     {
     <div>
-        <a type="button" class="btn btn-primary btn-sm"
-           href="@Url.Action("TeacherProfile", "Admin/TeacherInfo",new  {id =Session["Id"]})">
-            <span class="glyphicon glyphicon-list"></span>
-            <span>Back to Main Menu Teacher</span>
-        </a>
-        @*@Html.RouteLink("Back to list ", "Default",
- new { action = "_TeacherPage", controller = "Admin/TeacherInfo", id = Model.UserId })*@
+        @Html.RouteLink("Back To Main Menu ", "Default",
+         new { action = "TeacherProfile", controller = "Admin/TeacherInfo",   id =Model.UserId})
+        <span>|</span>
 
-        <a type="button" class="btn btn-primary btn-sm"
-           href="@Url.Action("_TeacherPage", "Admin/TeacherInfo",new  {id =Session["Id"]})">
-            <span class="glyphicon glyphicon-list"></span>
-            <span>Back to list</span>
-        </a>
+        @Html.RouteLink("Edit Profile ", "Default",
+              new { action = "UpdateRegisteredUsers", controller ="NetUserView",   id =Model.UserId})
     </div>
     }
    
+
 </p>
 <p>
 
-    @if (Convert.ToInt32(Session["RoleId"]) == 2)
+    @if (Convert.ToInt32(Session["RoleId"]) == 3)
     {
-        @Html.RouteLink("Back To Main Menu ", "Default",
-                 new { action = "UserProfile", controller = "Admin/TeacherInfo",   id =Model.UserId})
-        <span>|</span>
+
         @Html.RouteLink("Edit Profile ", "Default",
               new { action = "UpdateRegisteredUsers", controller ="NetUserView",   id =Model.UserId})
-
+        @Html.RouteLink("|Back To Main Menu ", "Default",
+          new { action = "UserSearchView", controller = "Admin/TeacherInfo",   id =Model.UserId})
     }
 
 </p>
+
+

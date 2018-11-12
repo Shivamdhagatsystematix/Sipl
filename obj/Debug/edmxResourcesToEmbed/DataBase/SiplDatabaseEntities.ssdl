@@ -35,7 +35,6 @@
     </Key>
     <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CourseName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="SubjectId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="NetRoles">
     <Key>
@@ -110,7 +109,7 @@
     <Property Name="RoleId" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
-  <Association Name="FK__Address__CityId__1D4655FB">
+  <Association Name="FK__Address__CityId__6774552F">
     <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
     <End Role="Address" Type="Self.Address" Multiplicity="*" />
     <ReferentialConstraint>
@@ -122,7 +121,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Address__Country__1B5E0D89">
+  <Association Name="FK__Address__Country__658C0CBD">
     <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
     <End Role="Address" Type="Self.Address" Multiplicity="*" />
     <ReferentialConstraint>
@@ -134,7 +133,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Address__StateId__1C5231C2">
+  <Association Name="FK__Address__StateId__668030F6">
     <End Role="States" Type="Self.States" Multiplicity="1" />
     <End Role="Address" Type="Self.Address" Multiplicity="*" />
     <ReferentialConstraint>
@@ -146,7 +145,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cities__CountryI__2B947552">
+  <Association Name="FK__Address__UserId__6497E884">
+    <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NetUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cities__CountryI__68687968">
     <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
     <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
     <ReferentialConstraint>
@@ -158,7 +171,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Cities__StateId__2C88998B">
+  <Association Name="FK__Cities__StateId__695C9DA1">
     <End Role="States" Type="Self.States" Multiplicity="1" />
     <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
     <ReferentialConstraint>
@@ -170,19 +183,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Courses__Subject__7FB5F314">
-    <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
-    <End Role="Courses" Type="Self.Courses" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Subjects">
-        <PropertyRef Name="SubjectId" />
-      </Principal>
-      <Dependent Role="Courses">
-        <PropertyRef Name="SubjectId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__NetUsers__Course__60083D91">
+  <Association Name="FK__NetUsers__Course__6B44E613">
     <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
     <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="*" />
     <ReferentialConstraint>
@@ -194,7 +195,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__States__CountryI__29AC2CE0">
+  <Association Name="FK__States__CountryI__6C390A4C">
     <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
     <End Role="States" Type="Self.States" Multiplicity="*" />
     <ReferentialConstraint>
@@ -206,10 +207,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SubjectIn__Cours__37FA4C37">
-    <End Role="Courses" Type="Self.Courses" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
+  <Association Name="FK__SubjectIn__Cours__70099B30">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
     <End Role="SubjectInCourse" Type="Self.SubjectInCourse" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Courses">
@@ -220,7 +219,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SubjectIn__Subje__6E01572D">
+  <Association Name="FK__SubjectIn__Subje__6D2D2E85">
     <End Role="Subjects" Type="Self.Subjects" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -234,7 +233,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TeacherIn__Subje__3AD6B8E2">
+  <Association Name="FK__TeacherIn__Subje__73DA2C14">
     <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
     <End Role="TeacherInSubject" Type="Self.TeacherInSubject" Multiplicity="*" />
     <ReferentialConstraint>
@@ -246,19 +245,45 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__TeacherIn__Subje__778AC167">
-    <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+  <Association Name="FK__TeacherIn__UserI__71F1E3A2">
+    <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="TeacherInSubject" Type="Self.TeacherInSubject" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Subjects">
-        <PropertyRef Name="SubjectId" />
+      <Principal Role="NetUsers">
+        <PropertyRef Name="UserId" />
       </Principal>
       <Dependent Role="TeacherInSubject">
-        <PropertyRef Name="SubjectId" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserRole__UserId__38EE7070">
+  <Association Name="FK__UserRole__RoleId__61BB7BD9">
+    <End Role="NetRoles" Type="Self.NetRoles" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NetRoles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRole__RoleId__75C27486">
+    <End Role="NetRoles" Type="Self.NetRoles" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NetRoles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRole__UserId__74CE504D">
     <End Role="NetUsers" Type="Self.NetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -269,18 +294,6 @@
       </Principal>
       <Dependent Role="UserRole">
         <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserRole_NetRoles">
-    <End Role="NetRoles" Type="Self.NetRoles" Multiplicity="1" />
-    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="NetRoles">
-        <PropertyRef Name="RoleId" />
-      </Principal>
-      <Dependent Role="UserRole">
-        <PropertyRef Name="RoleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -297,60 +310,64 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeacherInSubject" EntityType="Self.TeacherInSubject" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Address__CityId__1D4655FB" Association="Self.FK__Address__CityId__1D4655FB">
+    <AssociationSet Name="FK__Address__CityId__6774552F" Association="Self.FK__Address__CityId__6774552F">
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Address" EntitySet="Address" />
     </AssociationSet>
-    <AssociationSet Name="FK__Address__Country__1B5E0D89" Association="Self.FK__Address__Country__1B5E0D89">
+    <AssociationSet Name="FK__Address__Country__658C0CBD" Association="Self.FK__Address__Country__658C0CBD">
       <End Role="Countries" EntitySet="Countries" />
       <End Role="Address" EntitySet="Address" />
     </AssociationSet>
-    <AssociationSet Name="FK__Address__StateId__1C5231C2" Association="Self.FK__Address__StateId__1C5231C2">
+    <AssociationSet Name="FK__Address__StateId__668030F6" Association="Self.FK__Address__StateId__668030F6">
       <End Role="States" EntitySet="States" />
       <End Role="Address" EntitySet="Address" />
     </AssociationSet>
-    <AssociationSet Name="FK__Cities__CountryI__2B947552" Association="Self.FK__Cities__CountryI__2B947552">
+    <AssociationSet Name="FK__Address__UserId__6497E884" Association="Self.FK__Address__UserId__6497E884">
+      <End Role="NetUsers" EntitySet="NetUsers" />
+      <End Role="Address" EntitySet="Address" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cities__CountryI__68687968" Association="Self.FK__Cities__CountryI__68687968">
       <End Role="Countries" EntitySet="Countries" />
       <End Role="Cities" EntitySet="Cities" />
     </AssociationSet>
-    <AssociationSet Name="FK__Cities__StateId__2C88998B" Association="Self.FK__Cities__StateId__2C88998B">
+    <AssociationSet Name="FK__Cities__StateId__695C9DA1" Association="Self.FK__Cities__StateId__695C9DA1">
       <End Role="States" EntitySet="States" />
       <End Role="Cities" EntitySet="Cities" />
     </AssociationSet>
-    <AssociationSet Name="FK__Courses__Subject__7FB5F314" Association="Self.FK__Courses__Subject__7FB5F314">
-      <End Role="Subjects" EntitySet="Subjects" />
-      <End Role="Courses" EntitySet="Courses" />
-    </AssociationSet>
-    <AssociationSet Name="FK__NetUsers__Course__60083D91" Association="Self.FK__NetUsers__Course__60083D91">
+    <AssociationSet Name="FK__NetUsers__Course__6B44E613" Association="Self.FK__NetUsers__Course__6B44E613">
       <End Role="Courses" EntitySet="Courses" />
       <End Role="NetUsers" EntitySet="NetUsers" />
     </AssociationSet>
-    <AssociationSet Name="FK__States__CountryI__29AC2CE0" Association="Self.FK__States__CountryI__29AC2CE0">
+    <AssociationSet Name="FK__States__CountryI__6C390A4C" Association="Self.FK__States__CountryI__6C390A4C">
       <End Role="Countries" EntitySet="Countries" />
       <End Role="States" EntitySet="States" />
     </AssociationSet>
-    <AssociationSet Name="FK__SubjectIn__Cours__37FA4C37" Association="Self.FK__SubjectIn__Cours__37FA4C37">
+    <AssociationSet Name="FK__SubjectIn__Cours__70099B30" Association="Self.FK__SubjectIn__Cours__70099B30">
       <End Role="Courses" EntitySet="Courses" />
       <End Role="SubjectInCourse" EntitySet="SubjectInCourse" />
     </AssociationSet>
-    <AssociationSet Name="FK__SubjectIn__Subje__6E01572D" Association="Self.FK__SubjectIn__Subje__6E01572D">
+    <AssociationSet Name="FK__SubjectIn__Subje__6D2D2E85" Association="Self.FK__SubjectIn__Subje__6D2D2E85">
       <End Role="Subjects" EntitySet="Subjects" />
       <End Role="SubjectInCourse" EntitySet="SubjectInCourse" />
     </AssociationSet>
-    <AssociationSet Name="FK__TeacherIn__Subje__3AD6B8E2" Association="Self.FK__TeacherIn__Subje__3AD6B8E2">
+    <AssociationSet Name="FK__TeacherIn__Subje__73DA2C14" Association="Self.FK__TeacherIn__Subje__73DA2C14">
       <End Role="Subjects" EntitySet="Subjects" />
       <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
     </AssociationSet>
-    <AssociationSet Name="FK__TeacherIn__Subje__778AC167" Association="Self.FK__TeacherIn__Subje__778AC167">
-      <End Role="Subjects" EntitySet="Subjects" />
-      <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserRole__UserId__38EE7070" Association="Self.FK__UserRole__UserId__38EE7070">
+    <AssociationSet Name="FK__TeacherIn__UserI__71F1E3A2" Association="Self.FK__TeacherIn__UserI__71F1E3A2">
       <End Role="NetUsers" EntitySet="NetUsers" />
+      <End Role="TeacherInSubject" EntitySet="TeacherInSubject" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__RoleId__61BB7BD9" Association="Self.FK__UserRole__RoleId__61BB7BD9">
+      <End Role="NetRoles" EntitySet="NetRoles" />
       <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserRole_NetRoles" Association="Self.FK_UserRole_NetRoles">
+    <AssociationSet Name="FK__UserRole__RoleId__75C27486" Association="Self.FK__UserRole__RoleId__75C27486">
       <End Role="NetRoles" EntitySet="NetRoles" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__UserId__74CE504D" Association="Self.FK__UserRole__UserId__74CE504D">
+      <End Role="NetUsers" EntitySet="NetUsers" />
       <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>
   </EntityContainer>

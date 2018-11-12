@@ -109,15 +109,17 @@
                 @Html.RouteLink("Delete", "Default",
           new { action = "DeleteRegisteredUsers", controller = "NetUserView", id = item.UserId  })
                 |
-                @Html.ActionLink("SubjectAssign", "SubjectAssign", new { id = item.UserId })
-                |
-                @Html.ActionLink("TeacherInSubjectlist", "TeacherInSubjectlist", new { id = item.UserId })
 
-                @if (Model.RoleName == "Teacher")
+
+                @if (item.RoleName == "Teacher")
+
                 {
-                    @Html.ActionLink("TeacherInfoController", "SubjectAssign", new { id = item.UserId })
+                    @Html.ActionLink("SubjectAssign", "SubjectAssign", new { id = item.UserId })
+                    <span>|</span>
+                    @Html.ActionLink("TeacherInSubjectlist", "TeacherInSubjectlist", new { id = item.UserId })
                 }
             </td>
+
 
         </tr>
     }

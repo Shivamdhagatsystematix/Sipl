@@ -18,6 +18,7 @@ namespace Sipl.DataBase
         public NetRoles()
         {
             this.UserRole = new HashSet<UserRole>();
+            this.UserRole1 = new HashSet<UserRole>();
         }
     
         public string RoleId { get; set; }
@@ -25,5 +26,7 @@ namespace Sipl.DataBase
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRole> UserRole1 { get; set; }
     }
 }

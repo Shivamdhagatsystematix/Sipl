@@ -5,7 +5,7 @@
 
     <div class="form-horizontal">
         <h4>Update User</h4>
-        <hr />
+
         <script src="~/Scripts/JavaScript-Google.js"></script>
         <script type="text/javascript">
             //Ajax call FOr Country
@@ -48,7 +48,7 @@
 
         </script>
 
-        Model
+
         @Html.HiddenFor(model => model.UserId)
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.AddressId)
@@ -240,7 +240,7 @@
                     </div>
                 </div>
             </div>
-            <<div class="col-md-6">
+            <div class="col-md-6">
                 <div class="form-group">
 
                     @Html.LabelFor(model => model.IsVerified, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -249,7 +249,7 @@
                         @Html.ValidationMessageFor(model => model.IsVerified, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>>
+            </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -258,13 +258,39 @@
         </div>
 
     </div>
-    <div>
-        <a type="button" class="btn btn-primary btn-sm"
-           href="@Url.Action("UserSearchView","Admin/TeacherInfo")">
-            <span class="glyphicon glyphicon-list"></span>
-            <span>Back to List</span>
-        </a>
-    </div>
+    <p>
+    @if (Convert.ToInt32(Session["RoleId"]) == 3)
+    {
+        <div>
+         @Html.RouteLink("Cancel ", "Default",
+       new { action = "UserSearchView", controller = "Admin/TeacherInfo", id = Model.UserId })
+        </div>
+    }
+
+    else if (Convert.ToInt32(Session["RoleId"]) == 2)
+    {
+        <div>
+            @*<a type="button" class="btn btn-primary btn-sm"
+               href="@Url.Action("StudentProfile", "Admin/TeacherInfo")">
+                <span class="glyphicon glyphicon-list"></span>
+                <span>Back to List</span>
+            </a>*@
+
+            @Html.RouteLink("Cancel ", "Default",
+        new { action = "UserProfile", controller = "Admin/TeacherInfo", id = Model.UserId })
+        </div>
+    }
+    else if (Convert.ToInt32(Session["RoleId"]) == 1)
+    {
+        <div>
+           
+            @Html.RouteLink("Cancel ", "Default",
+        new { action = "TeacherProfile", controller = "Admin/TeacherInfo", id = Model.UserId })
+        </div>
+    }
+    </p>
+
+
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

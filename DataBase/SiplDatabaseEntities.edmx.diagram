@@ -4,33 +4,34 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9cf988f6fc5d4a6db4a474df0f9a4516" Name="Diagram1">
-        <EntityTypeShape EntityType="SiplDatabaseModel.Address" Width="1.5" PointX="7.5" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.Cities" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.Countries" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.States" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.Subjects" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+      <Diagram DiagramId="9cf988f6fc5d4a6db4a474df0f9a4516" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="SiplDatabaseModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.TeacherInSubject" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__Address__CityId__1D4655FB" ManuallyRouted="false" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__Address__Country__1B5E0D89" ManuallyRouted="false" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__Address__StateId__1C5231C2" ManuallyRouted="false" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__Cities__CountryI__2B947552" ManuallyRouted="false" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__Cities__StateId__2C88998B" ManuallyRouted="false" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__States__CountryI__29AC2CE0" ManuallyRouted="false" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__TeacherIn__Subje__3AD6B8E2" ManuallyRouted="false" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__TeacherIn__Subje__778AC167" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.SubjectInCourse" Width="1.5" PointX="5.25" PointY="8.75" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__SubjectIn__Subje__6E01572D" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.NetRoles" Width="1.5" PointX="5.25" PointY="0.75" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.UserRole" Width="1.5" PointX="7.5" PointY="1.5" />
-        <AssociationConnector Association="SiplDatabaseModel.FK_UserRole_NetRoles" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.Courses" Width="1.5" PointX="3" PointY="4.125" />
-        <EntityTypeShape EntityType="SiplDatabaseModel.NetUsers" Width="1.5" PointX="5.25" PointY="3.375" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__Courses__Subject__7FB5F314" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__NetUsers__Course__60083D91" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__SubjectIn__Cours__37FA4C37" />
-        <AssociationConnector Association="SiplDatabaseModel.FK__UserRole__UserId__38EE7070" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.TeacherInSubject" Width="1.5" PointX="3" PointY="8.375" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.Address" Width="1.5" PointX="10.5" PointY="7.75" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.Cities" Width="1.5" PointX="8.25" PointY="16.125" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.Countries" Width="1.5" PointX="6" PointY="14.875" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.NetRoles" Width="1.5" PointX="5.25" PointY="4.5" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.States" Width="1.5" PointX="6" PointY="17.625" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__Address__CityId__6774552F" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__Address__Country__658C0CBD" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__Address__StateId__668030F6" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__Cities__CountryI__68687968" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__Cities__StateId__695C9DA1" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__States__CountryI__6C390A4C" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.NetUsers" Width="1.5" PointX="5.25" PointY="7.25" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.UserRole" Width="1.5" PointX="7.5" PointY="6.875" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__Address__UserId__6497E884" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__UserRole__RoleId__61BB7BD9" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__UserRole__RoleId__75C27486" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__TeacherIn__UserI__71F1E3A2" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__UserRole__UserId__74CE504D" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.Courses" Width="1.5" PointX="3" PointY="5.375" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.SubjectInCourse" Width="1.5" PointX="8.25" PointY="3.875" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__NetUsers__Course__6B44E613" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__SubjectIn__Cours__70099B30" />
+        <EntityTypeShape EntityType="SiplDatabaseModel.Subjects" Width="1.5" PointX="0.75" PointY="6.25" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__SubjectIn__Subje__6D2D2E85" />
+        <AssociationConnector Association="SiplDatabaseModel.FK__TeacherIn__Subje__73DA2C14" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

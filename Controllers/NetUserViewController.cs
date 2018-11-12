@@ -66,6 +66,8 @@ namespace Sipl.Controllers
             NetUserViewModel objNetUserViewModel = new NetUserViewModel();
             try
             {
+                ViewBag.SendId = id;
+
                 var getUser = (from d in objEntities.Address
                                join c in objEntities.NetUsers on d.UserId equals c.UserId
                                join s in objEntities.UserRole on c.UserId equals s.UserId
@@ -86,6 +88,48 @@ namespace Sipl.Controllers
                                    IsActive = c.IsActive,
                                    DateCreated = c.DateCreated,
                                    CourseName = c.Courses.CourseName,
+                                   CurrentAddress = d.CurrentAddress,
+                                   PermanantAddress = d.PermanantAddress,
+                                   Country = d.Countries.CountryName,
+                                   States = d.States.StateName,
+                                   Cities = d.Cities.CityName,
+                                   Pincode = d.Pincode
+                               }).FirstOrDefault();
+                return View(getUser);
+            }
+            catch (Exception er)
+            {
+                Console.Write(er.Message);
+                return View();
+            }
+        }
+        public ActionResult TeacherDetails(int? id)
+        {
+            NetUserViewModel objNetUserViewModel = new NetUserViewModel();
+            try
+            {
+
+                var getUser = (from d in objEntities.Address
+                               join c in objEntities.NetUsers on d.UserId equals c.UserId
+                               join s in objEntities.UserRole on c.UserId equals s.UserId
+                               join f in objEntities.TeacherInSubject on c.UserId equals f.UserId
+                               join su in objEntities.Subjects on f.SubjectId equals su.SubjectId
+                               where d.UserId == id
+
+                               select new NetUserViewModel
+                               {
+                                   UserId = c.UserId,
+                                   FirstName = c.FirstName,
+                                   LastName = c.LastName,
+                                   Password = c.Password,
+                                   RoleId = s.RoleId,
+                                   Gender = c.Gender,
+                                   DOB = c.DOB,
+                                   Email = c.Email,
+                                   IsVerified = c.IsVerified,
+                                   IsActive = c.IsActive,
+                                   DateCreated = c.DateCreated,
+                                   SubjectName = su.SubjectName,
                                    CurrentAddress = d.CurrentAddress,
                                    PermanantAddress = d.PermanantAddress,
                                    Country = d.Countries.CountryName,
@@ -334,9 +378,7 @@ namespace Sipl.Controllers
             ViewBag.Role = new SelectList(objEntities.NetRoles.ToList(), "RoleId", "RoleName");
             try
             {
-                if (Convert.ToInt32(Session["RoleId"]) == 2)
-                {
-                    if (ModelState.IsValid)
+                if (ModelState.IsValid)
                     {
                         // to specify UserRole according to their UserId
                         UserRole objUserRole = new UserRole
@@ -388,143 +430,25 @@ namespace Sipl.Controllers
                         };
                         objEntities.Entry(objAddress).State = EntityState.Modified;
                         objEntities.SaveChanges();
-                        return RedirectToAction("StudentProfile", "Admin/TeacherInfo", new { id = userId });
-                        //return RedirectToAction("StudentProfile", , Id = userId }));
+                        if (Convert.ToInt32(Session["RoleId"]) == 2)
+                        {
+                            return RedirectToAction("UserProfile", "Admin/TeacherInfo", new { id = userId });
+                            //return RedirectToAction("StudentProfile", , Id = userId }));
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 1)
+                        {
+                            return RedirectToAction("TeacherProfile", "Admin/TeacherInfo", new { id = userId });
+                        }
+                        else if (Convert.ToInt32(Session["RoleId"]) == 3)
+                                {
+                            return RedirectToAction("UserSearchView", "Admin/TeacherInfo", new { id = userId });
+
+                        }
                     }
                     return View(objCrudViewModel);
 
                 }
 
-
-
-                else if (Convert.ToInt32(Session["RoleId"]) == 1)
-                {
-                    {
-                        if (ModelState.IsValid)
-                        {
-                            // to specify UserRole according to their UserId
-                            UserRole objUserRole = new UserRole
-                            {
-                                Id = objCrudViewModel.Id,
-                                RoleId = objCrudViewModel.RoleId,
-                                UserId = objCrudViewModel.UserId
-                            };
-                            objEntities.Entry(objUserRole).State = EntityState.Modified;
-                            objEntities.UserRole.Add(objUserRole);
-                            objEntities.SaveChanges();
-
-                            //Encrytion For Password
-                            //Encrytion For Password
-                            var keyNew = "Test";
-                            var password = Helper.EncodePassword(objCrudViewModel.Password, keyNew);
-
-                            NetUsers objNetUsers = new NetUsers
-                            {
-                                UserId = objCrudViewModel.UserId,
-                                FirstName = objCrudViewModel.FirstName,
-                                LastName = objCrudViewModel.LastName,
-                                Gender = objCrudViewModel.Gender,
-                                CourseId = objCrudViewModel.CourseId,
-                                Email = objCrudViewModel.Email,
-                                Password = objCrudViewModel.Password,
-                                DOB = objCrudViewModel.DOB,
-                                IsActive = objCrudViewModel.IsActive,
-                                IsVerified = objCrudViewModel.IsVerified,
-                                DateCreated = DateTime.Now,
-                                DateModified = DateTime.Now,
-                            };
-                            objEntities.Entry(objNetUsers).State = EntityState.Modified;
-                            objEntities.SaveChanges();
-                            //to get userId
-                            var userId = objNetUsers.UserId;
-
-                            //to add data in Address Table
-                            Address objAddress = new Address
-                            {
-                                AddressId = objCrudViewModel.AddressId,
-                                CountryId = objCrudViewModel.CountryId,
-                                StateId = objCrudViewModel.StateId,
-                                CityId = objCrudViewModel.CityId,
-                                CurrentAddress = objCrudViewModel.CurrentAddress,
-                                PermanantAddress = objCrudViewModel.PermanantAddress,
-                                Pincode = objCrudViewModel.Pincode,
-                                UserId = userId
-                            };
-                            objEntities.Entry(objAddress).State = EntityState.Modified;
-                            objEntities.SaveChanges();
-                            return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
-                        }
-
-                    }
-
-
-                }
-                else if (Convert.ToInt32(Session["RoleId"]) == 3)
-                {
-                    {
-                        {
-                            if (ModelState.IsValid)
-                            {
-                                // to specify UserRole according to their UserId
-                                UserRole objUserRole = new UserRole
-                                {
-                                    Id = objCrudViewModel.Id,
-                                    RoleId = objCrudViewModel.RoleId,
-                                    UserId = objCrudViewModel.UserId
-                                };
-                                objEntities.Entry(objUserRole).State = EntityState.Modified;
-                                objEntities.UserRole.Add(objUserRole);
-                                objEntities.SaveChanges();
-
-                                //Encrytion For Password
-                                //Encrytion For Password
-                                var keyNew = "Test";
-                                var password = Helper.EncodePassword(objCrudViewModel.Password, keyNew);
-
-                                NetUsers objNetUsers = new NetUsers
-                                {
-                                    UserId = objCrudViewModel.UserId,
-                                    FirstName = objCrudViewModel.FirstName,
-                                    LastName = objCrudViewModel.LastName,
-                                    Gender = objCrudViewModel.Gender,
-                                    CourseId = objCrudViewModel.CourseId,
-                                    Email = objCrudViewModel.Email,
-                                    Password = objCrudViewModel.Password,
-                                    DOB = objCrudViewModel.DOB,
-                                    IsActive = objCrudViewModel.IsActive,
-                                    IsVerified = objCrudViewModel.IsVerified,
-                                    DateCreated = DateTime.Now,
-                                    DateModified = DateTime.Now,
-                                };
-                                objEntities.Entry(objNetUsers).State = EntityState.Modified;
-                                objEntities.SaveChanges();
-                                //to get userId
-                                var userId = objNetUsers.UserId;
-
-                                //to add data in Address Table
-                                Address objAddress = new Address
-                                {
-                                    AddressId = objCrudViewModel.AddressId,
-                                    CountryId = objCrudViewModel.CountryId,
-                                    StateId = objCrudViewModel.StateId,
-                                    CityId = objCrudViewModel.CityId,
-                                    CurrentAddress = objCrudViewModel.CurrentAddress,
-                                    PermanantAddress = objCrudViewModel.PermanantAddress,
-                                    Pincode = objCrudViewModel.Pincode,
-                                    UserId = userId
-                                };
-                                objEntities.Entry(objAddress).State = EntityState.Modified;
-                                objEntities.SaveChanges();
-                                return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
-                            }
-
-                        }
-
-
-                    }
-                }
-                return View(objCrudViewModel);
-            }
             catch (Exception ex)
             {
                 Console.WriteLine("Exception source: {0} user is failed to Update", ex.Message);
@@ -646,6 +570,7 @@ namespace Sipl.Controllers
                 {
                     NetUsers netUsers = objEntities.NetUsers.Find(id);
                     objEntities.NetUsers.Remove(netUsers);
+
                     objEntities.SaveChanges();
                 }
                 return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
@@ -665,7 +590,7 @@ namespace Sipl.Controllers
         {
             var states = objEntities.States.Where(x => x.CountryId == id).ToList();
             List<SelectListItem> listates = new List<SelectListItem>();
-            listates.Add(new SelectListItem { Text = "", Value = "0" });
+            listates.Add(new SelectListItem { Text = "Select State", Value = "0" });
             if (states != null)
             {
                 foreach (var x in states)
@@ -685,7 +610,7 @@ namespace Sipl.Controllers
         {
             var city = objEntities.Cities.Where(x => x.StateId == id).ToList();
             List<SelectListItem> licity = new List<SelectListItem>();
-            licity.Add(new SelectListItem { Text = "", Value = "0" });
+            licity.Add(new SelectListItem { Text = "Select City", Value = "0" });
             if (city != null)
             {
                 foreach (var l in city)

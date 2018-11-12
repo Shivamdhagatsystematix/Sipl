@@ -1,0 +1,42 @@
+﻿@model StudentProject.Models.MapCourseAndSubjectViewModel
+@{
+    ViewBag.Title = "Add Course";
+}
+<div>
+    <h2>Add Course</h2>
+    <div class="w3-container w3-teal">
+        @using (Html.BeginForm("MapCourseAndSubject", "SuperAdmin", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.CourseList, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CourseList, Model.CourseList.Select(item => new SelectListItem
+               {
+                   Value = item.CourseId.ToString(),
+                   Text = item.CourseName.ToString()
+
+               }), "---Select Course---", new { id = "ddlCourse" })
+                    @Html.ValidationMessageFor(model => model.CourseList, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SubjectList, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SubjectList, Model.SubjectList.Select(item => new SelectListItem
+               {
+                   Value = item.SubjectId.ToString(),
+                   Text = item.SubjectName.ToString()
+
+               }), "---Select Course---", new { id = "ddlCourse" })
+                    @Html.ValidationMessageFor(model => model.SubjectList, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="MapCourseAndSubject" class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -65,8 +65,10 @@ namespace Sipl.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        [Required]
         public string RoleId { get; set; }
         public string RoleName { get; set; }
+        [Required]
         public List<SelectListItem> Role { get; set; }
         public int? CourseId { get; set; }
         public string CourseName { get; set; }
@@ -74,13 +76,13 @@ namespace Sipl.Models
         public string SubjectName { get; set; }
 
         public IEnumerable<SelectListItem> Course { get; set; }
-        
+
         public string Gender { get; set; }
 
 
         [Required]
         [Remote("CheckEmailExists", "NetUserView", HttpMethod = "POST", ErrorMessage = "Email address already registered.")]
-       [EmailAddress]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -110,12 +112,17 @@ namespace Sipl.Models
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
         public string Country { get; set; }
+        [Display(Name = "State")]
         public int StateId { get; set; }
         public string States { get; set; }
+        [Display(Name = "City")]
         public int CityId { get; set; }
         public string Cities { get; set; }
+        [Required(ErrorMessage = "Zip is Required")]
+        [RegularExpression(@"[0-9]{5}", ErrorMessage = "Invalid Zip")]
         public string Pincode { get; set; }
         public List<NetUserViewModel> List { get; set; }
 
@@ -135,6 +142,7 @@ namespace Sipl.Models
         public string LastName { get; set; }
         [Display(Name = "Password")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "- Select Role -")]
         public string RoleId { get; set; }
         public string RoleName { get; set; }
         public List<SelectListItem> Role { get; set; }
@@ -143,10 +151,12 @@ namespace Sipl.Models
         public string CourseName { get; set; }
 
         public IEnumerable<SelectListItem> Course { get; set; }
+        [Required]
         public string Gender { get; set; }
 
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
 
     
@@ -165,12 +175,23 @@ namespace Sipl.Models
         public string CurrentAddress { get; set; }
         [Display(Name = " Permanant Address")]
         public string PermanantAddress { get; set; }
+
+        [Required]
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
         public string Country { get; set; }
+
+        [Required]
+        [Display(Name = "States")]
         public int StateId { get; set; }
         public string States { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
         public int CityId { get; set; }
         public string Cities { get; set; }
+        [Required(ErrorMessage = "Zip is Required")]
+        [RegularExpression(@"[0-9]{5}", ErrorMessage = "Invalid Zip")]
         public string Pincode { get; set; }
         public List<CrudViewModel> List { get; set; }
 

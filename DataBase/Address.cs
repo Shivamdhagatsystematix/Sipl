@@ -26,5 +26,6 @@ namespace Sipl.DataBase
         public virtual Cities Cities { get; set; }
         public virtual Countries Countries { get; set; }
         public virtual States States { get; set; }
+        public virtual NetUsers NetUsers { get; set; }
     }
 }

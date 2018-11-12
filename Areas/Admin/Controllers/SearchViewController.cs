@@ -21,9 +21,9 @@ namespace Sipl.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult _SearchGridPartial()
         {
-
             return View();
         }
+
         /// <summary>
         /// GET data from db
         /// </summary>
@@ -90,11 +90,9 @@ namespace Sipl.Areas.Admin.Controllers
 
 
                     if (userAddressInfo != null)
-
                     {
                         SearchViewModel searchView = new SearchViewModel
                         {
-
                             FirstName = item.FirstName,
                             LastName = item.LastName,
                             Gender = item.Gender,
@@ -110,7 +108,6 @@ namespace Sipl.Areas.Admin.Controllers
                             Cities = userAddressInfo.Cities.CityName,
                             Pincode = userAddressInfo.Pincode,
                             IsVerified = item.IsVerified,
-
                             DateCreated = item.DateCreated
                         };
                         objSearchViewModel.Add(searchView);
@@ -124,6 +121,7 @@ namespace Sipl.Areas.Admin.Controllers
                 return View(ex);
             }
         }
+
         /// <summary>
         /// Search Page 
         /// </summary>
@@ -185,7 +183,6 @@ namespace Sipl.Areas.Admin.Controllers
                              where Address.Cities.CityId == objFilterViewModel.CityId || string.IsNullOrEmpty(objFilterViewModel.Cities)
                              where Address.Pincode == model.Pincode.ToString() || model.Pincode == null
                              where userRole.RoleId == objFilterViewModel.RoleId || string.IsNullOrEmpty(objFilterViewModel.RoleId)
-
                              select new SearchViewModel
                              {
                                  FirstName = user.FirstName,
@@ -205,10 +202,10 @@ namespace Sipl.Areas.Admin.Controllers
                                  DateCreated = user.DateCreated,
                                  RoleName = userRole.NetRoles.RoleName
                              }).ToList();
-
             model.List = searchBar;
             return View(model);
         }
+
         /// <summary>
         ///  Method For Getting Respective States Accordind to their Country
         /// </summary>

@@ -28,7 +28,8 @@ namespace Sipl.Areas.Admin.Controllers
                 SubjectViewModel subject = new SubjectViewModel
                 {
                     SubjectId = item.SubjectId,
-                    SubjectName = item.SubjectName
+                    SubjectName = item.SubjectName,
+                    
                 };
                 objSubjectViewModel.Add(subject);
             };
@@ -164,14 +165,19 @@ namespace Sipl.Areas.Admin.Controllers
         /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult DeleteSubject(int id)
+        public ActionResult DeleteSubject(int id, SubjectViewModel objSubjectViewModel)
      
         {
             try
             {
+               
+
+
                 Subjects subjects = objEntities.Subjects.Find(id);
                 objEntities.Subjects.Remove(subjects);
                 objEntities.SaveChanges();
+             
+
                 return RedirectToAction("GetSubject");
             }
             catch (Exception ex)

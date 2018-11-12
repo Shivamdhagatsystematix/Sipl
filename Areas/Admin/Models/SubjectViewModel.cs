@@ -11,8 +11,7 @@ namespace Sipl.Areas.Admin.Models
         public int SubjectId { get; set; }
 
         [Required]
-        [Display(Name ="Add Subject ")]
-
+        [Display(Name = "Add Subject ")]
         public string SubjectName { get; set; }
     }
 }

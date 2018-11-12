@@ -91,24 +91,21 @@ namespace Sipl.Controllers
                             {
                                 Session["RoleId"] = 3;
                                 Session["RoleName"] = "Admin";
-
-
-
                                 return RedirectToAction("UserSearchView", "Admin/TeacherInfo");
                             }
                             else if (isAdmin == "Teacher")
                             {
-                                Session["RoleId"] = 1;
-                                return RedirectToAction("_TeacherPage", "Admin/TeacherInfo");
+                                Session["RoleId"] =1;
+                                Session["RoleName"] = "Teacher";
+                                return RedirectToAction("TeacherProfile", "Admin/TeacherInfo", new { id = obj.UserId });
 
 
                             }
                             else if (isAdmin == "Student")
                             {
                                 Session["RoleId"] = 2;
-                               
-                                
-                                return RedirectToAction("StudentProfile", "Admin/TeacherInfo", new { id = obj.UserId });
+                                Session["RoleName"] = "Student";
+                                return RedirectToAction("UserProfile", "Admin/TeacherInfo", new { id = obj.UserId });
 
                             }
                             else
@@ -127,7 +124,7 @@ namespace Sipl.Controllers
 
                     }
                 }
-               
+
                 else return View(model);
                 {
 

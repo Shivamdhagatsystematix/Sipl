@@ -1,95 +1,65 @@
 ﻿@model IEnumerable<Sipl.Models.NetUserViewModel>
-<h2>List of Teachers</h2>
-<table class="table table-striped table ">
-    <tr class="success">
+
+@{
+    ViewBag.Title = "_StudentPage";
+}
+
+<h2>List of Student</h2>
+<table class="table">
+    <tr>
+
         <th>
-            @Html.DisplayName("FirstName")
+            @Html.DisplayNameFor(model => model.SubjectName)
         </th>
         <th>
-            @Html.DisplayName("LastName")
-        </th>
-        @*<th>
-                @Html.DisplayName("Role")
-            </th>*@
-        <th>
-            @Html.DisplayName("Subject Assign")
+            @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
-            @Html.DisplayName("Gender")
+            @Html.DisplayNameFor(model => model.LastName)
         </th>
+
         <th>
-            @Html.DisplayName("Email")
+            @Html.DisplayNameFor(model => model.CourseName)
         </th>
-        <th>
-            @Html.DisplayName("DOB")
-        </th>
-        <th>
-            @Html.DisplayName("CurrentAddress")
-        </th>
-        <th>
-            @Html.DisplayName("PermanantAddress")
-        </th>
-        <th>
-            @Html.DisplayName("Country")
-        </th>
-        <th>
-            @Html.DisplayName("States")
-        </th>
-        <th>
-            @Html.DisplayName("Cities")
-        </th>
-        <th>
-            @Html.DisplayName("Pincode")
-        </th>
+
+        <th></th>
     </tr>
+
     @foreach (var item in Model)
     {
         <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.SubjectName)
+                @Html.DisplayFor(modelItem => item.CourseName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DOB)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrentAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PermanantAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Country)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.States)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cities)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pincode)
-            </td>
+
         </tr>
     }
+
+
 </table>
+<div>
+    @*<a type="button" class="btn btn-primary btn-sm"
+           href="@Url.Action("UserProfile","TeacherInfo")">
+            <span class="glyphicon glyphicon-home"></span>
+            <span>Back to Main Menu</span>
+        </a>
+        @Html.RouteLink("Back to Main Menu ", "Default",
+                    new { action = "UserProfile", controller = "TeacherInfo",id = ViewBag.UserId  })*@
+    <a type="button" class="btn btn-primary btn" href="@Url.Action("UserProfile","TeacherInfo",new { id =  ViewBag.UserId})"
+
+    <span>Back To HomePage</span>
+</a>
 
 
-
-
-
-
-
-
-
+</div>

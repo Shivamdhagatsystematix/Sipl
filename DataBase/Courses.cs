@@ -23,9 +23,7 @@ namespace Sipl.DataBase
     
         public int CourseId { get; set; }
         public string CourseName { get; set; }
-        public int SubjectId { get; set; }
     
-        public virtual Subjects Subjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NetUsers> NetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

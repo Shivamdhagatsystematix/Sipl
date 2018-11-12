@@ -27,8 +27,9 @@ namespace Sipl.Areas.Admin.Controllers
             {
                 CourseViewModel course = new CourseViewModel
                 {
-                    //CourseId = Convert.ToInt32(item.CourseId),
+                    CourseId = item.CourseId,
                     CourseName = item.CourseName
+                  
                 };
                 objCourseViewModel.Add(course);
             };
@@ -40,16 +41,7 @@ namespace Sipl.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult CreateCourse(string id)
         {
-            var Subjects = (from b in objEntities.Subjects select b).ToList();
-            var model = new CourseViewModel
-            {
-                Subject = Subjects.Select(x => new SelectListItem
-                {
-                    Value = x.SubjectId.ToString(),
-                    Text = x.SubjectName
-                })
-            };
-            return View(model);
+           return View();
         }
         /// <summary>
         /// POST :Create Method For Course
@@ -67,21 +59,11 @@ namespace Sipl.Areas.Admin.Controllers
                     Courses objCourses = new Courses
                     {
                         CourseName = objCourseViewModel.CourseName,
-                        SubjectId = objCourseViewModel.SubjectId
+                     
                     };
                     var test = objEntities.Courses.Add(objCourses);
                     objEntities.SaveChanges();
-                    //To get CourseId
-                    var courseId = objCourses.CourseId;
-
-                    //To add Respective Subject in Course in SubjectInCourse Table
-                    SubjectInCourse objSubjectInCourse = new SubjectInCourse
-                    {
-                        SubjectId = objCourseViewModel.SubjectId,
-                        CourseId = courseId
-                    };
-                    objEntities.SubjectInCourse.Add(objSubjectInCourse);
-                    objEntities.SaveChanges();
+                    
                 };
                 return RedirectToAction("GetCourse", "Course", objCourseViewModel);
             }
@@ -103,20 +85,20 @@ namespace Sipl.Areas.Admin.Controllers
             }
             Courses courses = objEntities.Courses.Find(id);
             var data = from d in objEntities.Courses
-                       where d.SubjectId == id
+                       where d.CourseId == id
                        select d;
             //var TEMPlIST = objEntities.Subjects.ToList();
             CourseViewModel courseView = new CourseViewModel
             {
                 CourseId = Convert.ToInt32(courses.CourseId),
-                CourseName = courses.CourseName,
-                SubjectId = courses.SubjectId
+                CourseName = courses.CourseName
+            
             };
             if (courses == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.SubjectId = new SelectList(objEntities.Subjects, "SubjectId", "SubjectName", courses.SubjectId);
+          
             return View(courseView);
         }
         /// <summary>
@@ -136,8 +118,8 @@ namespace Sipl.Areas.Admin.Controllers
                     Courses objCourse = new Courses
                     {
                         CourseId = id,
-                        CourseName = objCourses.CourseName,
-                        SubjectId = objCourses.SubjectId
+                        CourseName = objCourses.CourseName
+                       
 
 
 

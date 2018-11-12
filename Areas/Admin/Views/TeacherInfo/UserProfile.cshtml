@@ -1,0 +1,50 @@
+﻿@model Sipl.Models.NetUserViewModel
+@{
+    ViewBag.Title = "LoggedIn";
+}
+
+<fieldset>
+    <legend>
+        <text>
+            @if (Session["Email"] != null)
+            {
+                <text>
+                    Welcome!!!!! @Session["Email"].ToString()
+                </text>
+            }
+        </text>
+    </legend>
+</fieldset>
+
+@if (Convert.ToInt32(Session["RoleId"]) == 2)
+{
+    <h2>Hello!! Buddy</h2>
+    <div>
+        <ul>
+            <li>
+                @Html.RouteLink("View Teacher ", "Default",
+              new { action = "_StudentPage", controller = "Admin/TeacherInfo" , id = Model.UserId })
+            </li>
+            <li>
+                @Html.RouteLink("View Profile ", "Default",
+                         new { action = "RegisteredUserDetails", controller = "NetUserView", id = Model.UserId })
+            </li>
+        </ul>
+    </div>
+}
+else if (Convert.ToInt32(Session["RoleId"]) == 1)
+{
+    <h2>Hello!! Sir</h2>
+
+    <div>
+        @Html.RouteLink("View Student ", "Default",
+             new { action = "_TeacherPage", controller = "Admin/TeacherInfo" })
+    </div>
+    <div>
+        @Html.RouteLink("Edit Profile ", "Default",
+            new { action = "RegisteredUserDetails", controller = "NetUserView", id = Model.UserId })
+    </div>
+
+
+}
+

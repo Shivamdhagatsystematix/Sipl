@@ -246,6 +246,7 @@ namespace Sipl.Areas.Admin.Controllers
             var getUser = (from d in objEntities.Address
                            join c in objEntities.NetUsers on d.UserId equals c.UserId
                            join s in objEntities.UserRole on c.UserId equals s.UserId
+                           where d.UserId == id
                            select new FilterViewModel
                            {
                                UserId = c.UserId,
@@ -257,7 +258,7 @@ namespace Sipl.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SubjectAssign(FilterViewModel objFilterViewModel)
+        public ActionResult SubjectAssign(int id, FilterViewModel objFilterViewModel)
         {
             {
                 ViewBag.Subject = new SelectList(objEntities.Subjects.ToList(), "SubjectId", "SubjectName");
@@ -268,6 +269,7 @@ namespace Sipl.Areas.Admin.Controllers
                         var getUser = (from d in objEntities.Address
                                        join c in objEntities.NetUsers on d.UserId equals c.UserId
                                        join s in objEntities.UserRole on c.UserId equals s.UserId
+                                       where d.UserId == id
                                        select new FilterViewModel
                                        {
                                            UserId = c.UserId,
@@ -361,57 +363,58 @@ namespace Sipl.Areas.Admin.Controllers
         /// list of students for teacher
         /// </summary>
         /// <returns></returns>
-        public ActionResult _TeacherPage()
+        public ActionResult _TeacherPage(int? id)
         {
+            List<NetUserViewModel> results = new List<NetUserViewModel>();
             if (Request.IsAuthenticated)
             {
-                //geting list from db
-                var userList = (from d in objEntities.NetUsers
-                                join c in objEntities.UserRole on d.UserId equals c.UserId
-                                join s in objEntities.Address on c.UserId equals s.UserId
-                                join e in objEntities.SubjectInCourse on d.CourseId equals e.CourseId
-                                where c.RoleId != "3" & c.RoleId != "1"
+                //teacher list
+                ViewBag.SendId = id;
+                TempData["TeacherId"] = id;
+                var innerQuery = (from user in objEntities.NetUsers
+                                  join teacherInSubject in objEntities.TeacherInSubject on user.UserId equals teacherInSubject.UserId
+                                  join subjectInCourse in objEntities.SubjectInCourse on teacherInSubject.SubjectId equals subjectInCourse.SubjectId
+                                  where user.UserId == id
+                                  select subjectInCourse.CourseId
+                            ).ToList();
+                if (innerQuery.Count > 0)
+                {
+                    foreach (var item in innerQuery)
+                    {
+                        List<NetUserViewModel> result = new List<NetUserViewModel>();
+                        result = (from user in objEntities.NetUsers
+                                  where user.CourseId == item
+                                  select new NetUserViewModel
+                                  {
+                                      UserId = user.UserId,
+                                      FirstName = user.FirstName,
+                                      LastName = user.LastName,
+                                      CourseName = user.Courses.CourseName,
+                                  }
+                                       ).ToList();
 
-                                select new NetUserViewModel
-                                {
-                                    UserId = d.UserId,
-                                    RoleId = c.RoleId,
-                                    CourseName = d.Courses.CourseName,
-                                    FirstName = d.FirstName,
-                                    LastName = d.LastName,
-                                    Gender = d.Gender,
-                                    Email = d.Email,
-                                    Password = d.Password,
-                                    DOB = d.DOB,
-                                    IsActive = d.IsActive,
-                                    IsVerified = d.IsVerified,
-                                    CurrentAddress = s.CurrentAddress,
-                                    PermanantAddress = s.PermanantAddress,
-                                    Country = s.Countries.CountryName,
-                                    States = s.States.StateName,
-                                    Cities = s.Cities.CityName,
-                                    DateCreated = d.DateCreated,
-                                    Pincode = s.Pincode
-                                }).ToList();
-
-                return View(userList);
-
+                        results.AddRange(result);
+                    }
+                }
+                return View(results);
             }
             else
             {
                 return RedirectToAction("LogIn");
             }
         }
+
         /// <summary>
         /// get method for student list
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult StudentProfile(int? id)
+        public ActionResult UserProfile(int? id)
         {
             if (Request.IsAuthenticated)
             {
                 //var user = User.Identity.Name;
+
                 var userList = (from d in objEntities.NetUsers
                                 join c in objEntities.UserRole on d.UserId equals c.UserId
                                 join s in objEntities.Address on c.UserId equals s.UserId
@@ -439,32 +442,36 @@ namespace Sipl.Areas.Admin.Controllers
                                     Pincode = s.Pincode
                                 }).FirstOrDefault();
                 return View(userList);
-
             }
             else
             {
                 return RedirectToAction("LogIn");
             }
         }
+
         /// <summary>
-        /// Student page where Action links 
+        /// Method for teacher HomePage
         /// </summary>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult _StudentPage()
+        public ActionResult TeacherProfile(int? id)
         {
             if (Request.IsAuthenticated)
             {
-                //teacher list
+                //var user = User.Identity.Name;
+                Session["Id"] = id;
+
                 var userList = (from d in objEntities.NetUsers
                                 join c in objEntities.UserRole on d.UserId equals c.UserId
                                 join s in objEntities.Address on c.UserId equals s.UserId
-                                join e in objEntities.SubjectInCourse on d.CourseId equals e.CourseId
-                                where c.RoleId != "3" & c.RoleId != "2"
+                                join f in objEntities.TeacherInSubject on c.UserId equals f.UserId
+                                join su in objEntities.Subjects on f.SubjectId equals su.SubjectId
+                                where d.UserId == id
                                 select new NetUserViewModel
                                 {
                                     UserId = d.UserId,
                                     RoleId = c.RoleId,
-                                    SubjectName = e.Subjects.SubjectName,
+                                    SubjectName = su.SubjectName,
                                     FirstName = d.FirstName,
                                     LastName = d.LastName,
                                     Gender = d.Gender,
@@ -480,13 +487,41 @@ namespace Sipl.Areas.Admin.Controllers
                                     Cities = s.Cities.CityName,
                                     DateCreated = d.DateCreated,
                                     Pincode = s.Pincode
-                                }).ToList();
+                                }).FirstOrDefault();
+
                 return View(userList);
             }
             else
             {
                 return RedirectToAction("LogIn");
             }
+        }
+
+        /// <summary>
+        /// Student page where Action links 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _StudentPage(int? id)
+        {
+            ViewBag.UserId = id;
+            var courseDetails =
+                    (from
+                     user in objEntities.NetUsers
+                     join subjectInCourse in objEntities.SubjectInCourse on user.CourseId equals subjectInCourse.CourseId
+                     join subject in objEntities.Subjects on subjectInCourse.SubjectId equals subject.SubjectId
+                     join teacherInSubject in objEntities.TeacherInSubject on subjectInCourse.SubjectId equals teacherInSubject.SubjectId
+                     where user.UserId == id
+                     select new NetUserViewModel
+                     {
+                         UserId = user.UserId,
+                         SubjectId = teacherInSubject.SubjectId,
+                         SubjectName = subject.SubjectName,
+                         FirstName = teacherInSubject.NetUsers.FirstName,
+                         LastName = teacherInSubject.NetUsers.LastName,
+                         CourseId = user.CourseId,
+                         CourseName = user.Courses.CourseName
+                     }).ToList();
+            return View(courseDetails);
         }
     }
 }

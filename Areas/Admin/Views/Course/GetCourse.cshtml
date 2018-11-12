@@ -20,19 +20,20 @@
         <th>
             @Html.DisplayNameFor(model => model.CourseName)
         </th>
-        <th></th>
+       
     </tr>
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourseName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditCourse", new { id = item.CourseId }) |
-                @Html.ActionLink("Delete", "DeleteCourse", new { id = item.CourseId })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseName)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "EditCourse", new { id = item.CourseId }) |
+            @Html.ActionLink("Delete", "DeleteCourse", new { id = item.CourseId })
+        </td>
+    </tr>
     }
 </table>
 @section Scripts {

@@ -184,11 +184,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MapCourseSubjectController.cs" />
     <Compile Include="Areas\Admin\Controllers\SearchViewController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubjectInCoursesController1.cs" />
     <Compile Include="Areas\Admin\Controllers\TeacherInfoController.cs" />
     <Compile Include="Areas\Admin\Models\CourseViewModel.cs" />
     <Compile Include="Areas\Admin\Models\SearchViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SubjectInCoursesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\SubjectViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
@@ -357,8 +360,13 @@
     <Content Include="Areas\Admin\Views\TeacherInfo\TeacherInSubjectlist.cshtml" />
     <Content Include="Areas\Admin\Views\TeacherInfo\_TeacherPage.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminMenuPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\UserProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\MapCourseSubject\GetMapCourseSubject.cshtml" />
+    <Content Include="Areas\Admin\Views\MapCourseSubject\CreateSubjectInCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\MapCourseSubject\EditSubjectInCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\MapCourseSubject\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInfo\TeacherProfile.cshtml" />
     <Content Include="Areas\Admin\Views\TeacherInfo\_StudentPage.cshtml" />
-    <Content Include="Areas\Admin\Views\TeacherInfo\StudentProfile.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\JavaScript-Google.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -410,8 +418,12 @@
     <Content Include="Views\Login\RegisteredUser.cshtml" />
     <Content Include="Views\Shared\1_SearchGridPartial.cshtml" />
     <Content Include="Views\Login\_AdminPage.cshtml" />
+    <Content Include="Views\Login\ttest.cshtml" />
+    <Content Include="Views\NetUserView\TeacherDetails.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Super-Admin\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

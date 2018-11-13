@@ -69,9 +69,12 @@ namespace Sipl.Areas.Admin.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public string Password { get; set; }
+        [Display(Name = "Role")]
         public string RoleId { get; set; }
         public string RoleName { get; set; }
         public IEnumerable<SelectListItem> Role { get; set; }
+
+        [Display(Name = "Course")]
         public int? CourseId { get; set; }
         public string CourseName { get; set; }
         public IEnumerable<SelectListItem> Course { get; set; }
